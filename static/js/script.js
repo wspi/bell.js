@@ -15,6 +15,11 @@
     api = a;
 
     plot();
+
+    setInterval(function(){
+      d3.select('#chart').selectAll('*').remove();
+      plot();
+    }, 5 * 60 * 1000);  // replot every 5m
   };
 
   /*
