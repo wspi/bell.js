@@ -6,7 +6,7 @@
   .size(1080) // 4h
   ;
 
-  var pattern, limit, type, api;
+  var pattern, limit, api, type;
 
   this.initBell = function(t, p, l, a) {
     type = t;
@@ -49,7 +49,7 @@
       step = +step / 1000;
 
       // api url to fetch metrics
-      var url = [api, 'metrics', name, start, stop].join('/');
+      var url = [api, 'metrics', name, start, stop].join('/') + '?type=' + type;
       var values = [], i = 0;
 
       // request data and call callback with values
@@ -66,6 +66,22 @@
       });
     }, name);
   }
+
+
+  /*
+   * make a horizon chart
+   */
+  function horizon() {
+    var hrz = context.horizon();
+
+    if (type === 'm') {
+      return hrz.extent([0, 2])
+      .colors(['black', 'black', 'teal', '#dd1144']);
+    } else if (type === 'v') {
+      return hrz;
+    }
+  }
+
 
   /*
    * plot
@@ -88,9 +104,7 @@
         .data(data)
         .enter().append('div')
         .attr('class', 'horizon')
-        .call(context.horizon()
-              .extent([0, 2])
-              .colors(['black', 'black', 'teal', '#dd1144']));
+        .call(horizon());
 
         div.append('div')
         .attr('class', 'rule')
