@@ -35,7 +35,7 @@ Quick Start
 -----------
 
 1. Start ssdb & beanstalkd.
-2. Generate sample configuration and edit it, default [res/configs.toml](res/configs.toml):
+2. Generate sample configuration and edit it, default [config/configs.toml](config/configs.toml):
 
    ```bash
    $ bell -s
