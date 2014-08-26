@@ -110,6 +110,12 @@
         .attr('class', 'rule')
         .call(context.rule());
       });
+
+      d3.selectAll('.title').on('click', function(d, i){
+        var name = d.toString();
+        var url = root + name + '/?type=' + (type === 'v' ? 't' : 'v');
+        window.location.href = url;
+      });
     });
   }
 

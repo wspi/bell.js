@@ -40,6 +40,8 @@
 <script src="{{url('static', 'js/script.js')}}"></script>
 {%autoescape false%}
 <script>
+var root = '{{url('/')}}';
+
 window.onload = function() {
   initBell('{{type}}', '{{pattern}}', {{limit}}, '{{apiPrefix}}');
 }
