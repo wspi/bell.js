@@ -6,7 +6,7 @@ for periodic time series.
 
 ![](https://github.com/eleme/node-bell/raw/master/snap.png)
 
-Latest version: v0.1.6
+Latest version: v0.1.7
 
 Requirements
 ------------
@@ -34,7 +34,7 @@ then add `node-bell` to statsd's backends in statsd's config.js:
 Quick Start
 -----------
 
-1. Start statsd & ssdb & beanstalkd.
+1. Start ssdb & beanstalkd.
 2. Generate sample configuration and edit it, default [res/configs.toml](res/configs.toml):
 
    ```bash
@@ -47,10 +47,10 @@ Quick Start
    ```bash
    bell analyzer -c configs.toml
    bell listener -c configs.toml
-   bell webapp -c configs.toml
+   bell webapp -c configs.toml  # default port: 8989
    ```
 
-   You can view site on 0.0.0.0:8989.
+4. Start statsd.
 
 Services
 --------
@@ -75,7 +75,7 @@ Events currently available:
 
    Emitted when an anomaly was detected.
 
-Built-in hook module (and sample hook): [hooks](hooks).
+Built-in hook module (and sample hook): [hook](hook).
 
 Look Inside
 -----------
@@ -92,8 +92,8 @@ Analyzers store metrics in ssdb, using zset, here is storage format for a single
 
 ```
 key       |  score
---------------------------------------
-timestamp | value:is_anomaly:timestamp
+-----------------------------------------------
+timestamp | value:anomalous multiples:timestamp
 ```
 
 ### Data Flow

@@ -32,21 +32,21 @@
  */
 
 
-var co = require('co')
-  , fs = require('fs')
-  , program = require('commander')
-  , toml = require('toml')
-  , analyzer = require('./lib/analyzer')
-  , configs = require('./lib/configs')
-  , listener = require('./lib/listener')
-  , webapp = require('./lib/webapp')
-  , util = require('./lib/util')
-  , log = util.log
-;
+var co = require('co');
+var fs = require('fs');
+var program = require('commander');
+var toml = require('toml');
+var analyzer = require('./lib/analyzer');
+var configs = require('./lib/configs');
+var listener = require('./lib/listener');
+var webapp = require('./lib/webapp');
+var util = require('./lib/util');
+var log = util.log;
+
 
 co(function *(){
   program
-  .version('0.1.6')
+  .version('0.1.7')
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
