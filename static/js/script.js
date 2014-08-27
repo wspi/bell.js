@@ -111,10 +111,11 @@
         .call(context.rule());
       });
 
-      d3.selectAll('.title').on('click', function(d, i){
+      d3.selectAll('.title')
+      .html(function(d){
         var name = d.toString();
         var url = root + name + '/?type=' + (type === 'v' ? 't' : 'v');
-        window.location.href = url;
+        return '<a href="' + url + '">' + name + '</a>';
       });
     });
   }

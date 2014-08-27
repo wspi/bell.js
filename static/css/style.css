@@ -78,7 +78,15 @@ form input {
   background-color:rgba(255, 255, 255, .7);
 }
 
-#chart .title:hover {
-  cursor: pointer;
+#chart .title a {
+  color: black;
+  text-decoration: none;
+}
+
+#chart .title a:hover {
   text-decoration: underline;
+}
+
+#chart .title a:visited {
+  color: black;
 }

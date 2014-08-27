@@ -46,7 +46,7 @@ var log = util.log;
 
 co(function *(){
   program
-  .version('0.1.8')
+  .version('0.1.9')
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
