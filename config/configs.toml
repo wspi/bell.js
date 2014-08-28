@@ -12,7 +12,7 @@ hash = "bell.allseries"   # to store all time series names
 
 [ssdb.zset]  # to store datapoints
 prefix = "bell."   # zset name prefix
-life = 432000  # 5day
+expire = 432000  # 5day
 
 # ================================ Listener ===================================
 [listener]
