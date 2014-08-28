@@ -20,7 +20,7 @@
     setInterval(function(){
       d3.select('#chart').selectAll('*').remove();
       plot();
-    }, 5 * 60 * 1000);  // replot every 5m
+    }, 10 * 60 * 1000);  // replot every 10 min
   };
 
   /*
@@ -31,7 +31,7 @@
     xmlhttp.open('GET', url, true);
     xmlhttp.send();
     xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var data = JSON.parse(xmlhttp.responseText);
         callback(data);
       }
@@ -130,7 +130,8 @@
    * cubism context rule
    */
   context.on('focus', function(i){
-    d3.selectAll('.value').style('right', i === null ? null : context.size() - i + 'px');
+    d3.selectAll('.value')
+    .style('right', i === null ? null : context.size() - i + 'px');
   });
 
 })(this);
