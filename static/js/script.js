@@ -6,12 +6,13 @@
   .size(1080) // 4h
   ;
 
-  var pattern, limit, api, type;
+  var type, pattern, limit, since, api;
 
-  this.initBell = function(t, p, l, a) {
+  this.initBell = function(t, p, l, s, a) {
     type = t;
     pattern = p;
     limit = l;
+    since = s;
     api = a;
 
     plot();
@@ -49,7 +50,7 @@
       step = +step / 1000;
 
       // api url to fetch metrics
-      var url = [api, 'metrics', name, start, stop].join('/') + '?type=' + type;
+      var url = [api, 'metrics', name, start, stop, type].join('/');
       var values = [], i = 0;
 
       // request data and call callback with values
@@ -87,7 +88,7 @@
    * plot
    */
   function plot () {
-    var url = [api, 'names', pattern, limit].join('/');
+    var url = [api, 'names', pattern, limit, since].join('/');
 
     request(url, function(names){
       var data = [];
@@ -114,12 +115,16 @@
       d3.selectAll('.title')
       .html(function(d){
         var name = d.toString();
-        var url = root + name + '/?type=' + (type === 'v' ? 't' : 'v');
+        var params = {
+          since: since,
+          limit: 1,
+          type: type === 'v' ? 'm' : 'v'
+        };
+        var url = root + name + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
       });
     });
   }
-
 
   /*
    * cubism context rule
@@ -129,3 +134,12 @@
   });
 
 })(this);
+
+
+function buildUrlParams(data) {
+  var list = [];
+  for (var key in data) {
+    list.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+  }
+  return list.join('&');
+}
