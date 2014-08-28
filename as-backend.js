@@ -1,75 +1,88 @@
-/*
- * this module exports function `init` as a statsd's backend
+/**
+ * Exports function `init` as a statsd's backend
  *
  * Optional configs:
+ *   bellHost, default: '0.0.0.0'
+ *   bellPort, default: 8889
+ *   bellIgnores, default: ['statsd.*']
+ *   bellTimerDataFields, default: ['mean', 'count_ps']
  *
- *   bellHost, string, default: '0.0.0.0'
- *   bellPort, integer, default: 2024
- *   bellIgnores, array, default: ['statsd.*']
- *   bellTimerDataFields, array, default: ['mean', 'count_ps']
- *
- *
- * Metric types supported: `counter` & `timer` (counter_rates & timer_data)
+ * Metric types supported: `counter_rates` & `timer_data`
  */
-
 
 var net = require('net');
 var minimatch = require('minimatch');
 
+var config;
 var debug;
 var logger;
-var config;
 
 
-// metrics makers
+/**
+ * datapoints creator for each metric type
+ */
 var makers = {
-  counter_rates: function (key, val, time) {
+  'counter_rates': function (key, val, time) {
     return [['counter.' + key, [time, val]]];
   },
-  timer_data: function (key, stats, time) {
+  'timer_data': function (key, stats, time) {
     var fields = config.bellTimerDataFields || ['mean', 'count_ps'];
-    var metrics = [];
+    var datapoints = [];
+
     for (var i = 0; i < fields.length; i++) {
       var field = fields[i];
       var name = ['timer', field, key].join('.');
       var val = stats[field];
-      metrics.push([name, [time, val]]);
+      datapoints.push([name, [time, val]]);
     }
-    return metrics;
+    return datapoints;
   }
 };
 
 
-function match (key) {
+/***
+ * test if metric name matches our patterns
+ */
+function match(key) {
   var ignores = config.ignores || ['statsd.*'];
   for (var i = 0; i < ignores.length; i++) {
-    if (minimatch(key, ignores[i]))
+    if (minimatch(key, ignores[i])) {
       return true;
+    }
   }
   return false;
 }
 
 
+/**
+ * bell constructor
+ */
 function Bell() {
   this.conn = net.connect({
     host: config.bellHost || '0.0.0.0',
-    port: config.bellPort || 2024
+    port: config.bellPort || 8889
   }, function(){
-    if (debug)
+    if (debug) {
       logger.log('bell connected successfully');
+    }
   });
 
   this.conn.addListener('error', function(err){
-    if (debug)
+    if (debug) {
       logger.log('bell connection error: ' + err.message);
+    }
   });
 }
 
 
+/**
+ * flush datapoints to bell
+ */
 Bell.prototype.flush = function(time, data) {
   var list = [];
   var types = Object.keys(makers);
 
+  // collect datapoints
   for (var i = 0; i < types.length; i++) {
     var type = types[i];
     var dict = data[type];
@@ -78,22 +91,27 @@ Bell.prototype.flush = function(time, data) {
       if (!match(key)) {
         var val = dict[key];
         var maker = makers[type];
-        var metrics = maker(key, val, time);
-        Array.prototype.push.apply(list, metrics);
+        var datapoints = maker(key, val, time);
+        Array.prototype.push.apply(list, datapoints);
       }
     }
   }
 
   var length = list.length;
 
-  if (length > 0) { // send metrics only if isnt empty
+  // send to bell if not empty
+  if (length > 0) {
     var string = JSON.stringify(list);
     var buffer = new Buffer('' + string.length + '\n' + string);
     this.conn.write(buffer, 'utf8', function(){
       if (debug) {
-      var message = 'sent to bell: ' + JSON.stringify(list[0]);
-      if (length > 1) message += ', (' + (length - 1) + ' more..)';
-      logger.log(message);
+        var message = 'sent to bell: ' + JSON.stringify(list[0]);
+
+        if (length > 1) {
+          message += ', (' + (length - 1) + ' more..)';
+        }
+
+        logger.log(message);
       }
     });
   }

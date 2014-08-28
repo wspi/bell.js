@@ -6,7 +6,7 @@ for periodic time series.
 
 ![](https://github.com/eleme/node-bell/raw/master/snap.png)
 
-Latest version: v0.1.9
+Latest version: v0.2.1
 
 Requirements
 ------------
@@ -46,7 +46,7 @@ Quick Start
 
    ```bash
    bell analyzer -c configs.toml
-   bell listener -c configs.toml
+   bell listener -c configs.toml  # default port: 8889
    bell webapp -c configs.toml  # default port: 8989
    ```
 
@@ -71,7 +71,7 @@ Events currently available:
 
 - Event **'anomaly detected'**
 
-   Parameters: `(metric, multiples)`
+   Parameters: `(datapoint, multiples)`
 
    Emitted when an anomaly was detected.
 
