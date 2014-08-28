@@ -1,17 +1,12 @@
-/*
- * this module exports function `init` as a statsd's backend
+/**
+ * Exports function `init` as a statsd's backend
  *
  * Optional configs:
- *
- *   bellHost, string, default: '0.0.0.0'
- *   bellPort, integer, default: 2024
- *   bellIgnores, array, default: ['statsd.*']
- *   bellTimerDataFields, array, default: ['mean', 'count_ps']
- *
- *
- * Metric types supported: `counter` & `timer` (counter_rates & timer_data)
+ *   bellHost, default: '0.0.0.0'
+ *   bellPort, default: 8889
+ *   bellIgnores, default: ['statsd.*']
+ *   bellTimerDataFields, default: ['mean', 'count_ps']
  */
-
 
 var net = require('net');
 var minimatch = require('minimatch');
@@ -21,7 +16,9 @@ var logger;
 var config;
 
 
-// metrics makers
+/**
+ * datapoints creator for each metric type
+ */
 var makers = {
   counter_rates: function (key, val, time) {
     return [['counter.' + key, [time, val]]];
@@ -40,6 +37,9 @@ var makers = {
 };
 
 
+/***
+ * test if metric name matches our patterns
+ */
 function match (key) {
   var ignores = config.ignores || ['statsd.*'];
   for (var i = 0; i < ignores.length; i++) {
@@ -50,10 +50,13 @@ function match (key) {
 }
 
 
+/**
+ * bell constructor
+ */
 function Bell() {
   this.conn = net.connect({
     host: config.bellHost || '0.0.0.0',
-    port: config.bellPort || 2024
+    port: config.bellPort || 8889
   }, function(){
     if (debug)
       logger.log('bell connected successfully');
@@ -66,6 +69,9 @@ function Bell() {
 }
 
 
+/**
+ * flush datapoints to bell
+ */
 Bell.prototype.flush = function(time, data) {
   var list = [];
   var types = Object.keys(makers);
@@ -78,15 +84,15 @@ Bell.prototype.flush = function(time, data) {
       if (!match(key)) {
         var val = dict[key];
         var maker = makers[type];
-        var metrics = maker(key, val, time);
-        Array.prototype.push.apply(list, metrics);
+        var datapoints = maker(key, val, time);
+        Array.prototype.push.apply(list, datapoints);
       }
     }
   }
 
   var length = list.length;
 
-  if (length > 0) { // send metrics only if isnt empty
+  if (length > 0) { // send only if isnt empty
     var string = JSON.stringify(list);
     var buffer = new Buffer('' + string.length + '\n' + string);
     this.conn.write(buffer, 'utf8', function(){
