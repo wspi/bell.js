@@ -20,9 +20,9 @@ a:visited {
   color: #4183c4;
 }
 
-.header, .container {
+.header, .container, .footer {
   margin: 0 auto;
-  width: 1080px;
+  width: 1137px;
   position: relative;
 }
 
@@ -31,14 +31,29 @@ a:visited {
   height: 2.5em;
 }
 
+.footer {
+  color: #777;
+  font-size: 13px;
+  text-align: center;
+  padding: .5em;
+}
+
 .container {
   margin-top: .4em;
+  padding:1.3em 0;
+  border: 1px solid #ddd;
+  border-radius: 5px
+}
+
+.main {
+  width: 95%;
+  margin: 0 auto;
 }
 
 .tabnav {
   font-size: 14px;
   color: #666;
-  margin: 1em 0 .7em 0;
+  margin: 1.5em 0 .7em 0;
   border-bottom: 1px solid #ddd;
 }
 
@@ -76,10 +91,6 @@ a:visited {
   background-color: #fff;
 }
 
-
-.form-box {
-  padding: 20px 0;
-}
 
 .form-box form input {
   font-size: 18px;

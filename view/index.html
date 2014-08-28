@@ -20,35 +20,42 @@
     {# container #}
     <div class="container">
 
-      <div class="form-box">
-        <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
-          <input name='pattern' type="text" placeholder="Pattern.."  autofocus="autofocus">
-        </form>
-      </div>
+      <div class="main">
+        <div class="form-box">
+          <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
+            <input name='pattern' type="text" placeholder="Pattern.."  autofocus="autofocus">
+          </form>
+        </div>
 
-      <div class="tabnav">
-        <span class="tab-description">
-          Trending Since
-        </span>
-        <ul class="tabs">
-          {%set timeSpans = ['15m', '45m', '60m', '90m', '3h']%}
-          {%set timeSpanTexts = ['15 minutes', '45 minutes', '60 minutes', '90 minutes', '3 hours']%}
-          {%for index, timeSpan in timeSpans %}
-          <li {%if since === timeSpan%}class="active"{%endif%}>
+        <div class="tabnav">
+          <span class="tab-description">
+            Trending Since
+          </span>
+          <ul class="tabs">
+            {%set timeSpans = ['15m', '45m', '60m', '90m', '3h']%}
+            {%set timeSpanTexts = ['15 minutes', '45 minutes', '60 minutes', '90 minutes', '3 hours']%}
+            {%for index, timeSpan in timeSpans %}
+            <li {%if since === timeSpan%}class="active"{%endif%}>
             <a href="{{url('/', pattern) + '?since=' + timeSpan}}">{{timeSpanTexts[index]}}</a>
-          </li>
-          {%endfor%}
-        </ul>
-      </div>
+            </li>
+            {%endfor%}
+          </ul>
+        </div>
 
-      <div id="chart">
+        <div id="chart">
+        </div>
       </div>
 
     </div>
   </body>
+  <div class="footer">
+    Copyright (c) 2014 <a href="https://github.com/eleme">Eleme, Inc</a> |
+    <a href="https://github.com/eleme/node-bell">Bell</a>
+  </div>
 </html>
 <script src="{{url('static/js/script.js')}}"></script>
 <script>
+  {%autoescape false%}
   function submitform() {
     window.location.href = "{{url('/')}}" + document.getElementById('form').pattern.value;
   }
@@ -58,4 +65,5 @@
   window.onload = function() {
     initBell('{{type}}', '{{pattern}}', '{{limit}}', '{{since}}', '{{url('/api')}}');
   }
+  {%endautoescape%}
 </script>
