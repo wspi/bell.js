@@ -22,13 +22,13 @@ a:visited {
 
 .header, .container, .footer {
   margin: 0 auto;
-  width: 1137px;
+  width: 1140px;
   position: relative;
 }
 
 .header img {
   margin-top: 1em;
-  height: 2.5em;
+  height: 2em;
 }
 
 .footer {
