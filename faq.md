@@ -1,5 +1,5 @@
-Node-bell FAQ
-=============
+Node-bell Q&A
+==============
 
 How to run webapp with multiple workers
 ----------------------------------------

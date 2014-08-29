@@ -84,8 +84,6 @@ Look Inside
 
 **3-sigma** or called **68-95-99.7** rule, [reference](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)
 
-![](http://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/350px-Standard_deviation_diagram.svg.png)
-
 ### Storage
 
 Analyzers store metrics in ssdb, using zset, here is storage format for a single time series:
@@ -113,15 +111,14 @@ timestamp | value:anomalous multiples:timestamp
             |                     v                     |
             ------------------- [ssdb] <-----------------
                                   |
-                                  |
                                   v
                                [webapp]
 ```
 
-FAQ
----
+Questions?
+----------
 
-[FAQ.md](FAQ.md)
+See [faq.md](faq.md) or open an issue.
 
 License
 --------
