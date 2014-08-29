@@ -28,15 +28,36 @@
         </div>
 
         <div class="tabnav">
-          <span class="tab-description">
+          <span class="tab-description tab-others">
             Trending Since
+          </span>
+          <span class="tab-switch tab-right tab-others">
+            {%set params = {'since': since, 'limit': limit}%}
+            {%if type === 'v'%} {%set params.type = 'm'%}{%else%}{%set params.type = 'v'%}{%endif%}
+            <a href="{{url('/' + pattern, params)}}"> Switch </a>
+          </span>
+          <span class="tab-limit tab-right tab-others">
+            {%set params = {'since': since, 'type': type}%}
+            <a href="javscript:void(0);" class="tab-limit-text"> Top {{limit}}</a>
+            <div class="tab-limit-box">
+              <ul class="tab-limit-drop-menu">
+                {%set limits = [1, 30, 50, 100, 500, 1000]%}
+                {%for lim in limits%}
+                <li>
+                {%set params.limit = lim%}
+                <a href="{{url('/' + pattern, params)}}">{{lim}}</a>
+                </li>
+                {%endfor%}
+              </ul>
+            </div>
           </span>
           <ul class="tabs">
             {%set timeSpans = ['15m', '45m', '60m', '90m', '3h']%}
             {%set timeSpanTexts = ['15 minutes', '45 minutes', '60 minutes', '90 minutes', '3 hours']%}
             {%for index, timeSpan in timeSpans %}
             <li {%if since === timeSpan%}class="active"{%endif%}>
-            <a href="{{url('/', pattern) + '?since=' + timeSpan}}">{{timeSpanTexts[index]}}</a>
+            {%set params = {'since': timeSpan, 'limit': limit, 'type': type}%}
+            <a href="{{url('/' + pattern, params)}}">{{timeSpanTexts[index]}}</a>
             </li>
             {%endfor%}
           </ul>
