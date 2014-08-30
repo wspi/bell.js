@@ -1,7 +1,7 @@
 /**
  * this module can send message to hipchat room once enough anomalies
  * were detected since a certain time, to enable it, add this module
- * to `alerter.modules`.
+ * to `alerter.modules` in configs.toml.
  */
 
 var util = require('util');

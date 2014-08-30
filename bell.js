@@ -27,7 +27,6 @@
  *             |                     v                     |
  *             ------------------- [ssdb] <-----------------
  *                                   |
- *                                   |
  *                                   v
  *                                [webapp]
  */
@@ -76,7 +75,12 @@ co(function *(){
     program.help();
   }
 
-  var service = {listener: listener, analyzer: analyzer, webapp: webapp, alerter: alerter}[name];
+  var service = {
+    listener: listener,
+    analyzer: analyzer,
+    webapp: webapp,
+    alerter: alerter
+  }[name];
 
   if (!service) {
     // invalid service name

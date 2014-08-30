@@ -42,6 +42,9 @@ var makers = {
 
 /**
  * test if metric name matches our patterns
+ *
+ * @param {String} key
+ * @return {Boolean} // true for pass
  */
 function match(key) {
   var ignores = config.ignores || ['statsd.*'];
@@ -89,6 +92,9 @@ Bell.prototype.connect = function() {
 
 /**
  * flush datapoints to bell
+ *
+ * @param {Number} time
+ * @param {Array} data  // statsd data object
  */
 Bell.prototype.flush = function(time, data) {
   var list = [];
