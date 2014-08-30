@@ -20,12 +20,12 @@
  * [listener] -----------------> [beanstalkd]
  *                                   |
  *                                   | reserve
- *             history metrics       v       record anomalies
- *             ---------------> [analyzers] ----------------
- *             |                     |                     |
- *             |                     | put to ssdb         |
- *             |                     v                     |
- *             ------------------- [ssdb] <-----------------
+ *             history metrics       v     anomalies detected
+ *             ---------------> [analyzers] ------------------
+ *             |                     |                       |
+ *             |                     | put to ssdb           |
+ *             |                     v                       V
+ *             ------------------- [ssdb]                [alerter]
  *                                   |
  *                                   v
  *                                [webapp]

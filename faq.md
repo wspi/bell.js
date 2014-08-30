@@ -33,4 +33,4 @@ see [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number
 Why do you use ssdb (not redis, or not sql-based-db..) ?
 --------------------------------------------------------
 
-I need disk-based a data structure server. No, redis is limited to the memory capacity. 
+I need a disk-based data structure server. No, redis is limited to the memory capacity. 
