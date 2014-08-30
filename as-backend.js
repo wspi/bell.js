@@ -40,7 +40,7 @@ var makers = {
 };
 
 
-/***
+/**
  * test if metric name matches our patterns
  */
 function match(key) {
