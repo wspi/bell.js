@@ -53,7 +53,7 @@ exports.init = function(configs, analyzer, log) {
   analyzer.on('anomaly detected', function(datapoint, multi) {
     var name = datapoint[0];
     var time = datapoint[1][0];
-    // the last notification sent time
+
     var last = cache[name];
     if (typeof last === 'undefined') {
       last = cache[name] = 0;
@@ -68,7 +68,6 @@ exports.init = function(configs, analyzer, log) {
         if (err) {
           log.error('Hook hipchat has error, zcount ssdb: %s', err);
         }
-
         // send notification if count >= threshold
         if (count >= threshold) {
           notify(name, count);
