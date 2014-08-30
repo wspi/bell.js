@@ -57,7 +57,15 @@ function match(key) {
 /**
  * bell constructor
  */
-function Bell() {
+function Bell() {}
+
+
+/**
+ * connect to bell listener
+ */
+Bell.prototype.connect = function() {
+  var self = this;
+
   this.conn = net.connect({
     host: config.bellHost || '0.0.0.0',
     port: config.bellPort || 8889
@@ -65,14 +73,18 @@ function Bell() {
     if (debug) {
       logger.log('bell connected successfully');
     }
-  });
-
-  this.conn.addListener('error', function(err){
+  })
+  .on('error', function(err) {
     if (debug) {
       logger.log('bell connection error: ' + err.message);
+      logger.log('closing socket connection');
     }
+    self.conn.destroy();
+    self.conn = undefined;
   });
-}
+
+  return this;
+};
 
 
 /**
@@ -103,6 +115,11 @@ Bell.prototype.flush = function(time, data) {
   if (length > 0) {
     var string = JSON.stringify(list);
     var buffer = new Buffer('' + string.length + '\n' + string);
+
+    if (!this.conn) {
+      this.connect();
+    }
+
     this.conn.write(buffer, 'utf8', function(){
       if (debug) {
         var message = 'sent to bell: ' + JSON.stringify(list[0]);
@@ -124,5 +141,6 @@ exports.init = function(uptime, _config, events, _logger) {
   config = _config || {};
   var bell = new Bell();
   events.on('flush', function(time, data){bell.flush(time, data);});
+  bell.connect();
   return true;
 };
