@@ -1,82 +1,80 @@
-/* This module can send message to a hipchat room once enough anomalies
- * were detected. To enable it, set `hooks.enable` to `true`, and add
- * `../hook/hipchat` to `hooks.modules`
- * ::
- *   [hooks]
- *   enable = true
- *   modules = ["../hooks/hipchat"]
- *
- * then add the following section to `configs.toml`::
- *
- *   [hooks.hipchat]
- *   roomId = 12345
- *   token = "your-hipchat-api-token"
- *   weburl = "http://bell.example.com"
+/**
+ * this module can send message to hipchat room once enough anomalies
+ * were detected since a certain time, to enable it, set `hooks.enable`
+ * to `true`, and add this module to `hooks.modules`.
  */
 
 var util = require('util');
 var request = require('request');
+var ssdb = require('ssdb');
 
-/*
- * %0: weburl
- * %1: series
- * %2: series
- * %3: count
- * %4: seconds
+
+var messagePattern = '' +
+  // params: weburl, metric name, metric name
+  '<a href="%s/%s?type=v&limit=1&since=15m">%s</a>: ' +
+  // params: anomalies count, since
+  '%d anomalies in last %d seconds';
+
+var apiPattern = '' +
+  'http://api.hipchat.com/v1/rooms/message?' +
+  'format=json&auth_token=%s';
+
+
+/**
+ * a hook module should export a function `init` like this:
  */
-
-var pattern = (
-  '<a href="%s/%s/1"><strong>%s</strong><a/>: ' +
-  '<strong>%d</strong> anomalies detected in last %d seconds.'
-);
-
-
 exports.init = function(configs, analyzer, log) {
-  var api = (
-    'http://api.hipchat.com/v1/rooms/message?' +
-    'format=json&auth_token=' + configs.hooks.hipchat.token
-  );
-  var weburl = configs.hooks.hipchat.weburl;
   var roomId = configs.hooks.hipchat.roomId;
-  var recent = configs.hooks.hipchat.recent;
-  var minCount = configs.hooks.hipchat.minCount;
+  var token = configs.hooks.hipchat.token;
+  var weburl = configs.hooks.hipchat.weburl;
+  var since = configs.hooks.hipchat.since;
+  var threshold = configs.hooks.hipchat.threshold;
+  var api = util.format(apiPattern, token);
 
-  var dict = {};  // anomalies cache
+  // create a new connection to ssdb
+  var ssdbc = ssdb.createClient({
+    port: configs.ssdb.port,
+    host: configs.ssdb.host
+  });
 
-  analyzer.on('anomaly detected', function(metric, multi){
-    var key = metric[0];
-    var time = metric[1][0];
-    var now = (new Date()).getTime() / 1000;
+  // function notify
+  var notify = function (name, count, callback) {
+    log.debug('Notify hipchat, %s, %d', name, count);
+    var message = util.format(messagePattern, weburl, name, name, count, since);
+    var data = {'room_id': roomId, from: 'Bell', message: message, notify: 1};
+    request.post(api).form(data).on('error', function(err) {
+      log.error('Hipchat hook request error: %s', err);
+    });
+  };
 
-    if (dict[key] === undefined) dict[key] = [];
+  // cache the last time sent notification, {name: time}
+  var cache = {};
 
-    var cache = dict[key];
-
-    // pop outdate anomalies
-    for (var i = 0; i < cache.length; i++) {
-      if (now - cache[i] > recent)
-        cache.splice(i, 1);
+  analyzer.on('anomaly detected', function(datapoint, multi) {
+    var name = datapoint[0];
+    var time = datapoint[1][0];
+    // the last notification sent time
+    var last = cache[name];
+    if (typeof last === 'undefined') {
+      last = cache[name] = 0;
     }
 
-     cache.push(time);
+    var start = time - since;
 
-     if (cache.length >= minCount) {
-       log.debug('Notify hipchat (%s, %d)..', key, cache.length);
+    if (last < start) {
+      var zset = configs.ssdb.zset.prefix + '_' + name;
+      // we should send a notification
+      ssdbc.zcount(zset, start, time, function(err, count){
+        if (err) {
+          log.error('Hook hipchat has error, zcount ssdb: %s', err);
+        }
 
-       var message = util.format(
-         pattern, weburl, key, key, cache.length, recent);
-
-       request.post(api).form({
-         room_id: roomId,
-         from: 'Bell',
-         message: message,
-         notify: 1
-       }).on('error', function(err){
-         log.error('Hipchat hook request error: %s', err);
-       });
-
-       // clean cache
-       while (cache.length > 0) {cache.pop();}
-     }
+        // send notification if count >= threshold
+        if (count >= threshold) {
+          notify(name, count);
+          cache[name] = time;
+        }
+      });
+    }
   });
 };
