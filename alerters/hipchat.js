@@ -37,7 +37,6 @@ exports.init = function(configs, alerter, log) {
     host: configs.ssdb.host
   });
 
-  // function notify
   var notify = function (name, count, callback) {
     log.debug('Notify hipchat, %s, %d', name, count);
     var message = util.format(messagePattern, weburl, name, name, count, since);
