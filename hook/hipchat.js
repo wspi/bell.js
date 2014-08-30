@@ -11,7 +11,7 @@ var ssdb = require('ssdb');
 
 var messagePattern = '' +
   // params: weburl, metric name, metric name
-  '<a href="%s/%s?limit=1">%s</a>: ' +
+  '<a href="%s/%s">%s</a>: ' +
   // params: anomalies count, since
   '%d anomalies in last %d seconds';
 
