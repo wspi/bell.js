@@ -28,3 +28,9 @@ $ node --harmony-generators webapp-master.js
 
 You need to set your linux's `max open files` to at least 10k, 
 see [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
+
+
+Why do you use ssdb (not redis, or not sql-based-db..) ?
+--------------------------------------------------------
+
+I need disk-based a data structure server. No, redis is limited to the memory capacity. 
