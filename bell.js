@@ -37,6 +37,7 @@ var fs = require('fs');
 var co = require('co');
 var program = require('commander');
 var toml = require('toml');
+var alerter = require('./lib/alerter');
 var analyzer = require('./lib/analyzer');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
@@ -75,7 +76,7 @@ co(function *(){
     program.help();
   }
 
-  var service = {listener: listener, analyzer: analyzer, webapp: webapp}[name];
+  var service = {listener: listener, analyzer: analyzer, webapp: webapp, alerter: alerter}[name];
 
   if (!service) {
     // invalid service name

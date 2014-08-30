@@ -37,12 +37,12 @@ periodicity = 86400  # 86400 = 24 * 60 * 60 = 1 day  (for all time series)
 port = 8989
 root = ""   # set this if your webapp serves in a sub-directory.
 
-# ================================ Hooks =======================================
-[hooks]
-enable = false
-modules = ["../hook/hipchat"]
+# ================================ Alerter ====================================
+[alerter]
+port = 8789
+modules = ["../alerters/hipchat.js"]
 
-[hooks.hipchat]
+[alerter.hipchat]
 roomId = 12345
 token = "hipchat-api-token"
 weburl = "http://bell.example.com"
