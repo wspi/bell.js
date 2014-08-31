@@ -33,4 +33,11 @@ see [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number
 Why do you use ssdb (not redis, or not sql-based-db..) ?
 --------------------------------------------------------
 
-I need a disk-based data structure server. No, redis is limited to the memory capacity. 
+I need a disk-based data structure server. No, redis is limited to the memory capacity.
+
+How many analyzer instances should I start?
+--------------------------------------------
+
+If the analyzation cannot catch up with the incomming mertics, we should increase analyzer instances.
+[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
+, and show you how fast jobs are going in and out of the queue.
