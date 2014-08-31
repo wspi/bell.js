@@ -66,8 +66,8 @@ Services
 Write my own alerters
 ---------------------
 
-Bell comes with a built-in alerter: [hipchat.js](alerters/hipchat.js), but you can write your own
-alerters compeletely, here are brief steps:
+Bell comes with a built-in alerter: [hipchat.js](alerters/hipchat.js), but you can completely write one
+on your own, here are brief steps:
 
 1. An alerter is a nodejs module which should export a function `init`:
 
