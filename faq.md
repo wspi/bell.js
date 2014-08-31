@@ -28,3 +28,16 @@ $ node --harmony-generators webapp-master.js
 
 You need to set your linux's `max open files` to at least 10k, 
 see [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
+
+
+Why do you use ssdb (not redis, or not sql-based-db..) ?
+--------------------------------------------------------
+
+I need a disk-based data structure server. No, redis is limited to the memory capacity.
+
+How many analyzer instances should I start?
+--------------------------------------------
+
+If the analyzation cannot catch up with the incomming mertics, we should increase analyzer instances.
+[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
+, and show you how fast jobs are going in and out of the queue.

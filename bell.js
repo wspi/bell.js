@@ -20,13 +20,12 @@
  * [listener] -----------------> [beanstalkd]
  *                                   |
  *                                   | reserve
- *             history metrics       v       record anomalies
- *             ---------------> [analyzers] ----------------
- *             |                     |                     |
- *             |                     | put to ssdb         |
- *             |                     v                     |
- *             ------------------- [ssdb] <-----------------
- *                                   |
+ *             history metrics       v     anomalies detected
+ *             ---------------> [analyzers] ------------------
+ *             |                     |                       |
+ *             |                     | put to ssdb           |
+ *             |                     v                       V
+ *             ------------------- [ssdb]                [alerter]
  *                                   |
  *                                   v
  *                                [webapp]
@@ -37,6 +36,7 @@ var fs = require('fs');
 var co = require('co');
 var program = require('commander');
 var toml = require('toml');
+var alerter = require('./lib/alerter');
 var analyzer = require('./lib/analyzer');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
@@ -49,7 +49,7 @@ var log = util.log;
 co(function *(){
   // argv parsing
   program
-  .version('0.2.6')
+  .version('0.2.7')
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
@@ -75,7 +75,12 @@ co(function *(){
     program.help();
   }
 
-  var service = {listener: listener, analyzer: analyzer, webapp: webapp}[name];
+  var service = {
+    listener: listener,
+    analyzer: analyzer,
+    webapp: webapp,
+    alerter: alerter
+  }[name];
 
   if (!service) {
     // invalid service name
