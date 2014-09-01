@@ -10,7 +10,7 @@ a short time, it alerts you via alerters like hipchat etc.
 
 ![](https://github.com/eleme/node-bell/raw/master/snap.png)
 
-Latest version: v0.2.7
+Latest version: v0.2.8
 
 Requirements
 ------------
