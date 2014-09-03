@@ -42,8 +42,8 @@ If the analyzation cannot catch up with the incomming mertics, we should increas
 [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
 , and show you how fast jobs are going in and out of the queue.
 
-Scale?
-------
+Scale & Performace?
+--------------------
 
 I didnt do any benchmarks. The status we eleme uses it is: 
 
