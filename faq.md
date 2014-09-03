@@ -8,7 +8,7 @@ I didnt do any benchmarks. The status we eleme using it is:
 
 ```
 metrics amount: 3k+
-datastore size: 40G+
+datastore size: 40G+ (5day)
 analyzers workers: 24
 number of cpu: 24
 machine load average (only node-bell): 6.01, 7.86, 8.88
