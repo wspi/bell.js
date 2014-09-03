@@ -41,3 +41,16 @@ How many analyzer instances should I start?
 If the analyzation cannot catch up with the incomming mertics, we should increase analyzer instances.
 [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
 , and show you how fast jobs are going in and out of the queue.
+
+Scale?
+------
+
+I didnt do any benchmarks. The status we eleme uses it is: 
+
+```
+metrics amount: 3k+
+datastore size: 40G+
+analyzers workers: 24
+number of cpu: 24
+machine load average (only node-bell): 6.01, 7.86, 8.88
+```
