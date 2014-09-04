@@ -96,11 +96,11 @@ a:visited {
   float: right;
 }
 
-.tab-switch a, .tab-limit a {
+.tab-switch a, .tab-limit a, .tab-help{
   text-decoration: underline;
 }
 
-.tab-switch a:hover, .tab-limit a:hover{
+.tab-switch a:hover, .tab-limit a:hover, .tab-help a:hover{
   color: black;
   text-decoration: underline;
 }

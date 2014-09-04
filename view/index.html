@@ -31,6 +31,11 @@
           <span class="tab-description tab-others">
             Trending Since
           </span>
+          <span class="tab-right tab-others tab-help">
+            <a href="https://github.com/eleme/node-bell/blob/master/faq.md#what-dose-the-metrics-prefix-mean">
+              Help
+            </a>
+          </span>
           <span class="tab-switch tab-right tab-others">
             {%set params = {'since': since, 'limit': limit}%}
             {%if type === 'v'%} {%set params.type = 'm'%}{%else%}{%set params.type = 'v'%}{%endif%}
