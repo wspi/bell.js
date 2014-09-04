@@ -49,7 +49,7 @@ var log = util.log;
 co(function *(){
   // argv parsing
   program
-  .version('0.2.8')
+  .version('0.2.9')
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
