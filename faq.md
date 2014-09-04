@@ -7,8 +7,8 @@ Scale & Performace?
 I didnt do any benchmarks. The status we eleme using it is: 
 
 ```
-metrics amount: 3k+
-datastore size: 40G+ (5day)
+metrics amount: 4k+
+datastore size: 43G+ (5days)
 analyzers workers: 24
 number of cpu: 24
 machine load average (only node-bell): 6.01, 7.86, 8.88
@@ -23,6 +23,18 @@ If the analyzation cannot catch up with the incomming mertics, we should increas
 [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
 , and show you how fast jobs are going in and out of the queue.
 
+
+What dose the metrics prefix mean?
+----------------------------------
+
+- **counter**: count average
+- **timer.mean**: time cost average
+- **timer.count_ps**: count per second or frequency
+
+For instances:
+
+- If timer.count_ps gets bigger, that means high-traffic.
+- If timer.mean gets bigger, that means timeout.
 
 "Too many open files" in my ssdb log
 ------------------------------------
