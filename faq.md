@@ -70,3 +70,7 @@ and then run it:
 $ node --harmony-generators webapp-master.js
 ```
 
+My ssdb makes cpu load 100%!
+----------------------------
+
+Compact leveldb maybe helpful: stop analyzers, then run this command in ssdb-cli: `compact`.
