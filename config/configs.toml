@@ -37,8 +37,8 @@ periodicity = 86400  # 86400 = 24 * 60 * 60 = 1 day  (for all time series)
 port = 8989
 root = ""   # set this if your webapp serves in a sub-directory.
 
-# handy patterns, see `config/example.handys.json`, set to "" to disable it
-handys = ""
+# see `config/example.quickenters.json`, set to "" to disable it
+quickenters = ""
 
 # ================================ Alerter ====================================
 [alerter]

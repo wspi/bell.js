@@ -169,30 +169,30 @@ ul.dropdown-menu li a:hover {
   background-color:rgba(255, 255, 255, .9);
 }
 
-.handys {
+.qcketrs {
   margin-top: .5em;
   border-bottom: 1px solid #ddd;
 }
 
-.handy-item {
+.qcketr-item {
   display: inline-block;
   line-height: 20px;
   padding: 8px 12px;
 }
 
-.handy-item:hover .dropdown-menu {
+.qcketr-item:hover .dropdown-menu {
   display: block;
 }
 
-.handy-item:hover .handy-item-key{
+.qcketr-item:hover .qcketr-item-key{
   color: #333;
 }
 
-.handy-item-key {
+.qcketr-item-key {
   font-size: 16px;
 }
 
-.handy-item ul {
+.qcketr-item ul {
   font-size: 12px;
   width: 150px;
 }
