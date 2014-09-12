@@ -27,6 +27,32 @@
           </form>
         </div>
 
+        {%if handys%}
+        <div class="handys">
+          {%for handy_key in Object.keys(handys)%}
+          <span class="handy-item">
+            <a class="handy-item-key" href="javascript:void(0)">
+              {{handy_key}}
+            </a>
+            <div class="dropdown-menu-box">
+              {%set handy_item = handys[handy_key]%}
+              <ul class="dropdown-menu">
+              {%for handy_sub_item_key in Object.keys(handy_item)%}
+              {%set handy_sub_item = handy_item[handy_sub_item_key]%}
+              {%set handy_sub_item_params = {
+                'since': handy_sub_item[1] || '15m',
+                'limit': handy_sub_item[2] || 50,
+                'type': handy_sub_item[3] || 'v'
+              }%}
+              <li><a href="{{url('/' + handy_sub_item[0], handy_sub_item_params)}}">{{handy_sub_item_key}}</a></li>
+              {%endfor%}
+              </ul>
+            </div>
+          </span>
+          {%endfor%}
+        </div>
+        {%endif%}
+
         <div class="tabnav">
           <span class="tab-description tab-others">
             Trending Since
@@ -44,8 +70,8 @@
           <span class="tab-limit tab-right tab-others">
             {%set params = {'since': since, 'type': type}%}
             <a href="javscript:void(0);" class="tab-limit-text"> Top {{limit}}</a>
-            <div class="tab-limit-box">
-              <ul class="tab-limit-drop-menu">
+            <div class="tab-limit-box dropdown-menu-box">
+              <ul class="dropdown-menu">
                 {%set limits = [1, 30, 50, 100, 500, 1000]%}
                 {%for lim in limits%}
                 <li>
