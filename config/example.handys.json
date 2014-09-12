@@ -1,6 +1,0 @@
-{
-  "sms": {
-    "net flow (per sec)": ["timer.count_ps.sms_service.*", "15m", 50, "v"],
-    "time cost (sec)": ["timer.mean.sms_service.*", "60m", 100, "v"]
-  }
-}
