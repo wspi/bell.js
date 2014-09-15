@@ -31,7 +31,7 @@
         <div class="qcketrs">
           {%for qcketr_key in Object.keys(qcketrs)%}
           <span class="qcketr-item">
-            <a class="qcketr-item-key" href="javascript:void(0)">
+            <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
               {{qcketr_key}}
             </a>
             <div class="dropdown-menu-box">
@@ -69,7 +69,7 @@
           </span>
           <span class="tab-limit tab-right tab-others">
             {%set params = {'since': since, 'type': type}%}
-            <a href="javscript:void(0);" class="tab-limit-text"> Top {{limit}}</a>
+            <a href="javscript:void(0);" onclick="return false;" class="tab-limit-text"> Top {{limit}}</a>
             <div class="tab-limit-box dropdown-menu-box">
               <ul class="dropdown-menu">
                 {%set limits = [1, 30, 50, 100, 500, 1000]%}
