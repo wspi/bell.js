@@ -118,7 +118,7 @@
         var params = {
           since: since,
           limit: 1,
-          type: type === 'v' ? 'm' : 'v'
+          type: type
         };
         var url = root + name + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
