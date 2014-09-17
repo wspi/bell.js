@@ -13,11 +13,11 @@
   },
   "main": "./as-backend",
   "dependencies": {
+    "bunyan": "~1.0.1",
     "co": "~3.1.0",
     "co-views": "0.2.0",
     "commander": "2.3.0",
     "fivebeans": "~1.1.1",
-    "log": "1.4.0",
     "koa": "~0.10.0",
     "koa-logger": "~1.2.2",
     "koa-route": "2.0.0",

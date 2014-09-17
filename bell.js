@@ -53,11 +53,11 @@ co(function *(){
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
-  .option('-l, --log-level <l>', 'logging level (1~5 for critical~debug)',
+  .option('-l, --log-level <l>', 'logging level (1~5 for fatal~debug)',
           function(val){return (parseInt(val, 10) - 1) % 5 + 1;})
   .parse(process.argv);
 
-  log.level = util.logLevels[program.logLevel || 4];
+  log.level(util.logLevels[program.logLevel || 4]);
 
   if (program.sampleConfigs) {
     log.info('Generate sample.configs.toml to current directory');
