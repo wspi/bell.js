@@ -3,17 +3,21 @@
   .serverDelay(0)
   .clientDelay(0)
   .step(1e4)  // 10sec
-  .size(1080) // 4h
+  .size(1080) // 3h
   ;
 
-  var pattern, sort, limit, type, api;
+  var pattern, sort, limit, type, past, api;
 
-  this.initBell = function(p, s, l, t, a) {
-    pattern = p;
-    sort = s;
-    limit = l;
-    type = t;
-    api = a;
+  this.initBell = function(pattern_, sort_, limit_, type_, past_, api_) {
+    pattern = pattern_;
+    sort = sort_;
+    limit = limit_;
+    type = type_;
+    past = past_;
+    api = api_;
+
+    pastSecs = timespan2secs(past);
+    context.serverDelay(pastSecs * 1000);  //!important
 
     plot();
 
@@ -45,8 +49,8 @@
   function makeMetric(name) {
     return context.metric(function(start, stop, step, callback){
       // cast to timestamp from date
-      start = +start / 1000;
-      stop = +stop / 1000;
+      start = +start / 1000 - pastSecs;
+      stop = +stop / 1000 - pastSecs;
       step = +step / 1000;
 
       // api url to fetch metrics
@@ -118,7 +122,8 @@
         var params = {
           sort: sort,
           limit: 1,
-          type: type
+          type: type,
+          past: past
         };
         var url = root + name + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
@@ -143,4 +148,37 @@ function buildUrlParams(data) {
     list.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
   }
   return list.join('&');
+}
+
+
+function timespan2secs(timespan) {
+  var map = {
+    's': 1,
+    'm': 60,
+    'h': 60 * 60,
+    'd': 24 * 60 * 60
+  };
+
+  var secs = 0;
+
+  while (timespan.length > 0) {
+    for (var i = 0; i < timespan.length; i++) {
+      var ch = timespan[i];
+      var measure = map[ch];
+
+      if (!isNaN(measure)) {
+        var count = +timespan.slice(0, i);
+        secs += count * measure;
+        timespan = timespan.slice(i + 1);
+        break;
+      }
+    }
+
+    // return false on illegal timespan
+    if (i === timespan.length) {
+      return false;
+    }
+  }
+
+  return secs;
 }

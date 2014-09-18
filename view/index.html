@@ -59,7 +59,9 @@
 
       <div class="tabnav">
 
-        <span class="tab-empty tab-others">
+        <span class="tab-time-range-upper tab-others">
+          {%set past_timestamp = now() / 1000 - timespan2secs(past)%}
+          ~ {{secs2str(past_timestamp)}}
         </span>
 
         <span class="tab-switch tab-right tab-others">
@@ -99,9 +101,20 @@
         </span>
 
         <ul class="tabs">
-          <li class="active">
-            <a href="{{url('/')}}">Coming Soon..</a>
-          </li>
+          {%set tabs = {
+            '0s': 'Now', '3h': '3 hours', '6h': '6 hours', '1d': '1 day', '2d': '2 days', '3d': '3 days', '4d': '4 days'
+          }%}
+          {%for tab_key in Object.keys(tabs)%}
+            <li {%if past === tab_key%}class="active"{%endif%}>
+              <a href="{{switchUrl('past', tab_key)}}">{{tabs[tab_key]}}</a>
+            </li>
+          {%endfor%}
+          {%if !tabs[past]%}
+            <li class="active">
+              <a href="{{switchUrl('past', past)}}">{{past}}</a>
+            </li>
+          {%endif%}
+
         </ul>
       </div>
 
@@ -129,7 +142,7 @@
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{url('/api')}}');
+    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', '{{url('/api')}}');
   }
   {%endautoescape%}
 </script>
