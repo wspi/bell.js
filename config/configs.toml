@@ -8,11 +8,14 @@ tube = "bell"
 [ssdb]
 host = "0.0.0.0"
 port = 8888
-hash = "bell.allseries"   # to store all time series names
 
 [ssdb.zset]  # to store datapoints
 prefix = "bell."   # zset name prefix
 expire = 432000  # 5day
+
+[ssdb.zset.trending]  # to store values & anomalies trending
+value = "bell.trending.value"
+multi = "bell.trending.multi"
 
 # ================================ Listener ===================================
 [listener]
@@ -32,6 +35,10 @@ minSize = 50
 [analyzer.filter]
 offset = 0.01  # filter all points within `periodicity * offset`
 periodicity = 86400  # 86400 = 24 * 60 * 60 = 1 day  (for all time series)
+
+[analyzer.trending]
+# for anomalies trending
+factor = 0.3  # the bigger, the timeliness better. 0~1
 
 # ================================ WebApp =====================================
 [webapp]
