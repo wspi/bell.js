@@ -95,11 +95,11 @@
               {%set params = {'limit': limit, 'type': type}%}
               <li>
                 {%set params.sort = 'm'%}
-                <a href="{{url('/' + pattern, params)}}"> Anomalies trending</a>
+                <a href="{{url('/' + pattern, params)}}">Trending Anomalies</a>
               </li>
               <li>
                 {%set params.sort = 'v'%}
-                <a href="{{url('/' + pattern, params)}}"> Values trending</a>
+                <a href="{{url('/' + pattern, params)}}">Trending Values</a>
               </li>
             </ul>
           </div>
@@ -112,10 +112,8 @@
         </ul>
       </div>
 
-
       <div id="chart">
       </div>
-
     </div>
 
     <div class="footer">
