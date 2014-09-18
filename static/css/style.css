@@ -72,6 +72,7 @@ ul.dropdown-menu li:hover {
 }
 
 .dropdown-menu li a {
+  display: block;
   min-width: 100%;
   line-height: 15px;
   text-decoration: none;
@@ -245,7 +246,15 @@ form input {
   font-size: 16px;
 }
 
-.qcketr-item ul {
+.qcketr-item ul.dropdown-menu {
   font-size: 12px;
+  width: 150px;
+}
+
+
+/**
+ * custom tabs
+ */
+.tab-sort-by ul.dropdown-menu {
   width: 150px;
 }

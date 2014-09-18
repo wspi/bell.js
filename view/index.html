@@ -1,121 +1,144 @@
+{%set static_version = "v201409181956"%}
+{%set static_params = {'version': static_version}%}
+
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Bell - Realtime anomalous metrics detection</title>
-    <link rel="shortcut icon" href="{{url('static/img/bell.png')}}">
-    <link rel="stylesheet" href="{{url('static/css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{url('static/css/cubism.css')}}" type="text/css" />
-    <script src="{{url('static/js/d3.min.js')}}"></script>
-    <script src="{{url('static/js/cubism.v1.min.js')}}"></script>
-  </head>
-  <body>
-    {# header #}
-    <div class="header">
-      <a href="{{url('/')}}" class="logo">
-        <img src="{{url('static/img/logo.png')}}"/>
-      </a>
-    </div>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Bell - Metrics Monitor</title>
+  <link rel="shortcut icon" href="{{url('static/img/bell.png')}}">
+  <link rel="stylesheet" href="{{url('static/css/cubism.css')}}" type="text/css" />
+  <link rel="stylesheet" href="{{url('static/css/style.css', static_params)}}" type="text/css" />
+  <script src="{{url('static/js/d3.min.js')}}"></script>
+  <script src="{{url('static/js/cubism.v1.min.js')}}"></script>
+</head>
+<body>
 
-    {# container #}
-    <div class="container">
+  <div class="header">
+    <a href="{{url('/')}}" class="logo">
+      <img src="{{url('static/img/logo.png')}}"/>
+    </a>
+  </div>
 
-      <div class="main">
-        <div class="form-box">
-          <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
-            <input name='pattern' type="text" placeholder="Pattern.."  autofocus="autofocus">
-          </form>
-        </div>
+  <div class="container">
+    <div class="main">
 
-        {%if qcketrs%}
-        <div class="qcketrs">
-          {%for qcketr_key in Object.keys(qcketrs)%}
-          <span class="qcketr-item">
-            <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
-              {{qcketr_key}}
-            </a>
-            <div class="dropdown-menu-box">
-              {%set qcketr_item = qcketrs[qcketr_key]%}
-              <ul class="dropdown-menu">
-              {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
+      <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
+        <input name='pattern' type="text" placeholder="Pattern.."  autofocus="autofocus">
+      </form>
+
+      {%if qcketrs%}
+      <div class="qcketrs">
+      {%for qcketr_key in Object.keys(qcketrs)%}
+        <span class="qcketr-item">
+          <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
+            {{qcketr_key}}
+          </a>
+          <div class="dropdown-menu-box">
+          {%set qcketr_item = qcketrs[qcketr_key]%}
+            <ul class="dropdown-menu">
+            {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
               {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
               {%set qcketr_sub_item_params = {
-                'since': qcketr_sub_item[1] || '15m',
+                'sort': qcketr_sub_item[1] || 'm',
                 'limit': qcketr_sub_item[2] || 50,
                 'type': qcketr_sub_item[3] || 'v'
               }%}
-              <li><a href="{{url('/' + qcketr_sub_item[0], qcketr_sub_item_params)}}">{{qcketr_sub_item_key}}</a></li>
-              {%endfor%}
-              </ul>
-            </div>
-          </span>
-          {%endfor%}
-        </div>
-        {%endif%}
-
-        <div class="tabnav">
-          <span class="tab-description tab-others">
-            Trending Since
-          </span>
-          <span class="tab-right tab-others tab-help">
-            <a href="https://github.com/eleme/node-bell/blob/master/faq.md#what-dose-the-metrics-prefix-mean">
-              Help
-            </a>
-          </span>
-          <span class="tab-switch tab-right tab-others">
-            {%set params = {'since': since, 'limit': limit}%}
-            {%if type === 'v'%} {%set params.type = 'm'%}{%else%}{%set params.type = 'v'%}{%endif%}
-            <a href="{{url('/' + pattern, params)}}"> Switch </a>
-          </span>
-          <span class="tab-limit tab-right tab-others">
-            {%set params = {'since': since, 'type': type}%}
-            <a href="javscript:void(0);" onclick="return false;" class="tab-limit-text"> Top {{limit}}</a>
-            <div class="tab-limit-box dropdown-menu-box">
-              <ul class="dropdown-menu">
-                {%set limits = [1, 30, 50, 100, 500, 1000]%}
-                {%for lim in limits%}
-                <li>
-                {%set params.limit = lim%}
-                <a href="{{url('/' + pattern, params)}}">{{lim}}</a>
-                </li>
-                {%endfor%}
-              </ul>
-            </div>
-          </span>
-          <ul class="tabs">
-            {%set timeSpans = ['15m', '45m', '60m', '90m', '3h']%}
-            {%set timeSpanTexts = ['15 minutes', '45 minutes', '60 minutes', '90 minutes', '3 hours']%}
-            {%for index, timeSpan in timeSpans %}
-            <li {%if since === timeSpan%}class="active"{%endif%}>
-            {%set params = {'since': timeSpan, 'limit': limit, 'type': type}%}
-            <a href="{{url('/' + pattern, params)}}">{{timeSpanTexts[index]}}</a>
-            </li>
+              <li>
+                <a href="{{url('/' + qcketr_sub_item[0], qcketr_sub_item_params)}}">
+                  {{qcketr_sub_item_key}}
+                </a>
+              </li>
             {%endfor%}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        </span>
+      {%endfor%}
+      </div>
+      {%endif%}
 
-        <div id="chart">
-        </div>
+      <div class="tabnav">
+
+        <span class="tab-empty tab-others">
+        </span>
+
+        <span class="tab-switch tab-right tab-others">
+          {%set params = {'sort': sort, 'limit': limit}%}
+          {%if type === 'v'%}
+            {%set params.type = 'm'%}
+          {%else%}
+            {%set params.type = 'v'%}
+          {%endif%}
+          <a href="{{url('/' + pattern, params)}}"> Switch </a>
+        </span>
+
+        <span class="tab-limit tab-right tab-others">
+          {%set params = {'sort': sort, 'type': type}%}
+          <a href="javscript:void(0);" onclick="return false;"> Top {{limit}}</a>
+          <div class="dropdown-menu-box">
+            <ul class="dropdown-menu">
+              {%set limits = [1, 30, 50, 100, 500, 1000]%}
+              {%for lim in limits%}
+              <li>
+              {%set params.limit = lim%}
+              <a href="{{url('/' + pattern, params)}}">{{lim}}</a>
+              </li>
+              {%endfor%}
+            </ul>
+          </div>
+        </span>
+
+        <span class="tab-sort-by tab-right tab-others">
+          <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
+          <div class="dropdown-menu-box">
+            <ul class="dropdown-menu">
+              {%set params = {'limit': limit, 'type': type}%}
+              <li>
+                {%set params.sort = 'm'%}
+                <a href="{{url('/' + pattern, params)}}"> Anomalies trending</a>
+              </li>
+              <li>
+                {%set params.sort = 'v'%}
+                <a href="{{url('/' + pattern, params)}}"> Values trending</a>
+              </li>
+            </ul>
+          </div>
+        </span>
+
+        <ul class="tabs">
+          <li class="active">
+            <a href="{{url('/')}}">Coming Soon..</a>
+          </li>
+        </ul>
+      </div>
+
+
+      <div id="chart">
       </div>
 
     </div>
-  </body>
-  <div class="footer">
-    Copyright (c) 2014 <a href="https://github.com/eleme">Eleme, Inc</a> |
-    <a href="https://github.com/eleme/node-bell">Bell</a>
-  </div>
+
+    <div class="footer">
+      Copyright (c) 2014 <a href="https://github.com/eleme">Eleme, Inc</a> |
+      <a href="https://github.com/eleme/node-bell">Bell</a>
+    </div>
+
+</div>
+
+</body>
 </html>
-<script src="{{url('static/js/script.js')}}"></script>
+<script src="{{url('static/js/script.js', static_params)}}"></script>
 <script>
   {%autoescape false%}
   function submitform() {
     window.location.href = "{{url('/')}}" + document.getElementById('form').pattern.value;
   }
 
+  // required by script.js
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{type}}', '{{pattern}}', '{{limit}}', '{{since}}', '{{url('/api')}}');
+    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{url('/api')}}');
   }
   {%endautoescape%}
 </script>

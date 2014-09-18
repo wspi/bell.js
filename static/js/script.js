@@ -6,13 +6,13 @@
   .size(1080) // 4h
   ;
 
-  var type, pattern, limit, since, api;
+  var pattern, sort, limit, type, api;
 
-  this.initBell = function(t, p, l, s, a) {
-    type = t;
+  this.initBell = function(p, s, l, t, a) {
     pattern = p;
+    sort = s;
     limit = l;
-    since = s;
+    type = t;
     api = a;
 
     plot();
@@ -88,7 +88,7 @@
    * plot
    */
   function plot () {
-    var url = [api, 'names', pattern, limit, since].join('/');
+    var url = [api, 'names', pattern, limit, sort].join('/');
 
     request(url, function(names){
       var data = [];
@@ -116,7 +116,7 @@
       .html(function(d){
         var name = d.toString();
         var params = {
-          since: since,
+          sort: sort,
           limit: 1,
           type: type
         };
