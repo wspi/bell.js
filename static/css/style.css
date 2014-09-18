@@ -253,8 +253,16 @@ form input {
 
 
 /**
- * custom tabs
+ * custom dropdown-menus
  */
 .tab-sort-by ul.dropdown-menu {
-  width: 150px;
+  width: 160px;
+}
+
+.tab-limit ul.dropdown-menu {
+  width: 60px;
+}
+
+.tabnav span ul.dropdown-menu li a {
+  color: #4183c4;
 }
