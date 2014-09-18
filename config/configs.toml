@@ -16,6 +16,7 @@ expire = 432000  # 5day
 
 # ================================ Listener ===================================
 [listener]
+host = "0.0.0.0"
 port = 8889
 
 [listener.patterns]
@@ -42,6 +43,7 @@ quickenters = ""
 
 # ================================ Alerter ====================================
 [alerter]
+host = "0.0.0.0"
 port = 8789
 modules = ["../alerters/hipchat.js"]
 
