@@ -2,33 +2,23 @@
  * Realtime anomalies detection based on statsd, for periodic time series.
  * Copyright (c) 2014 Eleme, Inc. https://github.com/eleme/node-bell
  *
- * Usage: bell <service> [options]
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * Options:
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- *   -h, --help            output usage information
- *   -V, --version         output the version number
- *   -c, --configs <c>     configs file path
- *   -l, --log-level <l>   logging level (1~5 for debug~critical)
- *   -s, --sample-configs  generate sample configs
- *
- * Data flow:
- *
- *  [statsd]
- *     |
- *     v        send to queue
- * [listener] -----------------> [beanstalkd]
- *                                   |
- *                                   | reserve
- *             history metrics       v     anomalies detected
- *             ---------------> [analyzers] ------------------
- *             |                     |                       |
- *             |                     | put to ssdb           |
- *             |                     v                       V
- *             ------------------- [ssdb]                [alerter]
- *                                   |
- *                                   v
- *                                [webapp]
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
