@@ -27,7 +27,7 @@ Installation
 npm install node-bell -g
 ```
 
-then add `node-bell` to statsd's backends in statsd's config.js:
+then add `node-bell` to statsd's backends in statsd's config.js ([example](config/example.statsd.config.js)):
 
 ```js
 {
