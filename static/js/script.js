@@ -7,6 +7,7 @@
   ;
 
   var pattern, sort, limit, type, past, api;
+  var timeRangeDiv = document.getElementById('datetime-now');
 
   this.initBell = function(pattern_, sort_, limit_, type_, past_, api_) {
     pattern = pattern_;
@@ -71,7 +72,7 @@
       });
 
       // udpate time range upper
-      document.getElementById('datetime-now').innerHTML = secs2str(stop);
+      timeRangeDiv.innerHTML = secs2str(stop);
     }, name);
   }
 
@@ -215,5 +216,13 @@ function secs2str(secs) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
   var seconds = date.getSeconds();
+
+  // normalize
+  month = ('00' + month).slice(-2);
+  day = ('00' + day).slice(-2);
+  hours = ('00' + hours).slice(-2);
+  minutes = ('00' + minutes).slice(-2);
+  seconds = ('00' + seconds).slice(-2);
+
   return [month, day].join('/') + ' ' + [hours, minutes, seconds].join(':');
 }
