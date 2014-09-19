@@ -17,7 +17,7 @@
     api = api_;
 
     pastSecs = timespan2secs(past);
-    context.serverDelay(pastSecs * 1000);  //!important
+    context.serverDelay(pastSecs * 1e3);  //!important
 
     plot();
 
@@ -49,9 +49,9 @@
   function makeMetric(name) {
     return context.metric(function(start, stop, step, callback){
       // cast to timestamp from date
-      start = +start / 1000 - pastSecs;
-      stop = +stop / 1000 - pastSecs;
-      step = +step / 1000;
+      start = (+start - pastSecs) / 1e3;
+      stop = (+stop - pastSecs) / 1e3;
+      step = +step / 1e3;
 
       // api url to fetch metrics
       var url = [api, 'metrics', name, start, stop, type].join('/');
