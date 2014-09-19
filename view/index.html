@@ -109,7 +109,7 @@
               <a href="{{switchUrl('past', tab_key)}}">{{tabs[tab_key]}}</a>
             </li>
           {%endfor%}
-          {%if !tabs[past]%}
+          {%if !tabs.hasOwnProperty(past)%}
             <li class="active">
               <a href="{{switchUrl('past', past)}}">{{past}}</a>
             </li>
