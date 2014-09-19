@@ -69,6 +69,9 @@
         }
         callback(null, values);
       });
+
+      // udpate time range upper
+      document.getElementById('datetime-now').innerHTML = secs2str(stop);
     }, name);
   }
 
@@ -151,6 +154,21 @@ function buildUrlParams(data) {
 }
 
 
+/**
+ * convert string format timespan to seconds
+ *
+ * example:
+ *
+ *   timespan2secs('1d')
+ *   // => 86400
+ *   timespan2secs('1h')
+ *   // => 3600
+ *   timespan2secs('1h2m')
+ *   // => 3720
+ *
+ * @param {String} timespan
+ * @return {Number}
+ */
 function timespan2secs(timespan) {
   var map = {
     's': 1,
@@ -180,4 +198,22 @@ function timespan2secs(timespan) {
   }
 
   return secs;
+}
+
+
+/**
+ * convert unix timestamp to readable string format
+ *
+ * @param {Number} secs
+ * @return {String}
+ */
+function secs2str(secs) {
+  var date = new Date(secs * 1000);
+  // getMonth() return 0~11 numbers
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  return [month, day].join('/') + ' ' + [hours, minutes, seconds].join(':');
 }

@@ -59,9 +59,8 @@
 
       <div class="tabnav">
 
-        <span class="tab-time-range-upper tab-others">
-          {%set past_timestamp = now() / 1000 - timespan2secs(past)%}
-          ~ {{secs2str(past_timestamp)}}
+        <span class="tab-time-range tab-others">
+          ~ <span id="datetime-now"></span>
         </span>
 
         <span class="tab-switch tab-right tab-others">
