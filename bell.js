@@ -41,6 +41,7 @@ var analyzer = require('./lib/analyzer');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
 var webapp = require('./lib/webapp');
+var version = require('./lib/version');
 var util = require('./lib/util');
 
 var log = util.log;
@@ -49,7 +50,7 @@ var log = util.log;
 co(function *(){
   // argv parsing
   program
-  .version('0.3.1')
+  .version(version)
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
