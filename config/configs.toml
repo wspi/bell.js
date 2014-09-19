@@ -38,7 +38,7 @@ periodicity = 86400  # 86400 = 24 * 60 * 60 = 1 day  (for all time series)
 
 [analyzer.trending]
 # for anomalies trending
-factor = 0.3  # the bigger, the timeliness better. 0~1
+factor = 0.1  # the bigger, the timeliness better. 0~1
 
 # ================================ WebApp =====================================
 [webapp]
