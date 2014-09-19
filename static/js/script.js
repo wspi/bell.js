@@ -174,9 +174,8 @@ function timespan2secs(timespan) {
       }
     }
 
-    // return false on illegal timespan
     if (i === timespan.length) {
-      return false;
+      return secs;
     }
   }
 
