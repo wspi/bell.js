@@ -10,7 +10,7 @@ a short time, it alerts you via alerters like hipchat etc.
 
 ![](https://github.com/eleme/node-bell/raw/master/snap.png)
 
-Latest version: v0.3.1
+Latest version: v0.3.2
 
 Requirements
 ------------
@@ -27,7 +27,7 @@ Installation
 npm install node-bell -g
 ```
 
-then add `node-bell` to statsd's backends in statsd's config.js:
+then add `node-bell` to statsd's backends in statsd's config.js ([example](config/example.statsd.config.js)):
 
 ```js
 {

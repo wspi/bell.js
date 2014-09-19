@@ -3,17 +3,22 @@
   .serverDelay(0)
   .clientDelay(0)
   .step(1e4)  // 10sec
-  .size(1080) // 4h
+  .size(1080) // 3h
   ;
 
-  var type, pattern, limit, since, api;
+  var pattern, sort, limit, type, past, api;
+  var timeRangeDiv = document.getElementById('datetime-now');
 
-  this.initBell = function(t, p, l, s, a) {
-    type = t;
-    pattern = p;
-    limit = l;
-    since = s;
-    api = a;
+  this.initBell = function(pattern_, sort_, limit_, type_, past_, api_) {
+    pattern = pattern_;
+    sort = sort_;
+    limit = limit_;
+    type = type_;
+    past = past_;
+    api = api_;
+
+    pastSecs = timespan2secs(past);
+    context.serverDelay(pastSecs * 1e3);  //!important
 
     plot();
 
@@ -45,9 +50,9 @@
   function makeMetric(name) {
     return context.metric(function(start, stop, step, callback){
       // cast to timestamp from date
-      start = +start / 1000;
-      stop = +stop / 1000;
-      step = +step / 1000;
+      start = (+start - pastSecs) / 1e3;
+      stop = (+stop - pastSecs) / 1e3;
+      step = +step / 1e3;
 
       // api url to fetch metrics
       var url = [api, 'metrics', name, start, stop, type].join('/');
@@ -65,6 +70,9 @@
         }
         callback(null, values);
       });
+
+      // udpate time range upper
+      timeRangeDiv.innerHTML = secs2str(stop);
     }, name);
   }
 
@@ -88,7 +96,7 @@
    * plot
    */
   function plot () {
-    var url = [api, 'names', pattern, limit, since].join('/');
+    var url = [api, 'names', pattern, limit, sort].join('/');
 
     request(url, function(names){
       var data = [];
@@ -116,9 +124,10 @@
       .html(function(d){
         var name = d.toString();
         var params = {
-          since: since,
+          sort: sort,
           limit: 1,
-          type: type
+          type: type,
+          past: past
         };
         var url = root + name + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
@@ -143,4 +152,77 @@ function buildUrlParams(data) {
     list.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
   }
   return list.join('&');
+}
+
+
+/**
+ * convert string format timespan to seconds
+ *
+ * example:
+ *
+ *   timespan2secs('1d')
+ *   // => 86400
+ *   timespan2secs('1h')
+ *   // => 3600
+ *   timespan2secs('1h2m')
+ *   // => 3720
+ *
+ * @param {String} timespan
+ * @return {Number}
+ */
+function timespan2secs(timespan) {
+  var map = {
+    's': 1,
+    'm': 60,
+    'h': 60 * 60,
+    'd': 24 * 60 * 60
+  };
+
+  var secs = 0;
+
+  while (timespan.length > 0) {
+    for (var i = 0; i < timespan.length; i++) {
+      var ch = timespan[i];
+      var measure = map[ch];
+
+      if (!isNaN(measure)) {
+        var count = +timespan.slice(0, i);
+        secs += count * measure;
+        timespan = timespan.slice(i + 1);
+        break;
+      }
+    }
+
+    if (i === timespan.length) {
+      return secs;
+    }
+  }
+
+  return secs;
+}
+
+
+/**
+ * convert unix timestamp to readable string format
+ *
+ * @param {Number} secs
+ * @return {String}
+ */
+function secs2str(secs) {
+  var date = new Date(secs * 1000);
+  // getMonth() return 0~11 numbers
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+
+  // normalize
+  month = ('00' + month).slice(-2);
+  day = ('00' + day).slice(-2);
+  hours = ('00' + hours).slice(-2);
+  minutes = ('00' + minutes).slice(-2);
+  seconds = ('00' + seconds).slice(-2);
+
+  return [month, day].join('/') + ' ' + [hours, minutes, seconds].join(':');
 }

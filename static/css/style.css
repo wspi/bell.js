@@ -1,3 +1,16 @@
+/**
+ * Claims
+ *
+ *   border-color: #ddd
+ *   link color: #4183c4
+ *
+ */
+
+
+/**
+ * body & html & *
+ */
+
 *, html {
   margin: 0;
   padding: 0;
@@ -7,21 +20,31 @@ body {
   font: 14px/1.5 Helvetica, arial, sans-serif;
 }
 
+
+/**
+ * <a/>
+ */
+
 a {
   color: #4183c4;
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:visited {
   color: #4183c4;
 }
 
-/* dropdown menu */
+
+/**
+ * dropdown menu
+ */
+
 .dropdown-menu-box {
+  clear: both;
   position: relative;
 }
 
@@ -30,8 +53,8 @@ ul.dropdown-menu {
   top: 100%;
   left: 0;
   z-index: 999;
-  list-style: none;
   width: 100%;
+  list-style: none;
   border: 1px solid #ddd;
   background-color: #fff;
   display: none;
@@ -48,7 +71,8 @@ ul.dropdown-menu li:hover {
   background-color: #fdfefc;
 }
 
-ul.dropdown-menu li a {
+.dropdown-menu li a {
+  display: block;
   min-width: 100%;
   line-height: 15px;
   text-decoration: none;
@@ -58,36 +82,10 @@ ul.dropdown-menu li a:hover {
   text-decoration: none;
 }
 
-.header, .container, .footer {
-  margin: 0 auto;
-  width: 1140px;
-  position: relative;
-}
 
-.header img {
-  margin-top: 1em;
-  height: 2em;
-}
-
-.footer {
-  color: #777;
-  font-size: 13px;
-  text-align: center;
-  padding: .5em;
-}
-
-.container {
-  margin-top: .4em;
-  padding:1.3em 0;
-  border: 1px solid #ddd;
-  border-radius: 5px
-}
-
-.main {
-  width: 95%;
-  margin: 0 auto;
-  position: relative;
-}
+/**
+ * tab navgations
+ */
 
 .tabnav {
   font-size: 14px;
@@ -130,30 +128,77 @@ ul.dropdown-menu li a:hover {
   padding: 8px 12px 7px;
 }
 
-.tab-right {
-  float: right;
-}
-
-.tab-switch a, .tab-limit a, .tab-help{
+.tab-others a {
   text-decoration: underline;
 }
 
-.tab-switch a:hover, .tab-limit a:hover, .tab-help a:hover{
+.tab-others a:hover {
   color: black;
   text-decoration: underline;
 }
 
-.tab-limit-box {
-  clear: both;
+.tab-right {
+  float: right;
 }
 
-/* hover tab and trigger dropdown */
-.tab-limit:hover ul.dropdown-menu {
+
+/**
+ * tab & dropdown menu
+ * hover tab and trigger dropdown 
+ */
+.tab-others:hover ul.dropdown-menu {
   display: block;
 }
 
 
-.form-box form input {
+/**
+ * header container footer
+ */
+
+.header, .container, .footer {
+  margin: 0 auto;
+  width: 1140px;
+  position: relative;
+}
+
+.footer {
+  color: #777;
+  font-size: 13px;
+  text-align: center;
+  padding: .5em;
+}
+
+.container {
+  margin-top: .4em;
+  padding: 1.3em 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+/**
+ * logo
+ */
+.header img {
+  margin-top: 1em;
+  height: 2em;
+}
+
+
+/**
+ * main
+ */
+.main {
+  width: 95%;
+  margin: 0 auto;
+  position: relative;
+}
+
+
+/**
+ * form
+ */
+form input {
   font-size: 18px;
   width: 99.5%;
   padding: 5px 3px;
@@ -163,12 +208,20 @@ ul.dropdown-menu li a:hover {
   background: transparent;
 }
 
+
+/**
+ * chart
+ */
 #chart .title {
   margin-left: 0;
   padding: 0 7px;
-  background-color:rgba(255, 255, 255, .9);
+  background-color: rgba(255, 255, 255, .85);
 }
 
+
+/**
+ * .quickenters
+ */
 .qcketrs {
   margin-top: .5em;
   border-bottom: 1px solid #ddd;
@@ -180,6 +233,7 @@ ul.dropdown-menu li a:hover {
   padding: 8px 12px;
 }
 
+/* dropdown-menu trigger for quickenter items*/
 .qcketr-item:hover .dropdown-menu {
   display: block;
 }
@@ -192,7 +246,27 @@ ul.dropdown-menu li a:hover {
   font-size: 16px;
 }
 
-.qcketr-item ul {
+.qcketr-item ul.dropdown-menu {
   font-size: 12px;
   width: 150px;
+}
+
+
+/**
+ * custom dropdown-menus
+ */
+.tab-sort-by ul.dropdown-menu {
+  width: 160px;
+}
+
+.tab-limit ul.dropdown-menu {
+  width: 60px;
+}
+
+.tabnav span ul.dropdown-menu li a {
+  color: #4183c4;
+}
+
+.tab-time-range {
+  color: black;
 }

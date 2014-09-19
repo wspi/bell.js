@@ -48,11 +48,12 @@ Why do you use ssdb (not redis, or not sql-based-db..) ?
 
 I need a disk-based data structure server. No, redis is limited to the memory capacity.
 
-How to run webapp with multiple workers
-----------------------------------------
+
+Analyzers Cluster ?
+-------------------
 
 For example, using [cluster-master](https://github.com/isaacs/cluster-master),
-touch a file, i.e `webapp-master.js`:
+touch a file, i.e `analyzer-cluster.js`:
 
 ```js
 var clusterMaster = require('cluster-master');
@@ -60,14 +61,14 @@ var clusterMaster = require('cluster-master');
 clusterMaster({
   exec: '/usr/bin/bell',  // bell bin path
   size: 5,  // workers count
-  args: ['webapp', '-c', './configs.toml', '-l', '5']
+  args: ['analyzer', '-c', './configs.toml']
 })
 ```
 
 and then run it:
 
 ```bash
-$ node --harmony-generators webapp-master.js
+$ node --harmony-generators analyzer-cluster.js
 ```
 
 My ssdb makes cpu load 100%!
