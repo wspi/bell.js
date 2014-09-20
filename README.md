@@ -113,22 +113,14 @@ timestamp | value:anomalous multiples:timestamp
 ### Data Flow
 
 
-```
- [statsd]
-    |
-    v        send to queue
-[listener] -----------------> [beanstalkd]
-                                  |
-                                  | reserve
-            history metrics       v     anomalies detected
-            ---------------> [analyzers] ------------------
-            |                     |                       |
-            |                     | put to ssdb           |
-            |                     v                       V
-            ------------------- [ssdb]                [alerter]
-                                  |
-                                  v
-                               [webapp]
+```javascript
+[statsd]->[listener]->[beanstalkd]
+                           |
+                           v
+            --------> [analyzers] ------> [alerter]
+            |              |
+    history |         save v    visualize
+            ------------ [ssdb] --------> [webapp]
 ```
 
 Questions?
