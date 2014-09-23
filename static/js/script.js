@@ -1,35 +1,74 @@
 (function(){
+  /**
+   * cubism context with default settings
+   */
   var context = cubism.context()
   .serverDelay(0)
   .clientDelay(0)
-  .step(1e4)  // 10sec
-  .size(1080) // 3h
+  .step(1e4)  // 10 seconds
+  .size(3 * 60 * 60 / 10)  // 3 hours / 10s
   ;
 
-  var pattern, sort, limit, type, past, api;
-  var timeRangeDiv = document.getElementById('datetime-now');
+  /**
+   * parameters from node-bell backend
+   */
+  var pattern;
+  var sort;
+  var limit;
+  var type;
+  var past;
+  var stop;
+  var api;
+  // the seconds past
+  var pastSecs;
 
-  this.initBell = function(pattern_, sort_, limit_, type_, past_, api_) {
+  /**
+   * document elements
+   */
+  var timeRangeDiv = document.getElementById('datetime-now');
+  var loader = document.getElementById('loader');
+
+
+  /**
+   * entry function
+   */
+  this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_, api_) {
     pattern = pattern_;
     sort = sort_;
     limit = limit_;
     type = type_;
     past = past_;
+    stop = stop_;
     api = api_;
 
     pastSecs = timespan2secs(past);
-    context.serverDelay(pastSecs * 1e3);  //!important
+
+    // reset context
+    context
+    .serverDelay(pastSecs * 1e3)  // past
+    ;
+
+    // stop update
+    if (stop === 1) {
+      context.stop();
+    }
 
     plot();
 
-    setInterval(function(){
-      d3.select('#chart').selectAll('*').remove();
-      plot();
-    }, 10 * 60 * 1000);  // replot every 10 min
+    if (stop === 0) {
+      setInterval(function(){
+        d3.select('#chart').selectAll('*').remove();
+        plot();
+      }, 10 * 60 * 1e3);  // replot every 10 min
+    }
   };
 
-  /*
-   * 'GET' request an url, and call callback with JSON data
+
+  /**
+   * 'GET' request an url, and call callback with responsed JSON data
+   *
+   * @param {String} url
+   * @param {Function} callback  // callback: @param {Object} data
    */
   function request(url, callback) {
     var xmlhttp = new XMLHttpRequest();
@@ -44,8 +83,11 @@
   }
 
 
-  /*
-   * Metrcs source
+  /**
+   * Metrics source
+   *
+   * @param {String} name
+   * @return {Object}  // context.metric
    */
   function makeMetric(name) {
     return context.metric(function(start, stop, step, callback){
@@ -58,12 +100,17 @@
       var url = [api, 'metrics', name, start, stop, type].join('/');
       var values = [], i = 0;
 
-      // request data and call callback with values
-      request(url, function(data) {
+      /**
+       * request data and call callback with values
+       *
+       * data schema: {times: {Array}, vals: {Array}}
+       */
+      request(url, function(data){
+        // the timestamps from statsd DONT have exactly steps `10`
         while (start < stop) {
           while (start < data.times[i]) {
             start += step;
-            values.push(0);  // push 0 if no data at this timestamp
+            values.push(start > data.times[i] ? data.vals[i] : 0);
           }
           values.push(data.vals[i++]);
           start += step;
@@ -71,21 +118,24 @@
         callback(null, values);
       });
 
-      // udpate time range upper
+      // udpate time range div
       timeRangeDiv.innerHTML = secs2str(stop);
     }, name);
   }
 
 
-  /*
-   * make a horizon chart
+  /**
+   * make a horizon chart (hmm, horizon chart is amazing..)
    */
   function horizon() {
     var hrz = context.horizon();
 
     if (type === 'm') {
-      return hrz.extent([0, 2])
-      .colors(['black', 'black', 'teal', '#dd1144']);
+      return hrz
+      .extent([-2, 2])
+      .mode('mirror')
+      .colors(['#dd1144', 'teal', 'teal', '#dd1144'])
+      ;
     } else if (type === 'v') {
       return hrz;
     }
@@ -99,6 +149,9 @@
     var url = [api, 'names', pattern, limit, sort].join('/');
 
     request(url, function(names){
+      // hide loader
+      loader.style.display = 'none';
+
       var data = [];
       for (var i = 0; i < names.length; i++) {
         data.push(makeMetric(names[i]));
@@ -142,14 +195,25 @@
     d3.selectAll('.value')
     .style('right', i === null ? null : context.size() - i + 'px');
   });
-
 })(this);
 
 
-function buildUrlParams(data) {
+/**
+ * build url parameters
+ *
+ * example
+ *
+ *   buildUrlParams({'name': 'mike', 'age': 3})
+ *   // => 'name=mike&age=3'
+ *
+ * @param {String} dict
+ * @return {String}
+ */
+
+function buildUrlParams(dict) {
   var list = [];
-  for (var key in data) {
-    list.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+  for (var key in dict) {
+    list.push([key, '=', dict[key]].join(''));
   }
   return list.join('&');
 }

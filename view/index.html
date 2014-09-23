@@ -40,7 +40,7 @@
             {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
               {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
               {%set qcketr_sub_item_params = {
-                'sort': qcketr_sub_item[1] || 'm',
+                'sort': qcketr_sub_item[1] || '↓',
                 'limit': qcketr_sub_item[2] || 50,
                 'type': qcketr_sub_item[3] || 'v'
               }%}
@@ -71,6 +71,14 @@
           {%endif%}
         </span>
 
+        <span class="tab-stop tab-right tab-others">
+          {%if stop === 1%}
+            <a href="{{switchUrl('stop', 0)}}"> Realtime </a>
+          {%else%}
+            <a href="{{switchUrl('stop', 1)}}"> Stop </a>
+          {%endif%}
+        </span>
+
         <span class="tab-limit tab-right tab-others">
           <a href="javscript:void(0);" onclick="return false;"> Top {{limit}}</a>
           <div class="dropdown-menu-box">
@@ -86,14 +94,14 @@
         </span>
 
         <span class="tab-sort-by tab-right tab-others">
-          <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
+          <a href="javscript:void(0);" onclick="return false;"> Sort </a>
           <div class="dropdown-menu-box">
             <ul class="dropdown-menu">
               <li>
-                <a href="{{switchUrl('sort', 'm')}}">Trending Anomalies</a>
+                <a href="{{switchUrl('sort', '↓')}}">Trending ↓</a>
               </li>
               <li>
-                <a href="{{switchUrl('sort', 'v')}}">Trending Values</a>
+                <a href="{{switchUrl('sort', '↑')}}">Trending ↑</a>
               </li>
             </ul>
           </div>
@@ -118,6 +126,9 @@
       </div>
 
       <div id="chart">
+        <div class="loader" id="loader">
+          <img src="{{url('static/img/spinner.gif')}}" />
+        </div>
       </div>
     </div>
 
@@ -141,7 +152,7 @@
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', '{{url('/api')}}');
+    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
   }
   {%endautoescape%}
 </script>

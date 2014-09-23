@@ -13,10 +13,6 @@ port = 8888
 prefix = "bell."   # zset name prefix
 expire = 432000  # 5day
 
-[ssdb.zset.trending]  # to store values & anomalies trending
-value = "bell.trending.value"
-multi = "bell.trending.multi"
-
 # ================================ Listener ===================================
 [listener]
 host = "0.0.0.0"
