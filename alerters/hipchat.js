@@ -5,13 +5,14 @@
  */
 
 var util = require('util');
+var co = require('co');
 var request = require('request');
 var ssdb = require('ssdb');
 
 
 var messagePattern = '' +
-  // params: weburl, metric name, metric name
-  '<a href="%s/%s">%s</a>: ' +
+  // params: trend weburl, metric name, metric name
+  'trending %s, <a href="%s/%s">%s</a>: ' +
   // params: anomalies count, since
   '%d anomalies in last %d seconds';
 
@@ -38,11 +39,14 @@ exports.init = function(configs, alerter, log) {
     port: configs.ssdb.port,
     host: configs.ssdb.host
   });
+  ssdbc.thunkify();
 
   // notify hipchat
-  var notify = function (name, count) {
+  var notify = function (name, count, trend) {
     log.debug('Notify hipchat.., %s, %d', name, count);
-    var message = util.format(messagePattern, weburl, name, name, count, since);
+    var message = util.format(messagePattern,
+                              trend > 0 ? '↑' : '↓',
+                              weburl, name, name, count, since);
     var data = {'room_id': roomId, from: 'Bell Alerter', message: message,
       notify: 1};
     request.post(api).form(data).on('error', function(err){
@@ -56,31 +60,35 @@ exports.init = function(configs, alerter, log) {
   var prefix = 'bellhipchat';
 
   alerter.on('anomaly detected', function(datapoint){
-    // datapoint: [name, [timestamp, value, multiples]]
-    var name = datapoint[0];
-    var time = datapoint[1][0];
+    co(function *(){
+      // datapoint: [name, [timestamp, value, multiples]]
+      var name = datapoint[0];
+      var time = datapoint[1][0];
 
-    // cache to ssdb, key: 'bellhipchattimer.mean.foo1411099647'
-    ssdbc.setx([prefix, name, time].join(''), 0, since);
+      // cache to ssdb, key: 'bellhipchattimer.mean.foo1411099647'
+      yield ssdbc.setx([prefix, name, time].join(''), 0, since);
 
-    // last time sent notification
-    var last = cache[name] = cache[name] || 0;
+      // last time sent notification
+      var last = cache[name] = cache[name] || 0;
 
-    if (last + since < time) {
-      var start = [prefix, name, time - since].join('');
-      var stop = [prefix, name, time].join('');
-      ssdbc.keys(start, stop, -1, function(err, data){
-        if (err) {
-          log.error('Hook hipchat error: %s', err);
-        }
+      if (last + since < time) {
+        var start = [prefix, name, time - since].join('');
+        var stop = [prefix, name, time].join('');
 
-        // send notification if count >= threshold
-        if(data.length >= threshold) {
-          notify(name, data.length);
+        var resps = yield [
+          ssdbc.keys(start, stop, -1),
+          ssdbc.zget(configs.ssdb.zset.prefix + 'trend', name)
+        ];
+
+        var keys = resps[0];
+        var trend = resps[1];
+
+        if (keys.length >= threshold) {
+          notify(name, keys.length, trend);
           // update cache
           cache[name] = time;
         }
-      });
-    }
+      }
+    })();
   });
 };
