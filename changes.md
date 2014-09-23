@@ -1,6 +1,15 @@
 Node-bell Changelog
 ===================
 
+v0.3.3
+------
+
+- remove `trending values` support, new trending: z-score + wma
+- add option `stop` to webapp
+- multi can be negative values now
+- trending up/down in alerter
+- simple loader gif to webapp
+
 v0.3.2
 ------
 
