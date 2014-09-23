@@ -40,7 +40,7 @@
             {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
               {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
               {%set qcketr_sub_item_params = {
-                'sort': qcketr_sub_item[1] || 'm',
+                'sort': qcketr_sub_item[1] || '↓',
                 'limit': qcketr_sub_item[2] || 50,
                 'type': qcketr_sub_item[3] || 'v'
               }%}
@@ -90,10 +90,10 @@
           <div class="dropdown-menu-box">
             <ul class="dropdown-menu">
               <li>
-                <a href="{{switchUrl('sort', 'm')}}">Trending Anomalies</a>
+                <a href="{{switchUrl('sort', '↓')}}">Trending ↓</a>
               </li>
               <li>
-                <a href="{{switchUrl('sort', 'v')}}">Trending Values</a>
+                <a href="{{switchUrl('sort', '↑')}}">Trending ↑</a>
               </li>
             </ul>
           </div>

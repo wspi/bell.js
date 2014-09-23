@@ -123,9 +123,11 @@
 
     if (type === 'm') {
       return hrz
-      .extent([-2, -2])
-      .colors(['#08519c', '#6baed6', '#74c476', '#006d2c'])
-      // .colors(['black', 'black', 'teal', '#dd1144'])
+      .extent([-2, 2])
+      // .colors(['#08519c', '#6baed6', '#74c476', '#006d2c'])
+      // .colors(['orange', '#6baed6', '#74c476', '#dd1144'])
+      .colors(['red', 'teal', 'teal', 'red'])
+      .mode('mirror')
       ;
     } else if (type === 'v') {
       return hrz;
