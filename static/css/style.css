@@ -270,3 +270,12 @@ form input {
 .tab-time-range {
   color: black;
 }
+
+/**
+ * loader
+ */
+.loader {
+  text-align: center;
+  padding: 2em;
+  display: block;
+}

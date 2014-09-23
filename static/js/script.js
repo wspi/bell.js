@@ -25,6 +25,7 @@
    * document elements
    */
   var timeRangeDiv = document.getElementById('datetime-now');
+  var loader = document.getElementById('loader');
 
 
   /**
@@ -138,6 +139,9 @@
     var url = [api, 'names', pattern, limit, sort].join('/');
 
     request(url, function(names){
+      // hide loader
+      loader.style.display = 'none';
+
       var data = [];
       for (var i = 0; i < names.length; i++) {
         data.push(makeMetric(names[i]));
