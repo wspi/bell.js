@@ -256,7 +256,7 @@ form input {
  * custom dropdown-menus
  */
 .tab-sort-by ul.dropdown-menu {
-  width: 160px;
+  width: 100px;
 }
 
 .tab-limit ul.dropdown-menu {

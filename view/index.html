@@ -71,6 +71,14 @@
           {%endif%}
         </span>
 
+        <span class="tab-stop tab-right tab-others">
+          {%if stop === 1%}
+            <a href="{{switchUrl('stop', 0)}}"> Realtime </a>
+          {%else%}
+            <a href="{{switchUrl('stop', 1)}}"> Stop </a>
+          {%endif%}
+        </span>
+
         <span class="tab-limit tab-right tab-others">
           <a href="javscript:void(0);" onclick="return false;"> Top {{limit}}</a>
           <div class="dropdown-menu-box">
@@ -86,7 +94,7 @@
         </span>
 
         <span class="tab-sort-by tab-right tab-others">
-          <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
+          <a href="javscript:void(0);" onclick="return false;"> Sort </a>
           <div class="dropdown-menu-box">
             <ul class="dropdown-menu">
               <li>
@@ -144,7 +152,7 @@
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', '{{url('/api')}}');
+    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
   }
   {%endautoescape%}
 </script>

@@ -17,6 +17,7 @@
   var limit;
   var type;
   var past;
+  var stop;
   var api;
   // the seconds past
   var pastSecs;
@@ -31,12 +32,13 @@
   /**
    * entry function
    */
-  this.initBell = function(pattern_, sort_, limit_, type_, past_, api_) {
+  this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_, api_) {
     pattern = pattern_;
     sort = sort_;
     limit = limit_;
     type = type_;
     past = past_;
+    stop = stop_;
     api = api_;
 
     pastSecs = timespan2secs(past);
@@ -46,12 +48,19 @@
     .serverDelay(pastSecs * 1e3)  // past
     ;
 
+    // stop update
+    if (stop === 1) {
+      context.stop();
+    }
+
     plot();
 
-    setInterval(function(){
-      d3.select('#chart').selectAll('*').remove();
-      plot();
-    }, 10 * 60 * 1e3);  // replot every 10 min
+    if (stop === 0) {
+      setInterval(function(){
+        d3.select('#chart').selectAll('*').remove();
+        plot();
+      }, 10 * 60 * 1e3);  // replot every 10 min
+    }
   };
 
 
