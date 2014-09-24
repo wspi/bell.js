@@ -12,6 +12,8 @@ a short time, it alerts you via alerters like hipchat etc.
 
 Latest version: v0.3.3
 
+We([Eleme](http://eleme.io)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) how we created it.
+
 Requirements
 ------------
 
@@ -58,10 +60,11 @@ Quick Start
 Services
 --------
 
-1. **listener**: receives incoming metrics from statsd, then put them to job queue.
+1. **listener**: receive incoming metrics from statsd, then put them to job queue.
 2. **analyzer(s)**: get job from job queue, and then analyze if current metric an anomaly or not.
-3. **webapp**: visualizes analyzation result on web.
-4. **alerter**: alerts once enough anomalies were detected.
+3. **webapp**: visualize analyzation result on web.
+4. **alerter**: alert once enough anomalies were detected.
+5. **cleaner**: clean dead metrics.
 
 Write my own alerters
 ---------------------
@@ -122,6 +125,11 @@ timestamp | value:anomalous multiples:timestamp
     history |         save v    visualize
             ------------ [ssdb] --------> [webapp]
 ```
+
+Changes Log
+-----------
+
+[changes.md](changes.md)
 
 Questions?
 ----------
