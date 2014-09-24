@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v0.3.4
+------
+
+- add new service cleaner, issue#29
+- trending with time relatived, issue#30
+
 v0.3.3
 ------
 
