@@ -77,11 +77,11 @@ exports.init = function(configs, alerter, log) {
 
         var resps = yield [
           ssdbc.keys(start, stop, -1),
-          ssdbc.zget(configs.ssdb.prefix + 'trend', name)
+          ssdbc.hget(configs.ssdb.prefix + 'trend', name)
         ];
 
         var keys = resps[0];
-        var trend = resps[1];
+        var trend = +(resps[1].split(':')[0]);
 
         if (keys.length >= threshold) {
           notify(name, keys.length, trend);
