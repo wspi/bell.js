@@ -45,6 +45,15 @@ root = ""   # set this if your webapp serves in a sub-directory.
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
 
+# ================================ Cleaner ====================================
+[cleaner]
+interval = 10800   # clean interval, in seconds
+threshold = 172800  # no data over 2 days, will be cleaned
+
+[cleaner.patterns]
+matches = ["*"]
+ignores = []
+
 # ================================ Alerter ====================================
 [alerter]
 host = "0.0.0.0"
