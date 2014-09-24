@@ -28,6 +28,7 @@ var program = require('commander');
 var toml = require('toml');
 var alerter = require('./lib/alerter');
 var analyzer = require('./lib/analyzer');
+var cleaner = require('./lib/cleaner');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
 var webapp = require('./lib/webapp');
@@ -67,6 +68,7 @@ co(function *(){
   }
 
   var service = {
+    cleaner: cleaner,
     listener: listener,
     analyzer: analyzer,
     webapp: webapp,
