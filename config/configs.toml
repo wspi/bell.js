@@ -9,8 +9,9 @@ tube = "bell"
 host = "0.0.0.0"
 port = 8888
 
+prefix = "bell."   # zset/hash.. name prefix
+
 [ssdb.zset]  # to store datapoints
-prefix = "bell."   # zset name prefix
 expire = 432000  # 5day
 
 # ================================ Listener ===================================
@@ -43,6 +44,15 @@ root = ""   # set this if your webapp serves in a sub-directory.
 
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
+
+# ================================ Cleaner ====================================
+[cleaner]
+interval = 10800   # clean interval, in seconds
+threshold = 172800  # no data over 2 days, will be cleaned
+
+[cleaner.patterns]
+matches = ["*"]
+ignores = []
 
 # ================================ Alerter ====================================
 [alerter]
