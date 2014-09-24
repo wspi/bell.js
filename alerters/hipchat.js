@@ -77,7 +77,7 @@ exports.init = function(configs, alerter, log) {
 
         var resps = yield [
           ssdbc.keys(start, stop, -1),
-          ssdbc.zget(configs.ssdb.zset.prefix + 'trend', name)
+          ssdbc.zget(configs.ssdb.prefix + 'trend', name)
         ];
 
         var keys = resps[0];
