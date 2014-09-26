@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v0.3.5
+------
+
+- default timer type 'upper_90' => 'mean_90'
+- minor fixes (including css, typo..)
+
 v0.3.4
 ------
 
