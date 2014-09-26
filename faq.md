@@ -83,4 +83,4 @@ For instance, we wanna to migrate from `timer.mean` to `timer.mean_90`:
 
 1. add `timer.mean_90.*` to listener patterns.
 2. after 2 days, block `timer.mean.*` in listener patterns.
-3. start cleaner service.
+3. start cleaner service to clean `timer.mean.*`
