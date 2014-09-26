@@ -75,3 +75,12 @@ My ssdb makes cpu load 100%!
 ----------------------------
 
 Compact leveldb maybe helpful: stop analyzers, then run this command in ssdb-cli: `compact`.
+
+Metrics type migration
+-----------------------
+
+For instance, we wanna to migrate from `timer.mean` to `timer.mean_90`:
+
+1. add `timer.mean_90.*` to listener patterns.
+2. after 2 days, block `timer.mean.*` in listener patterns.
+3. start cleaner service to clean `timer.mean.*`

@@ -47,7 +47,7 @@ quickenters = ""
 
 # ================================ Cleaner ====================================
 [cleaner]
-interval = 10800   # clean interval, in seconds
+interval = 600   # clean interval, in seconds
 threshold = 172800  # no data over 2 days, will be cleaned
 
 [cleaner.patterns]
