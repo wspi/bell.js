@@ -7,7 +7,7 @@
  *   bellHost, default: '0.0.0.0'
  *   bellPort, default: 8889
  *   bellIgnores, default: ['statsd.*']
- *   bellTimerDataFields, default: ['mean', 'count_ps']
+ *   bellTimerDataFields, default: ['mean_90', 'count_ps']
  */
 
 {
