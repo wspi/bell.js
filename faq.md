@@ -8,10 +8,11 @@ For example, to write a common bell client:
 
 ```js
 var bell = require('node-bell');
+var client = bell.createClient({port: 8889});
 
 // send datapoints every 10 seconds
 setInterval(function(){
-  bell.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
+  client.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
 }, 1e4);
 ```
 
