@@ -12,7 +12,7 @@ it alerts you via alerters like hipchat.
 
 Latest version: v0.3.5
 
-We([eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) 
+We([Eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) 
 how we created it.
 
 Requirements
@@ -37,17 +37,18 @@ to add `node-bell` to statsd's backends, edit statsd's config.js ([example](conf
 }
 ```
 
-Get Start
----------
+Getting Start
+-------------
 
 1. Start ssdb & beanstalkd & clients.
 2. Generate sample config and edit it, default: [config/configs.toml](config/configs.toml):
+
    ```bash
    $ bell -s 
    $ mv sample.configs.toml configs.toml
    $ vi configs.toml
    ```
-3. Start services: listener & analyzers & webapp & alerter & cleaner
+3. Start services: listener, analyzers, webapp, alerter, cleaner
 
    ```bash
    $ bell analyzer -c configs.toml
@@ -81,7 +82,7 @@ Services
 
 5. **cleaner**
 
-   Check the last time of a metric hitting node-bell every time interval, if the age exceeds
+   Check the last time of a metric hitting node-bell every certain time interval, if the age exceeds
    the threshold, clean it.
 
 Inside
