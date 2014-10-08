@@ -11,7 +11,7 @@ var bell = require('node-bell');
 
 // send datapoints every 10 seconds
 setInterval(function(){
-  bell.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]])
+  bell.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
 }, 1e4);
 ```
 
@@ -79,6 +79,27 @@ on your own, here are brief wiki:
        - Parameters: `datapoint`, an array like: `[metricName, [timestamp, metricValue, AnalyzationResult]]`
        - Emitted when an anomaly was detected.
 
+
+Listener Net Protocol
+---------------------
+
+The net protocol between clients and node-bell listener is very simple:
+
+```
+Packet := Block+ '\n'
+Block  := Size '\n' Data
+Size   := literal_integer
+Data   := literal_stringify_json
+```
+
+example:
+
+```
+57
+[['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]
+58
+[['foo', [1412762345, 3.15]], ['bar', [1412762345, 2348]]
+```
 
 Ssdb FAQ
 --------
