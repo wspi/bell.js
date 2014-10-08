@@ -1,7 +1,7 @@
 /**
  * Example configuration for statsd to work with node-bell.
  *
- * Just append 'node-bell' to statsd backends, set config items, and
+ * Just append 'node-bell/upstreams/statsd' to statsd backends, set config items, and
  * then restart statsd. Avaliable config items:
  *
  *   bellHost, default: '0.0.0.0'
@@ -12,7 +12,7 @@
 
 {
   port: 8125
-, backends: ['node-bell']
+, backends: ['node-bell/upstreams/statsd']
 , bellHost: '0.0.0.0'
 , bellPort: 8889
 }
