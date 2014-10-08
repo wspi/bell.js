@@ -1,6 +1,20 @@
 Node-bell FAQ
 =============
 
+Write a client
+--------------
+
+Nodejs code:
+
+```js
+var bell = require('node-bell');
+
+// send datapoints every 10 seconds
+setInterval(function(){
+  bell.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]])
+}, 1e4);
+```
+
 Analyzers Cluster
 -----------------
 
