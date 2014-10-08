@@ -1,5 +1,8 @@
 /**
- * Exports function `init` as a statsd's backend
+ * Statsd backend to work as a Node-Bell client.
+ *
+ *   * Statsd: https://github.com/etsy/statsd
+ *   * Node-bell: https://github.com/eleme/node-bell
  *
  * Optional configs:
  *   bellHost, default: '0.0.0.0'
