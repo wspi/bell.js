@@ -69,7 +69,7 @@ Services
 
    Get jobs from queue, analyze if current datapoint is an anomaly or not via 3-sigma rule. The results and all metrics
    are stored in ssdb. We can start multiple analyzer processes, see 
-   [analyzer-cluster](https://github.com/eleme/node-bell/blob/master/faq.md#analyzers-cluster-).
+   [analyzer-cluster](faq.md#analyzers-cluster).
 
 3. **webapp**
 
@@ -84,6 +84,14 @@ Services
 
    Check the last time of a metric hitting node-bell every certain time interval, if the age exceeds
    the threshold, clean it.
+
+Questions
+---------
+
+Search [faq.md](faq.md) or open an issue.
+
+- [Analyzers Cluster](faq.md#analyzers-cluster)
+- [Custom Alerters](faq.md#custom-alerters)
 
 Inside
 ------
@@ -120,11 +128,6 @@ Changes
 -------- 
 
 See [changes.md](changes.md).
-
-Questions
----------
-
-See [faq.md](faq.md) or open an issue.
 
 License
 --------
