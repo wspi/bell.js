@@ -4,7 +4,7 @@ Node-bell FAQ
 Write a client
 --------------
 
-Nodejs code:
+For example, to write a common bell client:
 
 ```js
 var bell = require('node-bell');
@@ -15,13 +15,21 @@ setInterval(function(){
 }, 1e4);
 ```
 
+For statsd users, just add `'node-bell/upstreams/statsd'` to statsd config:
+
+```js
+{
+, backends: ['node-bell/upstreams/statsd']
+}
+```
+
 Analyzers Cluster
 -----------------
 
 The more metrics, the more analyzers should be up. If the analyzation cant
 catch up with the incomming datapoints, we should increase analyzer instances.
-[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to 
-watch a single beanstalk tube, and show you how fast jobs are going in and 
+[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
+watch a single beanstalk tube, and show you how fast jobs are going in and
 out of the queue.
 
 We can start multiple analyzers via [cluster-master](https://github.com/isaacs/cluster-master),
@@ -67,6 +75,15 @@ on your own, here are brief wiki:
 3. Events currently available for module `alerter` (also the second parameter in the `init` function):
 
     - Event **'anomaly detected'**
-    
+
        - Parameters: `datapoint`, an array like: `[metricName, [timestamp, metricValue, AnalyzationResult]]`
        - Emitted when an anomaly was detected.
+
+
+Ssdb FAQ
+--------
+
+- **"Too many open files" in my ssdb log**
+
+   You need to set your linux's max open files to at least 10k, see
+   [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).

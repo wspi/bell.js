@@ -19,7 +19,7 @@ Requirements
 ------------
 
 - [node.js](http://nodejs.org/) 0.11+  (bell is written in nodejs)
-- [ssdb](https://github.com/ideawu/ssdb) 1.6.8.8+ (datastore)
+- [ssdb](https://github.com/ideawu/ssdb) 1.6.8.8+ (disk based datastore)
 - [beanstalkd](https://github.com/kr/beanstalkd) (job queue between listeners and analyzes)
 
 Installation
@@ -90,6 +90,7 @@ Questions
 
 Search [faq.md](faq.md) or open an issue.
 
+- [Write a client](faq.md#write-a-client)
 - [Analyzers Cluster](faq.md#analyzers-cluster)
 - [Custom Alerters](faq.md#custom-alerters)
 
@@ -100,7 +101,7 @@ Inside
 
    Node-bell use the [3-sigma](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) rule(similar to z-score) 
    to detect if a datapoint is an anomaly:
-   > states that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
+   > States that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
 
 2. **storage schema**
 
