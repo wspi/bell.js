@@ -15,6 +15,7 @@
  *
  *   - createClient(options)
  *   - client.send(datapoints)
+ *   - client.destroy()
  *
  * Events on client
  *
@@ -68,24 +69,24 @@ Client.prototype.connect = function() {
   });
   this.conn.on('connect', function(){self.emit('connect');});
   this.conn.on('error', function(err){self.emit('error', err);});
-  this.conn.on('timeout', function(err){self.emit('timeout');});
-  this.conn.on('end', function(err){self.emit('end');});
-  this.conn.on('close', function(err){self.emit('close');});
-  this.conn.on('drain', function(err){self.emit('drain');});
+  this.conn.on('timeout', function(){self.emit('timeout');});
+  this.conn.on('end', function(){self.emit('end');});
+  this.conn.on('close', function(){self.emit('close');});
+  this.conn.on('drain', function(){self.emit('drain');});
   return this;
 };
 
 
 /**
- * close client connection
+ * destroy client to bell connection
  *
  * to auto reconnect:
  *
  *    client.on('error', function(){
- *      self.close();
+ *      self.destroy();
  *    });
  */
-Client.prototype.close = function() {
+Client.prototype.destroy = function() {
   this.conn.destroy();
   this.conn = undefined;
 };
