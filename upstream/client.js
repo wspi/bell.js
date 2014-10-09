@@ -3,7 +3,7 @@
  *
  * Example
  *
- *    var bell = require('bell');
+ *    var bell = require('node-bell');
  *    var client = bell.createClient({port: 8889});
  *
  *    // send datapoints every 10 seconds
