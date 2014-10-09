@@ -51,10 +51,10 @@ var util = require('util');
  * @return {Object}  // this
  */
 function Client(options) {
-  this.options = options;
+  this.options = options || {};
   return this;
 }
-inherits(Client, events.EventEmitter);
+util.inherits(Client, events.EventEmitter);
 
 
 /**
@@ -63,6 +63,7 @@ inherits(Client, events.EventEmitter);
  * @return {Object}  // this
  */
 Client.prototype.connect = function() {
+  var self = this;
   this.conn = net.connect({
     host: this.options.host || '0.0.0.0',
     port: this.options.port || 8889,
