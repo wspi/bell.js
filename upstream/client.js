@@ -14,6 +14,7 @@
  * API
  *
  *   - createClient(options)
+ *   - client.connect()
  *   - client.send(datapoints)
  *   - client.destroy()
  *
