@@ -1,6 +1,13 @@
 Node-bell Changelog
 ===================
 
+v0.3.6
+-------
+
+- issue#32 https://github.com/eleme/node-bell/issues/32
+   - add comman used client
+   - export statsd as `node-bell/upstream/statsd`
+
 v0.3.5
 ------
 
