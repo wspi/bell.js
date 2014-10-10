@@ -1,59 +1,40 @@
-Node-bell Q&A
-==============
+Node-bell FAQ
+=============
 
-Scale & Performace?
---------------------
+Write a client
+--------------
 
-I didnt do any benchmarks. The status we eleme using it is: 
+For example, to write a common bell client:
 
+```js
+var bell = require('node-bell');
+var client = bell.createClient({port: 8889});
+
+// send datapoints every 10 seconds
+setInterval(function(){
+  client.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
+}, 1e4);
 ```
-metrics amount: 4k+
-datastore size: 93G+ (5days)
-analyzers workers: 24
-number of cpu: 24
-machine load average (only node-bell): 6.01, 7.86, 8.88
+
+For statsd users, just add `'node-bell/upstream/statsd'` to statsd config:
+
+```js
+{
+, backends: ['node-bell/upstream/statsd']
+}
 ```
 
-How many analyzers should I run?
----------------------------------
+Analyzers Cluster
+-----------------
 
-The more metrics, the more analyzers should be up. 
+The more metrics, the more analyzers should be up. If the analyzation cant
+catch up with the incomming datapoints, we should increase analyzer instances.
+[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
+watch a single beanstalk tube, and show you how fast jobs are going in and
+out of the queue.
 
-If the analyzation cannot catch up with the incomming mertics, we should increase analyzer instances.
-[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to watch a single beanstalk tube
-, and show you how fast jobs are going in and out of the queue.
-
-
-What dose the metrics prefix mean?
-----------------------------------
-
-- **counter**: count average
-- **timer.mean**: time cost average
-- **timer.count_ps**: count per second or frequency
-
-For instances:
-
-- If timer.count_ps gets bigger, that means high-traffic.
-- If timer.mean gets bigger, that means timeout.
-
-"Too many open files" in my ssdb log
-------------------------------------
-
-You need to set your linux's `max open files` to at least 10k, 
-see [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
-
-
-Why do you use ssdb (not redis, or not sql-based-db..) ?
---------------------------------------------------------
-
-I need a disk-based data structure server. No, redis is limited to the memory capacity.
-
-
-Analyzers Cluster ?
--------------------
-
-For example, using [cluster-master](https://github.com/isaacs/cluster-master),
-touch a file, i.e `analyzer-cluster.js`:
+We can start multiple analyzers via [cluster-master](https://github.com/isaacs/cluster-master),
+for example, `analyzer-cluster.js`:
 
 ```js
 var clusterMaster = require('cluster-master');
@@ -65,22 +46,66 @@ clusterMaster({
 })
 ```
 
-and then run it:
+run it like this:
 
 ```bash
 $ node --harmony-generators analyzer-cluster.js
 ```
 
-My ssdb makes cpu load 100%!
-----------------------------
+Custom Alerters
+---------------
 
-Compact leveldb maybe helpful: stop analyzers, then run this command in ssdb-cli: `compact`.
+Node-Bell comes with a built-in alerter: [hipchat.js](alerters/hipchat.js), but you can completely write one
+on your own, here are brief wiki:
 
-Metrics type migration
------------------------
+1. An alerter is a nodejs module which should export a function `init`:
 
-For instance, we wanna to migrate from `timer.mean` to `timer.mean_90`:
+   ```js
+   init(configs, alerter, log)
+   ```
 
-1. add `timer.mean_90.*` to listener patterns.
-2. after 2 days, block `timer.mean.*` in listener patterns.
-3. start cleaner service to clean `timer.mean.*`
+2. To make an alerter work, add it to `alerter.modules` in `configs.toml`:
+
+   ```toml
+   [alerter]
+   modules = ["my_alerter_module"]
+   ```
+
+   and then restart service alerter.
+
+3. Events currently available for module `alerter` (also the second parameter in the `init` function):
+
+    - Event **'anomaly detected'**
+
+       - Parameters: `datapoint`, an array like: `[metricName, [timestamp, metricValue, AnalyzationResult]]`
+       - Emitted when an anomaly was detected.
+
+
+Listener Net Protocol
+---------------------
+
+The net protocol between clients and node-bell listener is very simple:
+
+```
+Packet := Block+
+Block  := Size '\n' Data
+Size   := literal_integer
+Data   := literal_stringify_json
+```
+
+example:
+
+```
+57
+[['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]
+58
+[['foo', [1412762345, 3.15]], ['bar', [1412762345, 2348]]
+```
+
+Ssdb FAQ
+--------
+
+- **"Too many open files" in my ssdb log**
+
+   You need to set your linux's max open files to at least 10k, see
+   [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
