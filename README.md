@@ -10,7 +10,7 @@ it alerts you via alerters like hipchat.
 
 ![node-bell snapshot](snap.png)
 
-Latest version: v0.3.5
+Latest version: v0.3.6
 
 We([Eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) 
 how we created it.
