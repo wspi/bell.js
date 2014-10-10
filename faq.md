@@ -87,7 +87,7 @@ Listener Net Protocol
 The net protocol between clients and node-bell listener is very simple:
 
 ```
-Packet := Block+ '\n'
+Packet := Block+
 Block  := Size '\n' Data
 Size   := literal_integer
 Data   := literal_stringify_json

@@ -29,7 +29,7 @@
  *
  * Net Protocol
  *
- *   Packet := Block+ '\n'
+ *   Packet := Block+
  *   Block  := Size '\n' Data
  *   Size   := literal_integer
  *   Data   := literal_stringify_json
