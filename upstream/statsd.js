@@ -15,6 +15,7 @@
 
 var net = require('net');
 var minimatch = require('minimatch');
+var protocol = require('../lib/protocol');
 
 var config;
 var debug;
@@ -122,8 +123,7 @@ Bell.prototype.flush = function(time, data) {
 
   // send to bell if not empty
   if (length > 0) {
-    var string = JSON.stringify(list);
-    var buffer = new Buffer('' + string.length + '\n' + string);
+    var buffer = protocol.encode(list);
 
     if (!this.conn) {
       this.connect();
