@@ -109,3 +109,9 @@ Ssdb FAQ
 
    You need to set your linux's max open files to at least 10k, see
    [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
+
+- **ssdb configuration suggestions**
+
+   - **ssdb disk usage is too large?**
+
+     set item `compression` to `yes` in `ssdb.conf`, or run `compact` in ssdb-cli.
