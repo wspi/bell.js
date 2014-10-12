@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.3.7
+------
+
+- New protocol for listener <=> clients & analyzers <=> alerter  issue#42
+
 v0.3.6
 -------
 
