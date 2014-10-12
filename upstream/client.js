@@ -38,6 +38,7 @@
 var events = require('events');
 var net = require('net');
 var util = require('util');
+var protocol = require('../lib/protocol');
 
 
 /**
@@ -102,8 +103,7 @@ Client.prototype.destroy = function() {
  * @return {Object} // this
  */
 Client.prototype.send = function(datapoints, callback) {
-  var string = JSON.stringify(datapoints);
-  var buffer = new Buffer([string.length, string].join('\n'));
+  var buffer = protocol.encode(datapoints);
 
   // lazy connect
   if (!this.conn) {
