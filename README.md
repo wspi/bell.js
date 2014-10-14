@@ -33,7 +33,7 @@ to add `node-bell` to statsd's backends, edit statsd's config.js ([example](conf
 
 ```js
 {
-, backends: ["node-bell/upstream/statsd"]
+, backends: ["node-bell/clients/statsd"]
 }
 ```
 

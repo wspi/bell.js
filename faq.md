@@ -16,11 +16,11 @@ setInterval(function(){
 }, 1e4);
 ```
 
-For statsd users, just add `'node-bell/upstream/statsd'` to statsd config:
+For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
 
 ```js
 {
-, backends: ['node-bell/upstream/statsd']
+, backends: ['node-bell/clients/statsd']
 }
 ```
 
