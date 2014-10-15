@@ -45,6 +45,8 @@ root = ""   # set this if your webapp serves in a sub-directory.
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
 
+cacheInterval = 10  # cache interval for trendings
+
 # ================================ Cleaner ====================================
 [cleaner]
 interval = 600   # clean interval, in seconds
