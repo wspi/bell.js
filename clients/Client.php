@@ -1,5 +1,5 @@
 <?php
-namespace Eleme;
+namespace Bell;
 
 class Client
 {
