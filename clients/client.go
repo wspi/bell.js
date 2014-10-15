@@ -5,6 +5,7 @@ package node-bell
 
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 )
@@ -12,8 +13,10 @@ import (
 type Client struct {
 	Host string
 	Port int
-	Sock nil
+	Sock net.Conn
 }
+
+type Datapoint []interface{}
 
 
 func New(host string, port int) *Client {
@@ -25,4 +28,14 @@ func New(host string, port int) *Client {
 func (client *Client) Connect() {
 	address := fmt.Sprintf("%s:%d", client.Host, client.Port)
 	client.Sock = net.Dail("tcp", address)
+	return client.Sock
+}
+
+
+func (client *Client) Send(datapoints []Datapoint) {
+	js, _ = json.Marshal(datapoints)
+
+	if (client.Sock == nil) {
+		client.Connect()
+	}
 }
