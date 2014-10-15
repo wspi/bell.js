@@ -1,4 +1,16 @@
 <?php
+/**
+ * Node-Bell PHP client example.
+ * Copyright (c) 2014 Eleme, Inc. https://github.com/eleme/node-bell
+ *
+ * Usage Example
+ *
+ *   require 'client.php';
+ *
+ *   $client = new Bell\Client('127.0.0.1', 8889);
+ *   $client->send(array(array('bar', array(1412762335, 3.14))));
+ */
+
 namespace Bell;
 
 class Client
