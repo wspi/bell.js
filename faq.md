@@ -4,7 +4,7 @@ Node-bell FAQ
 Write a client
 --------------
 
-For example, to write a common bell client:
+For example, to write a common bell client via [clients/client.js](clients/client.js):
 
 ```js
 var bell = require('node-bell');
@@ -23,6 +23,8 @@ For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
 , backends: ['node-bell/clients/statsd']
 }
 ```
+
+All clients available in [clients](clients), feel free to send yours.
 
 Analyzers Cluster
 -----------------
