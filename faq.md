@@ -104,6 +104,16 @@ example:
 [['foo', [1412762345, 3.15]], ['bar', [1412762345, 2348]]
 ```
 
+
+Week Analyzation Ability
+------------------------
+
+What if our analyzers cannot catch up with incomming datapoints ? 
+(beanstalkd hoards the jobs!)
+
+- Increase analyzer instances.  *(Preferred solution)*
+- Reduce `analyzer.filter.offset`, this makes IO faster.
+
 Ssdb FAQ
 --------
 
