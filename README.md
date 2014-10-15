@@ -10,7 +10,7 @@ it alerts you via alerters like hipchat.
 
 ![node-bell snapshot](snap.png)
 
-Latest version: v0.3.7
+Latest version: v0.3.8
 
 We([Eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) 
 how we created it.
@@ -94,6 +94,7 @@ Search [faq.md](faq.md) or open an issue.
 - [Analyzers Cluster](faq.md#analyzers-cluster)
 - [Custom Alerters](faq.md#custom-alerters)
 - [Listener Net Protocol](faq.md#listener-net-protocol)
+- [Week Analyzation Ability](faq.md#week-analyzation-ability)
 
 Inside
 ------

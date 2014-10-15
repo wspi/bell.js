@@ -4,7 +4,7 @@ Node-bell FAQ
 Write a client
 --------------
 
-For example, to write a common bell client:
+For example, to write a common bell client via [clients/client.js](clients/client.js):
 
 ```js
 var bell = require('node-bell');
@@ -23,6 +23,8 @@ For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
 , backends: ['node-bell/clients/statsd']
 }
 ```
+
+All clients available in [clients](clients), feel free to send yours.
 
 Analyzers Cluster
 -----------------
@@ -101,6 +103,16 @@ example:
 58
 [['foo', [1412762345, 3.15]], ['bar', [1412762345, 2348]]
 ```
+
+
+Week Analyzation Ability
+------------------------
+
+What if our analyzers cannot catch up with incomming datapoints ? 
+(beanstalkd hoards the jobs!)
+
+- Increase analyzer instances.  *(Preferred solution)*
+- Reduce `analyzer.filter.offset`, this makes IO faster.
 
 Ssdb FAQ
 --------
