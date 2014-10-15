@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.3.8
+------
+
+- Add clients for py, rb, path change: 'upstream' => 'clients'
+
 v0.3.7
 ------
 
