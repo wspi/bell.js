@@ -5,6 +5,7 @@ v0.3.8
 ------
 
 - Add clients for py, rb, path change: 'upstream' => 'clients'
+- Add `cache` for webapp, issue#41, commit#3e1d7272cb7c6065e9cf41f6dc574fcbf956d5e3
 
 v0.3.7
 ------
