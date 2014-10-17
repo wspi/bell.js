@@ -114,6 +114,11 @@ What if our analyzers cannot catch up with incomming datapoints ?
 - Increase analyzer instances.  *(Preferred solution)*
 - Reduce `analyzer.filter.offset`, this makes IO faster.
 
+Query or Filter Metrics
+------------------------
+
+Node-bell queries or filters metrics only by **metric name prefixes**.
+
 Ssdb FAQ
 --------
 
