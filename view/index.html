@@ -57,10 +57,11 @@
       </div>
       {%endif%}
 
-      <div class="tabnav">
 
-        <span class="tab-time-range tab-others">
-          ~ <span id="datetime-now"></span>
+      <div class="tabnav">
+        <span class="tab-chart-info tab-others">
+          ~ <span id="chart-until"></span>
+          | <span id="chart-timestep"></span>s/1px
         </span>
 
         <span class="tab-switch tab-right tab-others">
@@ -152,7 +153,7 @@
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{prefix}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
+    initBell('{{prefix}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, {{timestep}},'{{url('/api')}}');
   }
   {%endautoescape%}
 </script>
