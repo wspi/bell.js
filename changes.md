@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.3.9
+------
+
+- Use `prefix` to filter & query metrics, instead of `pattern`. issue#51
+
 v0.3.8
 ------
 
