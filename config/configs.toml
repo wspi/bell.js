@@ -54,8 +54,8 @@ timesteps = ""
 interval = 600   # clean interval, in seconds
 threshold = 172800  # no data over 2 days, will be cleaned
 
-[cleaner.patterns]
-matches = ["*"]
+[cleaner.prefixes]
+matches = [""]
 ignores = []
 
 # ================================ Alerter ====================================
