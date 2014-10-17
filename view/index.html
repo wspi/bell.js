@@ -1,4 +1,4 @@
-{%set static_version = "v201409181956"%}
+{%set static_version = "v201410171605"%}
 {%set static_params = {'version': static_version}%}
 
 <!DOCTYPE HTML>
@@ -24,7 +24,7 @@
     <div class="main">
 
       <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
-        <input name='pattern' type="text" placeholder="Pattern.." >
+        <input name='prefix' type="text" placeholder="Name Prefix.." >
       </form>
 
       {%if qcketrs%}
@@ -57,10 +57,11 @@
       </div>
       {%endif%}
 
-      <div class="tabnav">
 
-        <span class="tab-time-range tab-others">
-          ~ <span id="datetime-now"></span>
+      <div class="tabnav">
+        <span class="tab-chart-info tab-others">
+          ~ <span id="chart-until"></span>
+          | <span id="chart-timestep"></span>s/1px
         </span>
 
         <span class="tab-switch tab-right tab-others">
@@ -145,14 +146,14 @@
 <script>
   {%autoescape false%}
   function submitform() {
-    window.location.href = "{{url('/')}}" + document.getElementById('form').pattern.value;
+    window.location.href = "{{url('/')}}" + document.getElementById('form').prefix.value;
   }
 
   // required by script.js
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
+    initBell('{{prefix}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, {{timestep}},'{{url('/api')}}');
   }
   {%endautoescape%}
 </script>
