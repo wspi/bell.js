@@ -21,7 +21,7 @@ port = 8889
 
 [listener.prefixes]
 matches = [""]
-ignores = ["statsd"]
+ignores = ["statsd."]
 
 # ================================ Analyzer ===================================
 [analyzer]
