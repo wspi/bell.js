@@ -219,6 +219,7 @@ form input {
 }
 
 
+
 /**
  * .quickenters
  */
@@ -265,10 +266,6 @@ form input {
 
 .tabnav span ul.dropdown-menu li a {
   color: #4183c4;
-}
-
-.tab-time-range {
-  color: black;
 }
 
 /**
