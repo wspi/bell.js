@@ -45,7 +45,8 @@ cacheInterval = 10  # cache interval for trendings
 
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
-# see `config/example.steps.json`, set to "" to disable it, default: 10s
+
+# see `config/example.timesteps.json`, set to "" to disable it, default: 10s
 timesteps = ""
 
 
