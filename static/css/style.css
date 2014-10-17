@@ -215,8 +215,9 @@ form input {
 #chart .title {
   margin-left: 0;
   padding: 0 7px;
-  background-color: rgba(255, 255, 255, .85);
+  background-color: rgba(255, 255, 255, .75);
 }
+
 
 
 /**
@@ -265,10 +266,6 @@ form input {
 
 .tabnav span ul.dropdown-menu li a {
   color: #4183c4;
-}
-
-.tab-time-range {
-  color: black;
 }
 
 /**

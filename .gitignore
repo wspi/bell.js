@@ -6,4 +6,5 @@ test-*.js
 test-2
 test-*
 test.quickenters.json
+test.timesteps.json
 *.pyc
