@@ -12,7 +12,7 @@
   /**
    * parameters from node-bell backend
    */
-  var pattern;
+  var prefix;
   var sort;
   var limit;
   var type;
@@ -32,8 +32,8 @@
   /**
    * entry function
    */
-  this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_, api_) {
-    pattern = pattern_;
+  this.initBell = function(prefix_, sort_, limit_, type_, past_, stop_, api_) {
+    prefix = prefix_;
     sort = sort_;
     limit = limit_;
     type = type_;
@@ -97,7 +97,12 @@
       step = +step / 1e3;
 
       // api url to fetch metrics
-      var url = [api, 'metrics', name, start, stop, type].join('/');
+      var url = [api, 'metrics'].join('/') + '?' + buildUrlParams({
+        name: name,
+        type: type,
+        start: start,
+        stop: stop
+      });
       var values = [], i = 0;
 
       /**
@@ -146,7 +151,11 @@
    * plot
    */
   function plot () {
-    var url = [api, 'names', pattern, limit, sort].join('/');
+    var url = [api, 'names'].join('/') + '?' + buildUrlParams({
+      prefix: prefix,
+      limit: limit,
+      sort: sort
+    });
 
     request(url, function(names){
       // hide loader

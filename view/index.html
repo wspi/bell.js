@@ -24,7 +24,7 @@
     <div class="main">
 
       <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
-        <input name='pattern' type="text" placeholder="Pattern.." >
+        <input name='prefix' type="text" placeholder="Name Prefix.." >
       </form>
 
       {%if qcketrs%}
@@ -145,14 +145,14 @@
 <script>
   {%autoescape false%}
   function submitform() {
-    window.location.href = "{{url('/')}}" + document.getElementById('form').pattern.value;
+    window.location.href = "{{url('/')}}" + document.getElementById('form').prefix.value;
   }
 
   // required by script.js
   var root = '{{url('/')}}';
 
   window.onload = function() {
-    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
+    initBell('{{prefix}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
   }
   {%endautoescape%}
 </script>
