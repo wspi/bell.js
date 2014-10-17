@@ -46,8 +46,10 @@ cacheInterval = 10  # cache interval for trendings
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
 
-# see `config/example.timesteps.json`, set to "" to disable it, default: 10s
-timesteps = ""
+[webapp.timestep]
+default = 10  # 10s
+# see `config/example.timestep.rules.json`, set to "" to disable it
+rules = ""
 
 
 # ================================ Cleaner ====================================
