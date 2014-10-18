@@ -12,7 +12,7 @@ var ssdb = require('ssdb');
 
 var messagePattern = '' +
   // params: trend weburl, metric name, metric name
-  'trending %s, <a href="%s/%s">%s</a>: ' +
+  'trending %s, <a href="%s/?pattern=%s&limit=1">%s</a>: ' +
   // params: anomalies count, since
   '%d anomalies in last %d seconds';
 
