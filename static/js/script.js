@@ -189,12 +189,13 @@
       .html(function(d){
         var name = d.toString();
         var params = {
+          pattern: name,
           sort: sort,
           limit: 1,
           type: type,
           past: past
         };
-        var url = root + name + '?' + buildUrlParams(params);
+        var url = root + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
       });
     });

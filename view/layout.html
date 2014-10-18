@@ -1,0 +1,49 @@
+{%set static_version = "201410181344"%}
+{%set static_params = {'version': static_version}%}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{%block title%}Bell - Metrics Monitor{%endblock%}</title>
+    <link rel="shortcut icon" href="{{url('static/img/bell.png')}}">
+    <link rel="stylesheet" href="{{url('static/css/cubism.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{url('static/css/style.css', static_params)}}" type="text/css" />
+    <script src="{{url('static/js/d3.min.js')}}"></script>
+    <script src="{{url('static/js/cubism.v1.min.js')}}"></script>
+  </head>
+  <body>
+    <!-- header -->
+    <div class="header">
+      <a href="{{url('/')}}" class="logo">
+        <img src="{{url('static/img/logo.png')}}"/>
+      </a>
+    </div>
+    <!-- end header -->
+
+    <div class="container">
+      <div class="main">
+        {%block main%}{%endblock%}
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+      Copyright (c) 2014 <a href="https://github.com/eleme">Eleme, Inc</a> |
+      <a href="https://github.com/eleme/node-bell">Bell v{{version}}</a>
+    </div>
+    <!-- end footer -->
+  </body
+</html>
+
+<script src="{{url('static/js/script.js', static_params)}}"></script>
+
+<script>
+  {%autoescape false%}
+  // required by script.js
+  var root = '{{url('/')}}';
+
+  window.onload = function() {
+    initBell('{{pattern}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, '{{url('/api')}}');
+  }
+  {%endautoescape%}
+</script>

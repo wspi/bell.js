@@ -14,9 +14,11 @@
   "main": "./clients/client",
   "dependencies": {
     "bunyan": "~1.0.1",
+    "clone": "0.1.18",
     "co": "~3.1.0",
     "co-views": "0.2.0",
     "commander": "2.3.0",
+    "extend": "2.0.0",
     "fivebeans": "~1.1.1",
     "koa": "~0.10.0",
     "koa-bunyan": ">=0.0.2",
