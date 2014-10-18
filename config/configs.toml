@@ -57,8 +57,8 @@ rules = ""
 interval = 600   # clean interval, in seconds
 threshold = 172800  # no data over 2 days, will be cleaned
 
-[cleaner.prefixes]
-matches = [""]
+[cleaner.patterns]
+matches = ["*"]
 ignores = []
 
 # ================================ Alerter ====================================
