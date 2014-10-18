@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.4.0
+------
+
+- Revert to old `pattern` way instead of `prefix` way
+
 v0.3.9
 ------
 
