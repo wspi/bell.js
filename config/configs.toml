@@ -19,9 +19,9 @@ expire = 432000  # 5day
 host = "0.0.0.0"
 port = 8889
 
-[listener.prefixes]
-matches = [""]
-ignores = ["statsd."]
+[listener.patterns]
+matches = ["*"]
+ignores = ["statsd.*"]
 
 # ================================ Analyzer ===================================
 [analyzer]
