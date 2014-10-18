@@ -1,159 +1,129 @@
-{%set static_version = "v201410171605"%}
-{%set static_params = {'version': static_version}%}
+{%extends 'layout.html'%}
 
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Bell - Metrics Monitor</title>
-  <link rel="shortcut icon" href="{{url('static/img/bell.png')}}">
-  <link rel="stylesheet" href="{{url('static/css/cubism.css')}}" type="text/css" />
-  <link rel="stylesheet" href="{{url('static/css/style.css', static_params)}}" type="text/css" />
-  <script src="{{url('static/js/d3.min.js')}}"></script>
-  <script src="{{url('static/js/cubism.v1.min.js')}}"></script>
-</head>
-<body>
+{%block main%}
+<!-- pattern form -->
+<form action="" method="get" accept-charset="utf-8">
+  <input name="pattern" type="text" placeholder="Pattern">
+</form>
+<!-- end pattern form -->
 
-  <div class="header">
-    <a href="{{url('/')}}" class="logo">
-      <img src="{{url('static/img/logo.png')}}"/>
+<!-- quickenters -->
+{%if quickenters%}
+<div class="qcketrs">
+{%for qcketr_key in Object.keys(quickenters)%}
+  <span class="qcketr-item">
+    <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
+      {{qcketr_key}}
     </a>
-  </div>
 
-  <div class="container">
-    <div class="main">
-
-      <form id="form" action="" method="get" accept-charset="utf-8" onsubmit="submitform();return false;">
-        <input name='prefix' type="text" placeholder="Name Prefix.." >
-      </form>
-
-      {%if qcketrs%}
-      <div class="qcketrs">
-      {%for qcketr_key in Object.keys(qcketrs)%}
-        <span class="qcketr-item">
-          <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
-            {{qcketr_key}}
+    <div class="dropdown-menu-box">
+      {%set qcketr_item = quickenters[qcketr_key]%}
+      <ul class="dropdown-menu">
+        {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
+        {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
+        {%set qcketr_sub_item_params = {
+        'pattern': qcketr_sub_item[0],
+        'sort': qcketr_sub_item[1] || '↑',
+        'limit': qcketr_sub_item[2] || 50,
+        'type': qcketr_sub_item[3] || 'v'
+        }%}
+        <li>
+          <a href="{{url('/', qcketr_sub_item_params)}}">
+          {{qcketr_sub_item_key}}
           </a>
-          <div class="dropdown-menu-box">
-          {%set qcketr_item = qcketrs[qcketr_key]%}
-            <ul class="dropdown-menu">
-            {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
-              {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
-              {%set qcketr_sub_item_params = {
-                'sort': qcketr_sub_item[1] || '↑',
-                'limit': qcketr_sub_item[2] || 50,
-                'type': qcketr_sub_item[3] || 'v'
-              }%}
-              <li>
-                <a href="{{url('/' + qcketr_sub_item[0], qcketr_sub_item_params)}}">
-                  {{qcketr_sub_item_key}}
-                </a>
-              </li>
-            {%endfor%}
-            </ul>
-          </div>
-        </span>
-      {%endfor%}
-      </div>
-      {%endif%}
-
-
-      <div class="tabnav">
-        <span class="tab-chart-info tab-others">
-          ~ <span id="chart-until"></span>
-          | <span id="chart-timestep"></span>s/1px
-        </span>
-
-        <span class="tab-switch tab-right tab-others">
-          {%if type === 'v'%}
-            <a href="{{switchUrl('type', 'm')}}"> Switch </a>
-          {%else%}
-            <a href="{{switchUrl('type', 'v')}}"> Switch </a>
-          {%endif%}
-        </span>
-
-        <span class="tab-stop tab-right tab-others">
-          {%if stop === 1%}
-            <a href="{{switchUrl('stop', 0)}}"> Realtime </a>
-          {%else%}
-            <a href="{{switchUrl('stop', 1)}}"> Stop </a>
-          {%endif%}
-        </span>
-
-        <span class="tab-limit tab-right tab-others">
-          <a href="javscript:void(0);" onclick="return false;"> Top {{limit}}</a>
-          <div class="dropdown-menu-box">
-            <ul class="dropdown-menu">
-              {%set limits = [1, 30, 50, 100, 500, 1000]%}
-              {%for lim in limits%}
-              <li>
-              <a href="{{switchUrl('limit', lim)}}">{{lim}}</a>
-              </li>
-              {%endfor%}
-            </ul>
-          </div>
-        </span>
-
-        <span class="tab-sort-by tab-right tab-others">
-          <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
-          <div class="dropdown-menu-box">
-            <ul class="dropdown-menu">
-              <li>
-                <a href="{{switchUrl('sort', '↑')}}">Trending Up ↑</a>
-              </li>
-              <li>
-                <a href="{{switchUrl('sort', '↓')}}">Trending Down ↓</a>
-              </li>
-            </ul>
-          </div>
-        </span>
-
-        <ul class="tabs">
-          {%set tabs = {
-            '0s': 'Now', '3h': '3 hours', '6h': '6 hours', '1d': '1 day', '2d': '2 days', '3d': '3 days', '4d': '4 days'
-          }%}
-          {%for tab_key in Object.keys(tabs)%}
-            <li {%if past === tab_key%}class="active"{%endif%}>
-              <a href="{{switchUrl('past', tab_key)}}">{{tabs[tab_key]}}</a>
-            </li>
-          {%endfor%}
-          {%if !tabs.hasOwnProperty(past)%}
-            <li class="active">
-              <a href="{{switchUrl('past', past)}}">{{past}}</a>
-            </li>
-          {%endif%}
-
-        </ul>
-      </div>
-
-      <div id="chart">
-        <div class="loader" id="loader">
-          <img src="{{url('static/img/spinner.gif')}}" />
-        </div>
-      </div>
+        </li>
+        {%endfor%}
+      </ul>
     </div>
-
-    <div class="footer">
-      Copyright (c) 2014 <a href="https://github.com/eleme">Eleme, Inc</a> |
-      <a href="https://github.com/eleme/node-bell">Bell v{{version}}</a>
-    </div>
-
+  </span>
+{%endfor%}
 </div>
+{%endif%}
+<!-- end quickenters -->
 
-</body>
-</html>
-<script src="{{url('static/js/script.js', static_params)}}"></script>
-<script>
-  {%autoescape false%}
-  function submitform() {
-    window.location.href = "{{url('/')}}" + document.getElementById('form').prefix.value;
-  }
 
-  // required by script.js
-  var root = '{{url('/')}}';
+<!-- tabs -->
+<div class="tabnav">
+  <span class="tab-chart-info tab-others">
+    ~ <span id="chart-until"></span>
+  </span>
 
-  window.onload = function() {
-    initBell('{{prefix}}', '{{sort}}', '{{limit}}', '{{type}}', '{{past}}', {{stop}}, {{timestep}},'{{url('/api')}}');
-  }
-  {%endautoescape%}
-</script>
+  <!-- tab switch -->
+  <span class="tab-switch tab-right tab-others">
+  {%if type === 'v'%}
+    <a href="{{switch_('type', 'm')}}"> Switch </a>
+  {%else%}
+    <a href="{{switch_('type', 'v')}}"> Switch </a>
+  {%endif%}
+  </span>
+  <!-- end tab switch -->
+
+  <!-- tab stop -->
+  <span class="tab-stop tab-right tab-others">
+  {%if stop === 1%}
+    <a href="{{switch_('stop', 0)}}"> Realtime </a>
+  {%else%}
+    <a href="{{switch_('stop', 1)}}"> Stop </a>
+  {%endif%}
+  </span>
+  <!-- end tab stop -->
+
+  <!-- tab limit -->
+  <span class="tab-limit tab-right tab-others">
+    <a href="javscript:void(0);" onclick="return false;"> Top {{limit}}</a>
+    <div class="dropdown-menu-box">
+      <ul class="dropdown-menu">
+      {%set limits = [1, 30, 50, 100, 500, 1000]%}
+      {%for lim in limits%}
+        <li>
+          <a href="{{switch_('limit', lim)}}">{{lim}}</a>
+        </li>
+      {%endfor%}
+      </ul>
+    </div>
+  </span>
+  <!-- end tab limit -->
+
+  <!-- tab sort -->
+  <span class="tab-sort-by tab-right tab-others">
+    <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
+    <div class="dropdown-menu-box">
+      <ul class="dropdown-menu">
+        <li>
+        <a href="{{switch_('sort', '↑')}}">Trending Up ↑</a>
+        </li>
+        <li>
+        <a href="{{switch_('sort', '↓')}}">Trending Down ↓</a>
+        </li>
+      </ul>
+    </div>
+  </span>
+
+  <!-- past tabs -->
+  <ul class="tabs">
+  {%set tabs = {
+    '0s': 'Now', '3h': '3 hours', '6h': '6 hours', '1d': '1 day', '2d': '2 days', '3d': '3 days', '4d': '4 days'
+  }%}
+  {%for tab_key in Object.keys(tabs)%}
+    <li {%if past === tab_key%}class="active"{%endif%}>
+      <a href="{{switch_('past', tab_key)}}">{{tabs[tab_key]}}</a>
+    </li>
+  {%endfor%}
+  {%if !tabs.hasOwnProperty(past)%}
+    <li class="active">
+      <a href="{{switch_('past', past)}}">{{past}}</a>
+    </li>
+  {%endif%}
+  </ul>
+  <!-- end past tabs -->
+</div>
+<!-- end tabs -->
+
+<!-- chart -->
+<div id="chart">
+  <div class="loader" id="loader">
+    <img src="{{url('static/img/spinner.gif')}}" />
+  </div>
+</div>
+<!-- end chart -->
+{%endblock%}

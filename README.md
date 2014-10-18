@@ -95,7 +95,6 @@ Search [faq.md](faq.md) or open an issue.
 - [Custom Alerters](faq.md#custom-alerters)
 - [Listener Net Protocol](faq.md#listener-net-protocol)
 - [Week Analyzation Ability](faq.md#week-analyzation-ability)
-- [Query or Filter Metrics](faq.md#query-or-filter-metrics)
 
 Inside
 ------

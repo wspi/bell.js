@@ -19,9 +19,9 @@ expire = 432000  # 5day
 host = "0.0.0.0"
 port = 8889
 
-[listener.prefixes]
-matches = [""]
-ignores = ["statsd."]
+[listener.patterns]
+matches = ["*"]
+ignores = ["statsd.*"]
 
 # ================================ Analyzer ===================================
 [analyzer]
@@ -41,22 +41,18 @@ factor = 0.1  # the bigger, the timeliness better. 0~1
 port = 8989
 root = ""   # set this if your webapp serves in a sub-directory.
 
-cacheInterval = 10  # cache interval for trendings
+syncInterval = 10  # sync interval for trendings
 
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
-
-# see `config/example.timesteps.json`, set to "" to disable it, default: 10s
-timesteps = ""
-
 
 # ================================ Cleaner ====================================
 [cleaner]
 interval = 600   # clean interval, in seconds
 threshold = 172800  # no data over 2 days, will be cleaned
 
-[cleaner.prefixes]
-matches = [""]
+[cleaner.patterns]
+matches = ["*"]
 ignores = []
 
 # ================================ Alerter ====================================

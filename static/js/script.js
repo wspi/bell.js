@@ -12,7 +12,7 @@
   /**
    * parameters from node-bell backend
    */
-  var prefix;
+  var pattern;
   var sort;
   var limit;
   var type;
@@ -34,15 +34,14 @@
   /**
    * entry function
    */
-  this.initBell = function(prefix_, sort_, limit_, type_, past_, stop_,
-                           timestep_, api_) {
-    prefix = prefix_;
+  this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_,
+                           api_) {
+    pattern = pattern_;
     sort = sort_;
     limit = limit_;
     type = type_;
     past = past_;
     stop = stop_;
-    timestep = timestep_;
     api = api_;
 
     pastSecs = timespan2secs(past);
@@ -50,15 +49,12 @@
     // reset context
     context
     .serverDelay(pastSecs * 1e3)  // past
-    .step(timestep * 1e3)
     ;
 
     // stop update
     if (stop === 1) {
       context.stop();
     }
-
-    chartTimeStepSpan.innerHTML = timestep;
 
     plot();
 
@@ -159,7 +155,7 @@
    */
   function plot () {
     var url = [api, 'names'].join('/') + '?' + buildUrlParams({
-      prefix: prefix,
+      pattern: pattern,
       limit: limit,
       sort: sort
     });
@@ -193,12 +189,13 @@
       .html(function(d){
         var name = d.toString();
         var params = {
+          pattern: name,
           sort: sort,
           limit: 1,
           type: type,
           past: past
         };
-        var url = root + name + '?' + buildUrlParams(params);
+        var url = root + '?' + buildUrlParams(params);
         return '<a href="' + url + '">' + name + '</a>';
       });
     });

@@ -7,7 +7,7 @@
  * Optional configs:
  *   bellHost, default: '0.0.0.0'
  *   bellPort, default: 8889
- *   bellIgnores, default: ['statsd.']  // ignore prefixes
+ *   bellIgnores, default: ['statsd.*']
  *   bellTimerDataFields, default: ['mean_90', 'count_ps']
  *
  * Metric types supported: `counter_rates` & `timer_data`
@@ -15,6 +15,7 @@
 
 var net = require('net');
 var protocol = require('../lib/protocol');
+var minimatch = require('minimatch');
 var startsWith = require('../lib/util').startsWith;
 
 var config;
@@ -45,16 +46,16 @@ var makers = {
 
 
 /**
- * test if metric name matches our ignore prefixes
+ * test if metric name matches our ignore patterns
  *
  * @param {String} key
  * @return {Boolean} // true for pass
  */
 function match(key) {
-  var ignores = config.bellIgnores || ['statsd.'];
+  var ignores = config.bellIgnores || ['statsd.*'];
 
   for (var i = 0; i < ignores.length; i++) {
-    if (startsWith(key, ignores[i])) {
+    if (minimatch(key, ignores[i])) {
       return true;
     }
   }
