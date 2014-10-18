@@ -41,16 +41,10 @@ factor = 0.1  # the bigger, the timeliness better. 0~1
 port = 8989
 root = ""   # set this if your webapp serves in a sub-directory.
 
-cacheInterval = 10  # cache interval for trendings
+syncInterval = 10  # sync interval for trendings
 
 # see `config/example.quickenters.json`, set to "" to disable it
 quickenters = ""
-
-[webapp.timestep]
-default = 10  # 10s
-# see `config/example.timestep.rules.json`, set to "" to disable it
-rules = ""
-
 
 # ================================ Cleaner ====================================
 [cleaner]
