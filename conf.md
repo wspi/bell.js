@@ -102,3 +102,21 @@ Node-Bell Configuration Manual
    integer, time interval to sync trendings from ssdb (in seconds), default: `10` (10s)
 
 - **cleaner.interval**
+
+   integer, time interval to clean dead metrics, default: `600` (10min)
+
+- **cleaner.threshold**
+
+   integer, if the age of a metric hitting bell exceeds this threshold, it will be cleaned, default: `172800` (2 day)
+
+- **alerter.host**
+
+   string, the host of alerter, default: `0.0.0.0`
+
+- **alerter.port**
+
+   port, the port of alerter server, default: `8789`
+
+- **alerter.modules**
+
+   array, the nodejs alerter modules, default `["../alerters/hipchat.js"]`
