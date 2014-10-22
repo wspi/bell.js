@@ -7,40 +7,28 @@
 </form>
 <!-- end pattern form -->
 
-<!-- quickenters -->
-{%if quickenters%}
-<div class="qcketrs">
-{%for qcketr_key in Object.keys(quickenters)%}
-  <span class="qcketr-item">
-    <a class="qcketr-item-key" href="javascript:void(0)" onclick="return false;">
-      {{qcketr_key}}
+<!-- patterns -->
+<div class="patterns">
+  {%for key in Object.keys(patterns)%}
+  <span class="patterns-item">
+    <a class="patterns-item-key" href="javascript:void(0)" onclick="return false;">
+      {{key}}
     </a>
-
     <div class="dropdown-menu-box">
-      {%set qcketr_item = quickenters[qcketr_key]%}
       <ul class="dropdown-menu">
-        {%for qcketr_sub_item_key in Object.keys(qcketr_item)%}
-        {%set qcketr_sub_item = qcketr_item[qcketr_sub_item_key]%}
-        {%set qcketr_sub_item_params = {
-        'pattern': qcketr_sub_item[0],
-        'sort': qcketr_sub_item[1] || '↑',
-        'limit': qcketr_sub_item[2] || 50,
-        'type': qcketr_sub_item[3] || 'v'
-        }%}
+        {%for key_ in Object.keys(patterns[key])%}
         <li>
-          <a href="{{url('/', qcketr_sub_item_params)}}">
-          {{qcketr_sub_item_key}}
+          <a href="{{url('/', {'pattern': patterns[key][key_]})}}">
+            {{key_}}
           </a>
         </li>
         {%endfor%}
       </ul>
     </div>
   </span>
-{%endfor%}
+  {%endfor%}
 </div>
-{%endif%}
-<!-- end quickenters -->
-
+<!-- end patterns -->
 
 <!-- tabs -->
 <div class="tabnav">
