@@ -96,6 +96,12 @@ Search [faq.md](faq.md) or open an issue.
 - [Listener Net Protocol](faq.md#listener-net-protocol)
 - [Week Analyzation Ability](faq.md#week-analyzation-ability)
 
+
+Configs
+-------
+
+Configuration Manual: [conf.md](./conf.md).
+
 Inside
 ------
 
