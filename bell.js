@@ -25,12 +25,14 @@
 var fs = require('fs');
 var co = require('co');
 var program = require('commander');
+var extend = require('extend');
 var toml = require('toml');
 var alerter = require('./lib/alerter');
 var analyzer = require('./lib/analyzer');
 var cleaner = require('./lib/cleaner');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
+var patterns = require('./lib/patterns');
 var webapp = require('./lib/webapp');
 var version = require('./lib/version');
 var util = require('./lib/util');
@@ -56,9 +58,19 @@ co(function *(){
     return util.copy(util.path.configs, 'sample.configs.toml');
   }
 
+  // update configs
   var configsPath = program.configsPath || util.path.configs;
-  var content = fs.readFileSync(configsPath).toString();
-  util.updateNestedObjects(configs, toml.parse(content));
+  var configsContent = fs.readFileSync(configsPath).toString();
+  util.updateNestedObjects(configs, toml.parse(configsContent));
+
+  // update patterns
+  if (configs.patterns.length > 0) {
+    var patternsContent = fs.readFileSync(configs.patterns);
+    var patterns_ = eval('_ = ' + patternsContent); // jshint ignore: line
+    // clear default object `patterns`
+    for (var key in patterns) delete patterns[key]; // jshint ignore: line
+    extend(patterns, patterns_);
+  }
 
   var name = program.args[0];
 
