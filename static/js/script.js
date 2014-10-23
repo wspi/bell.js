@@ -225,9 +225,19 @@
     request(url, function(stats){
       for (var pattern in stats) {
         var trend = +stats[pattern];
+
+        // update trend
         var span = document.getElementById('p-' + pattern);
         span.innerHTML = trend < 0 ? '↓' : '↑';
 
+        // update link
+        var a = document.getElementById('a-' + pattern);
+        a.href = root + '?' + buildUrlParams({
+          pattern: pattern,
+          type: 'v', sort: trend < 0 ? '↓' : '↑'
+        });
+
+        // update background color
         var li = document.getElementById('li-' + pattern);
 
         if (Math.abs(trend) >= 0.5 && Math.abs(trend) < 1) {

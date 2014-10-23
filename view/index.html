@@ -18,7 +18,7 @@
       <ul class="dropdown-menu">
         {%for key_ in Object.keys(patterns[key])%}
         <li id="li-{{patterns[key][key_]}}">
-          <a href="{{url('/', {'pattern': patterns[key][key_], 'type': 'v'})}}">
+          <a id="a-{{patterns[key][key_]}}" href="{{url('/', {'pattern': patterns[key][key_], 'type': 'v'})}}">
             <span id="p-{{patterns[key][key_]}}"></span>
             {{key_}}
           </a>
