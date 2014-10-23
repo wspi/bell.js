@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v0.4.1
+------
+
+- Merge all patterns to one place `patterns.js`
+- add trend to enters
+
 v0.4.0
 ------
 
