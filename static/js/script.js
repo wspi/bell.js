@@ -224,9 +224,19 @@
 
     request(url, function(stats){
       for (var pattern in stats) {
-        var div = document.getElementById('p-' + pattern);
-        var htm = stats[pattern] < 0 ? '↓' : '↑';
-        div.innerHTML = htm;
+        var trend = +stats[pattern];
+        var span = document.getElementById('p-' + pattern);
+        span.innerHTML = trend < 0 ? '↓' : '↑';
+
+        var li = document.getElementById('li-' + pattern);
+
+        if (Math.abs(trend) >= 0.7 && Math.abs(trend) < 1) {
+          li.setAttribute('class', 'warn');
+        } else if (Math.abs(trend) >= 1) {
+          li.setAttribute('class', 'crit');
+        } else {
+          li.setAttribute('class', 'ok');
+        }
       }
     });
   }

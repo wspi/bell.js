@@ -252,6 +252,22 @@ form input {
   width: 200px;
 }
 
+.patterns-item ul.dropdown-menu li:hover {
+  background-color: #CED7DF;
+}
+
+.patterns-item li.ok {
+  background-color: #AAFFAA;
+}
+
+.patterns-item li.warn {
+  background-color: #FFF6A5;
+}
+
+
+.patterns-item li.crit {
+  background-color: #FF9999;
+}
 
 /**
  * custom dropdown-menus
