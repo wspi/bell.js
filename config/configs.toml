@@ -1,61 +1,51 @@
-# =============================== Job Queue ===================================
+# Node-Bell configuration. Docs: https://github.com/eleme/node-bell#configs
+
+# =============================== Patterns ==================================
+patterns = ""
+interval = 10  # 10s
+
+# =============================== Job Queue =================================
 [beanstalkd]
 host = "0.0.0.0"
 port = 11300
 tube = "bell"
 
-# ================================ Storage ====================================
+# =============================== Storage ===================================
 [ssdb]
 host = "0.0.0.0"
 port = 8888
-
-prefix = "bell."   # zset/hash.. name prefix
-
-[ssdb.zset]  # to store datapoints
+prefix = "bell."
+[ssdb.zset]
 expire = 432000  # 5day
 
-# ================================ Listener ===================================
+# =============================== Listener ==================================
 [listener]
 host = "0.0.0.0"
 port = 8889
 
-[listener.patterns]
-matches = ["*"]
-ignores = ["statsd.*"]
-
-# ================================ Analyzer ===================================
+# =============================== Analyzer ==================================
 [analyzer]
 strict = true
 minSize = 50
 
 [analyzer.filter]
-offset = 0.01  # filter all points within `periodicity * offset`
-periodicity = 86400  # 86400 = 24 * 60 * 60 = 1 day  (for all time series)
+offset = 0.01
+periodicity = 86400
 
 [analyzer.trending]
-# for anomalies trending
-factor = 0.1  # the bigger, the timeliness better. 0~1
+factor = 0.1
 
-# ================================ WebApp =====================================
+# =============================== WebApp ====================================
 [webapp]
 port = 8989
-root = ""   # set this if your webapp serves in a sub-directory.
+root = ""
 
-syncInterval = 10  # sync interval for trendings
-
-# see `config/example.quickenters.json`, set to "" to disable it
-quickenters = ""
-
-# ================================ Cleaner ====================================
+# =============================== Cleaner ===================================
 [cleaner]
-interval = 600   # clean interval, in seconds
-threshold = 172800  # no data over 2 days, will be cleaned
+interval = 600
+threshold = 172800
 
-[cleaner.patterns]
-matches = ["*"]
-ignores = []
-
-# ================================ Alerter ====================================
+# =============================== Alerter ===================================
 [alerter]
 host = "0.0.0.0"
 port = 8789
@@ -64,7 +54,7 @@ modules = ["../alerters/hipchat.js"]
 [alerter.hipchat]
 roomId = 12345
 token = "hipchat-api-token"
-weburl = "http://bell.example.com"
+weburl = "http://localhost:8989"
 
 since = 300  # 5min
 threshold = 15

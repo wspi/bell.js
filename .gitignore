@@ -8,3 +8,4 @@ test-*
 test.quickenters.json
 test.timesteps.json
 *.pyc
+test.patterns.js

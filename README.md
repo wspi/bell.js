@@ -1,18 +1,18 @@
 Node-Bell
 =========
 
-Node-Bell is a real-time anomalies detection for periodic time series, 
+Node-Bell is a real-time anomalies detection system for periodic time series,
 built to be able to monitor thousands of metrics. It collects metrics
 from clients like [statsd](https://github.com/etsy/statsd), analyzes
 them with the [3-sigma rule](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)
-and visualizes results on the web. Once enough anomalies were found in a short time, 
+and visualizes results on the web. Once enough anomalies were found in a short time,
 it alerts you via alerters like hipchat.
 
 ![node-bell snapshot](snap.png)
 
 Latest version: v0.4.0
 
-We([Eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/) 
+We([Eleme](http://ele.me)) have [blogged](http://eleme.io/blog/2014/metrics-monitor/)
 how we created it.
 
 Requirements
@@ -29,7 +29,7 @@ Installation
 $ npm install node-bell -g
 ```
 
-to add `node-bell` to statsd's backends, edit statsd's config.js ([example](config/example.statsd.config.js)):
+to add `node-bell` to statsd's backends, edit statsd's config.js:
 
 ```js
 {
@@ -44,7 +44,7 @@ Getting Start
 2. Generate sample config and edit it, default: [config/configs.toml](config/configs.toml):
 
    ```bash
-   $ bell -s 
+   $ bell -s
    $ mv sample.configs.toml configs.toml
    $ vi configs.toml
    ```
@@ -61,14 +61,14 @@ Getting Start
 Services
 --------
 
-1. **listener** 
+1. **listener**
 
    Receive incoming metrics from clients over tcp, then put them to job queue (beanstalkd), default port: 8889.
 
 2. **analyzer(s)**
 
    Get jobs from queue, analyze if current datapoint is an anomaly or not via 3-sigma rule. The results and all metrics
-   are stored in ssdb. We can start multiple analyzer processes, see 
+   are stored in ssdb. We can start multiple analyzer processes, see
    [analyzer-cluster](faq.md#analyzers-cluster).
 
 3. **webapp**
@@ -77,7 +77,7 @@ Services
 
 4. **alerter**
 
-   Alert once enough anomalies were detected. It receives anomalous datapoints from all analyzers over tcp, 
+   Alert once enough anomalies were detected. It receives anomalous datapoints from all analyzers over tcp,
    default port: 8789
 
 5. **cleaner**
@@ -96,12 +96,18 @@ Search [faq.md](faq.md) or open an issue.
 - [Listener Net Protocol](faq.md#listener-net-protocol)
 - [Week Analyzation Ability](faq.md#week-analyzation-ability)
 
+
+Configs
+-------
+
+Configuration Manual: [conf.md](./conf.md).
+
 Inside
 ------
 
 1. **algorithm**
 
-   Node-bell use the [3-sigma](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) rule(similar to z-score) 
+   Node-bell use the [3-sigma](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) rule(similar to z-score)
    to detect if a datapoint is an anomaly:
    > States that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
 
@@ -128,7 +134,7 @@ Inside
    ```
 
 Changes
--------- 
+--------
 
 See [changes.md](changes.md).
 
