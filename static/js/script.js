@@ -5,7 +5,6 @@
   var context = cubism.context()
   .serverDelay(0)
   .clientDelay(0)
-  .step(1e4)  // 10 seconds
   .size(3 * 60 * 60 / 10)  // 3 hours / 10s
   ;
 
@@ -18,7 +17,7 @@
   var type;
   var past;
   var stop;
-  var timestep;
+  var step;
   var api;
   // the seconds past
   var pastSecs;
@@ -35,13 +34,14 @@
    * entry function
    */
   this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_,
-                           api_) {
+                           step_, api_) {
     pattern = pattern_;
     sort = sort_;
     limit = limit_;
     type = type_;
     past = past_;
     stop = stop_;
+    step = step_;
     api = api_;
 
     pastSecs = timespan2secs(past);
@@ -49,6 +49,7 @@
     // reset context
     context
     .serverDelay(pastSecs * 1e3)  // past
+    .step(step * 1e3)
     ;
 
     // stop update
@@ -57,12 +58,17 @@
     }
 
     plot();
+    updateStats();
 
     if (stop === 0) {
       setInterval(function(){
         d3.select('#chart').selectAll('*').remove();
         plot();
       }, 10 * 60 * 1e3);  // replot every 10 min
+
+      setInterval(function() {
+        updateStats();
+      }, step * 1e3);
     }
   };
 
@@ -208,6 +214,22 @@
     d3.selectAll('.value')
     .style('right', i === null ? null : context.size() - i + 'px');
   });
+
+
+  /**
+   * update patterns stats
+   */
+  function updateStats() {
+    var url = [api, 'stats'].join('/');
+
+    request(url, function(stats){
+      for (var pattern in stats) {
+        var div = document.getElementById('p-' + pattern);
+        var htm = stats[pattern] < 0 ? '↓' : '↑';
+        div.innerHTML = htm;
+      }
+    });
+  }
 })(this);
 
 
