@@ -55,3 +55,6 @@ modules = ["../alerters/hipchat.js"]
 roomId = 12345
 token = "hipchat-api-token"
 weburl = "http://localhost:8989"
+
+since = 300  # 5min
+threshold = 15
