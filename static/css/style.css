@@ -144,7 +144,7 @@ ul.dropdown-menu li a:hover {
 
 /**
  * tab & dropdown menu
- * hover tab and trigger dropdown 
+ * hover tab and trigger dropdown
  */
 .tab-others:hover ul.dropdown-menu {
   display: block;
@@ -248,7 +248,7 @@ form input {
 }
 
 .patterns-item ul.dropdown-menu {
-  font-size: 12px;
+  font-size: 14px;
   width: 200px;
 }
 
