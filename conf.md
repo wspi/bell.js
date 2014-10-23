@@ -27,6 +27,10 @@ Node-Bell Configuration Manual
    }
    ```
 
+- **interval**
+
+   integer, datapoints incomming time interval, default: `10` (10s)
+
 - **beanstalkd.host**
 
    string, beanstalkd server host, default: `"0.0.0.0"`
