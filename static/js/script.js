@@ -230,7 +230,7 @@
 
         var li = document.getElementById('li-' + pattern);
 
-        if (Math.abs(trend) >= 0.7 && Math.abs(trend) < 1) {
+        if (Math.abs(trend) >= 0.5 && Math.abs(trend) < 1) {
           li.setAttribute('class', 'warn');
         } else if (Math.abs(trend) >= 1) {
           li.setAttribute('class', 'crit');
