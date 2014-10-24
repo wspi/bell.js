@@ -68,7 +68,7 @@
 
       setInterval(function() {
         updateStats();
-      }, step * 1e3);
+      }, 6 * step * 1e3);
     }
   };
 
@@ -240,12 +240,18 @@
         // update background color
         var li = document.getElementById('li-' + pattern);
 
-        if (Math.abs(trend) >= 0.5 && Math.abs(trend) < 1) {
-          li.setAttribute('class', 'warn');
-        } else if (Math.abs(trend) >= 1) {
-          li.setAttribute('class', 'crit');
-        } else {
-          li.setAttribute('class', 'ok');
+        var d = Math.abs(trend);
+
+        if (d < 0.2) {
+          li.setAttribute('class', 'lv1');
+        } else if (d >= 0.2 && d < 0.4) {
+          li.setAttribute('class', 'lv2');
+        } else if (d >= 0.4 && d < 0.6) {
+          li.setAttribute('class', 'lv3');
+        } else if (d >= 0.6 && d < 1.0) {
+          li.setAttribute('class', 'lv4');
+        } else if (d >= 1.0) {
+          li.setAttribute('class', 'lv5');
         }
       }
     });
