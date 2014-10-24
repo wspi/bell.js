@@ -254,15 +254,23 @@ form input {
 }
 
 
-.patterns-item li.ok {
+.patterns-item li.lv1 {  /* 0 ~ 0.2 */
   background-color: #fff;
 }
 
-.patterns-item li.warn {
+.patterns-item li.lv2 {   /* 0.2 ~ 0.4 */
   background-color: #fff9ea;
 }
 
-.patterns-item li.crit {
+.patterns-item li.lv3 {   /* 0.4 ~ 0.6 */
+  background-color: #FFF6A5;
+}
+
+.patterns-item li.lv4 {   /* 0.6 ~ 1 */
+  background-color: #FFB689;
+}
+
+.patterns-item li.lv5 {   /* 1 ~ */
   background-color: #ff9999;
 }
 
