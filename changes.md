@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.4.3
+------
+
+- Built in cluster support for webapp & analyzer #57
+
 v0.4.1
 ------
 
