@@ -67,6 +67,10 @@ Node-Bell Configuration Manual
 
    integer, listener port to listen, default: `8889`
 
+- **analyzer.workers**
+
+   integer, analyzer cluster size, default: `24` (better cpus number)
+
 - **analyzer.strict**
 
    boolean, if use strict mode in analyzation, default: `true`
@@ -92,6 +96,10 @@ Node-Bell Configuration Manual
 - **analyzer.trending.factor**
 
    float, the factor to calculate trending value via weighted moving average algorithm, default: `0.1`
+
+- **webapp.workers**
+
+   integer, webapp cluster size, default: `5`
 
 - **webapp.port**
 

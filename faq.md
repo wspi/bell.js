@@ -33,26 +33,7 @@ The more metrics, the more analyzers should be up. If the analyzation cant
 catch up with the incomming datapoints, we should increase analyzer instances.
 [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
 watch a single beanstalk tube, and show you how fast jobs are going in and
-out of the queue.
-
-We can start multiple analyzers via [cluster-master](https://github.com/isaacs/cluster-master),
-for example, `analyzer-cluster.js`:
-
-```js
-var clusterMaster = require('cluster-master');
-
-clusterMaster({
-  exec: '/usr/bin/bell',  // bell bin path
-  size: 5,  // workers count
-  args: ['analyzer', '-c', './configs.toml']
-})
-```
-
-run it like this:
-
-```bash
-$ node --harmony-generators analyzer-cluster.js
-```
+out of the queue, see also [Week Analyzation Ability](#week-analyzation-ability).
 
 Custom Alerters
 ---------------
@@ -111,7 +92,7 @@ Week Analyzation Ability
 What if our analyzers cannot catch up with incomming datapoints ? 
 (beanstalkd hoards the jobs!)
 
-- Increase analyzer instances.  *(Preferred solution)*
+- Increase analyzer workers.  *(Preferred solution)*
 - Reduce `analyzer.filter.offset`, this makes IO faster.
 
 Ssdb FAQ

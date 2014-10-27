@@ -68,7 +68,7 @@
 
       setInterval(function() {
         updateStats();
-      }, 6 * step * 1e3);
+      }, 60 * 1e3);  // 1min
     }
   };
 
