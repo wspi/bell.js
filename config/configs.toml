@@ -1,6 +1,6 @@
 # Node-Bell configuration. Docs: https://github.com/eleme/node-bell#configs
 
-# =============================== Patterns ==================================
+# =============================== Global ==================================
 patterns = ""
 interval = 10  # 10s
 

@@ -58,6 +58,11 @@ Getting Start
    $ bell cleaner -c configs.toml
    ```
 
+Tutorial
+--------
+
+- 中文: [tutorial-zh.md](tutorial-zh.md)
+
 Services
 --------
 
