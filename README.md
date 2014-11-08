@@ -61,7 +61,7 @@ Getting Start
 Tutorial
 --------
 
-- 中文: [tutorial-zh.md](tutorial-zh.md)
+- 中文: [tutorial-zh.md](docs/tutorial-zh.md)
 
 Services
 --------
@@ -74,7 +74,7 @@ Services
 
    Get jobs from queue, analyze if current datapoint is an anomaly or not via 3-sigma rule. The results and all metrics
    are stored in ssdb. We can start multiple analyzer processes, see
-   [analyzer-cluster](faq.md#analyzers-cluster).
+   [analyzer-cluster](docs/faq.md#analyzers-cluster).
 
 3. **webapp**
 
@@ -93,19 +93,19 @@ Services
 Questions
 ---------
 
-Search [faq.md](faq.md) or open an issue.
+Search [faq.md](docs/faq.md) or open an issue.
 
-- [Write a client](faq.md#write-a-client)
-- [Analyzers Cluster](faq.md#analyzers-cluster)
-- [Custom Alerters](faq.md#custom-alerters)
-- [Listener Net Protocol](faq.md#listener-net-protocol)
-- [Week Analyzation Ability](faq.md#week-analyzation-ability)
+- [Write a client](docs/faq.md#write-a-client)
+- [Analyzers Cluster](docs/faq.md#analyzers-cluster)
+- [Custom Alerters](docs/faq.md#custom-alerters)
+- [Listener Net Protocol](docs/faq.md#listener-net-protocol)
+- [Week Analyzation Ability](docs/faq.md#week-analyzation-ability)
 
 
 Configs
 -------
 
-Configuration Manual: [conf.md](./conf.md).
+Configuration Manual: [conf.md](docs/conf.md).
 
 Inside
 ------
