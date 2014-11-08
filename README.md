@@ -28,6 +28,9 @@ then statsd sends aggregates to node-bell, node-bell analyzes the current stats
 with history data, calculated the trending, and alerts us if the current trending behaves 
 anomalous.
 
+We don't have to set a threshold for each metric, that would be tired, node-bell will
+find the "thresholds" automatically.
+
 Installation
 ------------
 
