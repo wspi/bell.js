@@ -31,7 +31,7 @@ anomalous.
 Installation
 ------------
 
-1. Install nodejs (0.11.+), [ssdb](https://github.com/ideawu/ssdb) and [beanstalkd](https://github.com/kr/beanstalkd)
+1. Install nodejs (0.11.9+), [ssdb](https://github.com/ideawu/ssdb) and [beanstalkd](https://github.com/kr/beanstalkd)
 2. Install node-bell via npm
 
    ```bash
@@ -43,12 +43,52 @@ Installation
    ```bash
    $ bell -s
    ```
-5. start ssdb, beanstalkd, statsd.
-6. start bell's services.
+5. Start ssdb, beanstalkd, statsd and node-bell services
 
-   ```
-   $ bell <service-name> -c <path-to-config-file>
-   ```
+Usage
+-----
+
+To start a node-bell service:
+
+```bash
+$ bell <service-name> -c <path-to-config-file>
+```
 
 Services
 ---------
+
+Node-Bell have 5 "services", they do different jobs:
+
+1. **listener**
+
+   Receive incoming stats from clients(like statsd) over TCP, pack to jobs and send them to job queue.
+
+2. **analyzer(s)**
+
+   Get jobs from queue, analyze current datapoint via [3-sigma rule](http://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule).
+   Store analyzation result and all statistics in ssdb. Node-Bell is scalable, we can start multiple analyzer instances to process
+   lots of metrics.
+
+3. **webapp**
+
+   Visualize metrics and analyzation on the web, default prot: 8989.
+
+4. **alerter**
+
+   Alert once enough anomalies were detected.
+
+5. **cleaner**
+
+   Check the last time of a metric hitting node-bell every certain interval, if the age exceeds the threshold, clean it.
+
+More Specific Topics
+--------------------
+
+- [Custom Client](docs/topics.md#write-a-client)
+- [Custom Alerter](docs/topics.md#custom-alerter)
+- [Analyzers Scalability](docs/topics.md#analyzers-scalability)
+- [Listener Net Protocol](docs/topics.md#listener-net-protocol)
+- [Week Analyzation Ability](docs/topics.md#week-analyzation-ability)
+- [SSDB FAQ](docs/topics.md#ssdb-faq)
+
+

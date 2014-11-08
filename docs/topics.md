@@ -1,8 +1,8 @@
-Node-bell FAQ
-=============
+Node-bell Topics
+================
 
-Write a client
---------------
+Custom Client
+-------------
 
 For example, to write a common bell client via [clients/client.js](clients/client.js):
 
@@ -26,17 +26,8 @@ For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
 
 All clients available in [clients](clients), feel free to send yours.
 
-Analyzers Cluster
------------------
-
-The more metrics, the more analyzers should be up. If the analyzation cant
-catch up with the incomming datapoints, we should increase analyzer instances.
-[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
-watch a single beanstalk tube, and show you how fast jobs are going in and
-out of the queue, see also [Week Analyzation Ability](#week-analyzation-ability).
-
-Custom Alerters
----------------
+Custom Alerter
+--------------
 
 Node-Bell comes with a built-in alerter: [hipchat.js](alerters/hipchat.js), but you can completely write one
 on your own, here are brief wiki:
@@ -62,6 +53,16 @@ on your own, here are brief wiki:
 
        - Parameters: `datapoint`, an array like: `[metricName, [timestamp, metricValue, AnalyzationResult]]`
        - Emitted when an anomaly was detected.
+
+
+Analyzers Scalability
+---------------------
+
+The more metrics, the more analyzers should be up. If the analyzation cant
+catch up with the incomming datapoints, we should increase analyzer instances.
+[Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
+watch a single beanstalk tube, and show you how fast jobs are going in and
+out of the queue, see also [Week Analyzation Ability](#week-analyzation-ability).
 
 
 Listener Net Protocol
