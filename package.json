@@ -39,7 +39,7 @@
     "test": "mocha test.js"
   },
   "bin": {
-    "bell": "./bin/cli.js"
+    "bell": "./bin/bell.js"
   },
   "license": "MIT"
 }
