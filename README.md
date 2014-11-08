@@ -54,6 +54,12 @@ To start a node-bell service:
 $ bell <service-name> -c <path-to-config-file>
 ```
 
+Configuration
+-------------
+
+The default configuration is [config/configs.toml](config/configs.toml),
+and the detailed documentation is at [docs/conf.md](docs/conf.md).
+
 Services
 ---------
 
@@ -91,4 +97,43 @@ More Specific Topics
 - [Week Analyzation Ability](docs/topics.md#week-analyzation-ability)
 - [SSDB FAQ](docs/topics.md#ssdb-faq)
 
+Insight
+-------
 
+1. **algorithm**
+
+   Node-Bell uses the `3-sigma` rule (similar to z-score) to detect if a datapoint is an anomaly (or an outlier):
+   
+   > States that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
+
+2. **storage schema**
+   
+   Metrics are stored in ssdb using zset, the schema is:
+
+   ```
+   key       |  score
+   ------------------------------------------------
+   timestamp | value:anomalous severity:timestamp
+   ```
+
+3. **full data flow**
+
+   ```
+   [clients]->[listener]->[beanstalkd]
+                             |
+                             v
+              --------> [analyzers] ------> [alerter]
+              |              |
+      history |         save v    visualize
+              ------------ [ssdb] --------> [webapp]
+   ```
+
+Changes
+-------
+
+[changes.md](changes.md)
+
+License
+-------
+
+MIT Copyright (c) 2014 Eleme, Inc.
