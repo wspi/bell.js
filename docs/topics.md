@@ -4,7 +4,7 @@ Node-bell Topics
 Custom Client
 -------------
 
-For example, to write a common bell client via [clients/client.js](clients/client.js):
+For example, to write a common bell client via [../clients/client.js](../clients/client.js):
 
 ```js
 var bell = require('node-bell');
@@ -24,12 +24,12 @@ For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
 }
 ```
 
-All clients available in [clients](clients), feel free to send yours.
+All clients available in [../clients](../clients), feel free to send yours.
 
 Custom Alerter
 --------------
 
-Node-Bell comes with a built-in alerter: [hipchat.js](alerters/hipchat.js), but you can completely write one
+Node-Bell comes with a built-in alerter: [hipchat.js](../alerters/hipchat.js), but you can completely write one
 on your own, here are brief wiki:
 
 1. An alerter is a nodejs module which should export a function `init`:
