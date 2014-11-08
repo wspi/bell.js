@@ -229,48 +229,47 @@ form input {
   border-bottom: 1px solid #ddd;
 }
 
-.patterns-item {
+.patterns-group {
   display: inline-block;
   line-height: 20px;
   padding: 8px 12px;
 }
 
 /* dropdown-menu trigger for quickenter items*/
-.patterns-item:hover .dropdown-menu {
+.patterns-group:hover .dropdown-menu {
   display: block;
 }
 
-.patterns-item:hover .patterns-item-key{
+.patterns-group:hover .patterns-group-name{
   color: #333;
 }
 
-.patterns-item-key {
+.patterns-group-name {
   font-size: 16px;
 }
 
-.patterns-item ul.dropdown-menu {
+.patterns-group ul.dropdown-menu {
   font-size: 14px;
   width: 200px;
 }
 
-
-.patterns-item li.lv1 {  /* 0 ~ 0.2 */
+.patterns-group li.lv1 {  /* 0 ~ 0.2 */
   background-color: #fff;
 }
 
-.patterns-item li.lv2 {   /* 0.2 ~ 0.4 */
+.patterns-group li.lv2 {   /* 0.2 ~ 0.4 */
   background-color: #fff9ea;
 }
 
-.patterns-item li.lv3 {   /* 0.4 ~ 0.6 */
+.patterns-group li.lv3 {   /* 0.4 ~ 0.6 */
   background-color: #FFF6A5;
 }
 
-.patterns-item li.lv4 {   /* 0.6 ~ 1 */
+.patterns-group li.lv4 {   /* 0.6 ~ 1 */
   background-color: #FFB689;
 }
 
-.patterns-item li.lv5 {   /* 1 ~ */
+.patterns-group li.lv5 {   /* 1 ~ */
   background-color: #ff9999;
 }
 

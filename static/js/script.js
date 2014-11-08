@@ -17,8 +17,7 @@
   var type;
   var past;
   var stop;
-  var step;
-  var api;
+
   // the seconds past
   var pastSecs;
 
@@ -33,16 +32,13 @@
   /**
    * entry function
    */
-  this.initBell = function(pattern_, sort_, limit_, type_, past_, stop_,
-                           step_, api_) {
-    pattern = pattern_;
-    sort = sort_;
-    limit = limit_;
-    type = type_;
-    past = past_;
-    stop = stop_;
-    step = step_;
-    api = api_;
+  this.initBell = function(options) {
+    pattern = options.pattern;
+    sort = options.sort;
+    limit = options.limit;
+    type = options.type;
+    past = options.past;
+    stop = options.stop;
 
     pastSecs = timespan2secs(past);
 
