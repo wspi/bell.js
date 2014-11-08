@@ -34,8 +34,8 @@ var configs = require('./lib/configs');
 var listener = require('./lib/listener');
 var patterns = require('./lib/patterns');
 var webapp = require('./lib/webapp');
-var version = require('./lib/version');
 var util = require('./lib/util');
+var version = require('./package').version;
 
 var log = util.log;
 
