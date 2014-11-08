@@ -92,7 +92,7 @@ Node-Bell has 5 "services", they do different jobs:
 More Specific Topics
 --------------------
 
-- [Custom Client](docs/topics.md#write-a-client)
+- [Custom Client](docs/topics.md#custom-client)
 - [Custom Alerter](docs/topics.md#custom-alerter)
 - [Analyzers Scalability](docs/topics.md#analyzers-scalability)
 - [Listener Net Protocol](docs/topics.md#listener-net-protocol)
