@@ -3,7 +3,7 @@ Node-Bell
 
 ![build](https://travis-ci.org/eleme/node-bell.svg)
 
-Latest version: v0.4.3
+Latest version: v0.4.4
 
 ![snap](snap.png)
 
@@ -28,8 +28,7 @@ then statsd sends aggregates to node-bell, node-bell analyzes the current stats
 with history data, calculated the trending, and alerts us if the current trending behaves 
 anomalous.
 
-We don't have to set a threshold for each metric, that would be tired, node-bell will
-find the "thresholds" automatically.
+We don't have to set a threshold for each metric, that would be tired, node-bell will find the "thresholds" automatically.
 
 Installation
 ------------
@@ -66,7 +65,7 @@ and the detailed documentation is at [docs/conf.md](docs/conf.md).
 Services
 ---------
 
-Node-Bell have 5 "services", they do different jobs:
+Node-Bell has 5 "services", they do different jobs:
 
 1. **listener**
 
