@@ -1,6 +1,19 @@
 Node-bell Changelog
 ===================
 
+v0.4.5
+------
+
+- Remove docs/conf.md
+- Add comment documentation in config/configs.toml
+- Add configuration `listener.blacklist`
+
+v0.4.4
+------
+
+- Use nunjucks instead of swig as template engine.
+- Lots of views and static/css style & typos fixes
+
 v0.4.3
 ------
 
