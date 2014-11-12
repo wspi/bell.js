@@ -1,38 +1,38 @@
 # Node-Bell configuration. https://github.com/eleme/node-bell.git
 
-# =============================== Global ========================================
+# =============================== Global ======================================
 
-# patterns          string, patterns file path, e.g. "./patterns.js". Node-Bell
-#                   analyzes all metrics match these patterns (excludes blacklist),
+# patterns      string, patterns file path, e.g. "./patterns.js". Node-Bell
+#               analyzes all metrics match these patterns (excludes blacklist),
 #
-#                   the patterns schema (a javascript object):
+#               the patterns schema (a javascript object):
 #
-#                       {
-#                         group: {
-#                           key: pattern
-#                         }
-#                       }
+#                   {
+#                     group: {
+#                       key: pattern
+#                     }
+#                   }
 #
-#                   the default (also an example) patterns:
+#               the default (also an example) patterns:
 #
-#                       {
-#                         timer: {
-#                           count_ps: 'timer.count_ps.*',
-#                           mean_90: 'timer.mean_90.*'
-#                         },
-#                         counter: {
-#                           rate: 'counter.*'
-#                         }
-#                       }
+#                   {
+#                     timer: {
+#                       count_ps: 'timer.count_ps.*',
+#                       mean_90: 'timer.mean_90.*'
+#                     },
+#                     counter: {
+#                       rate: 'counter.*'
+#                     }
+#                   }
 #
-#                   set this item to "" to use the default patterns.
+#               set this item to "" to use the default patterns.
 patterns = ""
 
-# interval          integer, seconds step for all metrics. default: 10 (10s)
+# interval      integer, seconds step for all metrics. default: 10 (10s)
 interval = 10
 
 
-# =============================== Job Queue =====================================
+# =============================== Job Queue ===================================
 
 [beanstalkd]
 host = "0.0.0.0"    # beanstalkd host to connect, default: "0.0.0.0"
@@ -40,7 +40,7 @@ port = 11300        # beanstalkd port to connect, default: 11300
 tube = "bell"       # beanstalkd tube to use, default: "bell"
 
 
-# =============================== Storage ===================================
+# =============================== Storage =====================================
 
 [ssdb]
 host = "0.0.0.0"   # ssdb host to connect, default: "0.0.0.0"
@@ -48,12 +48,12 @@ port = 8888        # ssdb port to connect, default: 8888
 prefix = "bell."   # the prefix for bell to name zset, hash.., default: "bell."
 
   [ssdb.zset]
-  # ssdb.zset.expire          integer, seconds to expire a datapoint (for all
-  #                           metrics), default: 432000 (5 day)
+  # ssdb.zset.expire        integer, seconds to expire a datapoint (for all
+  #                         metrics), default: 432000 (5 day)
   expire = 432000
 
 
-# =============================== Listener ==================================
+# =============================== Listener ====================================
 
 [listener]
 host = "0.0.0.0"            # listener host to bind, default: "0.0.0.0"
@@ -64,7 +64,7 @@ port = 8889                 # listener (tcp) port to listen, default: 8889
 blacklist = ["statsd.*"]
 
 
-# =============================== Analyzer ==================================
+# =============================== Analyzer ====================================
 
 [analyzer]
 # analyzer.workers      integer, analyzer workers (processes) number, default: 24
@@ -83,7 +83,7 @@ minSize = 50
   #                               some offset, which is calculated by the folloing
   #                               method:
   #
-  #                                 current_time - history_time < abs(offset * periodicity)
+  #                                 current - history < abs(offset * periodicity)
   #
   #                               default: 0.01
   offset = 0.01
@@ -92,18 +92,18 @@ minSize = 50
   periodicity = 86400
 
   [analyzer.trending]
-  # analyzer.trending.factor      float, the factor to calculate trending value via weighted
-  #                               moving average algorithm, default: 0.1
+  # analyzer.trending.factor      float, the factor to calculate trending value via
+  #                               weighted moving average algorithm, default: 0.1
   factor = 0.1
 
 
-# =============================== WebApp ====================================
+# =============================== WebApp ======================================
 
 [webapp]
 # webapp.workers      integer, webapp workers (processes) number, default: 5
 workers = 5
 
-port = 8989    # tcp port for webapp to bind
+port = 8989           # tcp port for webapp to bind
 
 # webapp.root         string, if your webapp is going to be served in sub-directory,
 #                     like 'http://mydomain.com/sub_dir', set this to "sub_dir",
@@ -122,16 +122,22 @@ interval = 600
 #                       threshold, it will be cleaned, default: 172800 (2 day)
 threshold = 172800
 
+
 # =============================== Alerter ===================================
+
 [alerter]
-host = "0.0.0.0"
-port = 8789
+host = "0.0.0.0"        # alerter host to bidn
+port = 8789             # alerter port to listen (tcp)
+
+# alerter.modules       array, the alerter modules list, each alerter module
+#                       should be a nodejs module, node-bell comes with a
+#                       built-in alerter module `hipchat`.
 modules = ["../alerters/hipchat.js"]
 
 [alerter.hipchat]
-roomId = 12345
-token = "hipchat-api-token"
-weburl = "http://localhost:8989"
+roomId = 12345                   # the room's id
+token = "hipchat-api-token"      # hipchat api token
+weburl = "http://localhost:8989" # the full url for bell webapp
 
-since = 300  # 5min
-threshold = 15
+since = 300             # check anomalies in recent {since} seconds
+threshold = 15          # alert if anomalies count is bigger than {threshold}
