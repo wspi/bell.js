@@ -59,8 +59,7 @@ $ bell <service-name> -c <path-to-config-file>
 Configuration
 -------------
 
-The default configuration is [config/configs.toml](config/configs.toml),
-and the detailed documentation is at [docs/conf.md](docs/conf.md).
+**The default configuration is at [config/configs.toml](config/configs.toml)**.
 
 Services
 ---------

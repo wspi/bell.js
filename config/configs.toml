@@ -1,64 +1,143 @@
-# Node-Bell configuration. Docs: https://github.com/eleme/node-bell#configs
+# Node-Bell configuration. https://github.com/eleme/node-bell.git
 
-# =============================== Global ==================================
+# =============================== Global ======================================
+
+# patterns      string, patterns file path, e.g. "./patterns.js". Node-Bell
+#               analyzes all metrics match these patterns (excludes blacklist),
+#
+#               the patterns schema (a javascript object):
+#
+#                   {
+#                     group: {
+#                       key: pattern
+#                     }
+#                   }
+#
+#               the default (also an example) patterns:
+#
+#                   {
+#                     timer: {
+#                       count_ps: 'timer.count_ps.*',
+#                       mean_90: 'timer.mean_90.*'
+#                     },
+#                     counter: {
+#                       rate: 'counter.*'
+#                     }
+#                   }
+#
+#               set this item to "" to use the default patterns.
 patterns = ""
-interval = 10  # 10s
 
-# =============================== Job Queue =================================
+# interval      integer, seconds step for all metrics. default: 10 (10s)
+interval = 10
+
+
+# =============================== Job Queue ===================================
+
 [beanstalkd]
-host = "0.0.0.0"
-port = 11300
-tube = "bell"
+host = "0.0.0.0"    # beanstalkd host to connect, default: "0.0.0.0"
+port = 11300        # beanstalkd port to connect, default: 11300
+tube = "bell"       # beanstalkd tube to use, default: "bell"
 
-# =============================== Storage ===================================
+
+# =============================== Storage =====================================
+
 [ssdb]
-host = "0.0.0.0"
-port = 8888
-prefix = "bell."
-[ssdb.zset]
-expire = 432000  # 5day
+host = "0.0.0.0"   # ssdb host to connect, default: "0.0.0.0"
+port = 8888        # ssdb port to connect, default: 8888
+prefix = "bell."   # the prefix for bell to name zset, hash.., default: "bell."
 
-# =============================== Listener ==================================
+  [ssdb.zset]
+  # ssdb.zset.expire        integer, seconds to expire a datapoint (for all
+  #                         metrics), default: 432000 (5 day)
+  expire = 432000
+
+
+# =============================== Listener ====================================
+
 [listener]
-host = "0.0.0.0"
-port = 8889
+host = "0.0.0.0"            # listener host to bind, default: "0.0.0.0"
+port = 8889                 # listener (tcp) port to listen, default: 8889
 
-# =============================== Analyzer ==================================
+# listener.blacklist        array, listener will disallow metrics which match
+#                           blacklist pattern(s), default: ["statsd.*"]
+blacklist = ["statsd.*"]
+
+
+# =============================== Analyzer ====================================
+
 [analyzer]
+# analyzer.workers      integer, analyzer workers (processes) number, default: 24
 workers = 24
 
+# analyzer.strict       boolean, whether burr points should be considered to be
+#                       anomaous, default: true
 strict = true
+
+# analyzer.minSize      integer, analyzers start to work if series size is bigger
+#                       than this value, default: 50
 minSize = 50
 
-[analyzer.filter]
-offset = 0.01
-periodicity = 86400
+  [analyzer.filter]
+  # analyzer.filter.offset        float, analyzers filter history datapoints within
+  #                               some offset, which is calculated by the folloing
+  #                               method:
+  #
+  #                                 current - history < abs(offset * periodicity)
+  #
+  #                               default: 0.01
+  offset = 0.01
+  # analyzer.filter.periodicity   integer, metrics periodicity (in seconds), default:
+  #                               86400 (1 day)
+  periodicity = 86400
 
-[analyzer.trending]
-factor = 0.1
+  [analyzer.trending]
+  # analyzer.trending.factor      float, the factor to calculate trending value via
+  #                               weighted moving average algorithm, default: 0.1
+  factor = 0.1
 
-# =============================== WebApp ====================================
+
+# =============================== WebApp ======================================
+
 [webapp]
+# webapp.workers      integer, webapp workers (processes) number, default: 5
 workers = 5
 
-port = 8989
+port = 8989           # tcp port for webapp to bind
+
+# webapp.root         string, if your webapp is going to be served in sub-directory,
+#                     like 'http://mydomain.com/sub_dir', set this to "sub_dir",
+#                     default: "" (root directory)
 root = ""
 
+
 # =============================== Cleaner ===================================
+
 [cleaner]
+# cleaner.interval      integer, seconds interval to clean dead metrics,
+#                       default: 600 (1min)
 interval = 600
+
+# cleaner.threshold     integer, if the age of a metric hitting bell exceeds this
+#                       threshold, it will be cleaned, default: 172800 (2 day)
 threshold = 172800
 
+
 # =============================== Alerter ===================================
+
 [alerter]
-host = "0.0.0.0"
-port = 8789
+host = "0.0.0.0"        # alerter host to bidn
+port = 8789             # alerter port to listen (tcp)
+
+# alerter.modules       array, the alerter modules list, each alerter module
+#                       should be a nodejs module, node-bell comes with a
+#                       built-in alerter module `hipchat`.
 modules = ["../alerters/hipchat.js"]
 
 [alerter.hipchat]
-roomId = 12345
-token = "hipchat-api-token"
-weburl = "http://localhost:8989"
+roomId = 12345                   # the room's id
+token = "hipchat-api-token"      # hipchat api token
+weburl = "http://localhost:8989" # the full url for bell webapp
 
-since = 300  # 5min
-threshold = 15
+since = 300             # check anomalies in recent {since} seconds
+threshold = 15          # alert if anomalies count is bigger than {threshold}
