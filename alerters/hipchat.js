@@ -89,6 +89,6 @@ exports.init = function(configs, alerter, log) {
           cache[name] = time;
         }
       }
-    })();
+    });
   });
 };

@@ -32,26 +32,28 @@ var analyzer = require('./lib/analyzer');
 var cleaner = require('./lib/cleaner');
 var configs = require('./lib/configs');
 var listener = require('./lib/listener');
+var log = require('./lib/log');
 var patterns = require('./lib/patterns');
 var webapp = require('./lib/webapp');
 var util = require('./lib/util');
 var version = require('./package').version;
 
-var log = util.log;
+// use bluebird promise
+global.Promise = require('bluebird').Promise;
 
 
-co(function *(){
+co(function *(){  // jshint ignore: line
   // argv parsing
   program
   .version(version)
   .usage('<service> [options]')
   .option('-c, --configs-path <c>', 'configs file path')
   .option('-s, --sample-configs', 'generate sample configs file')
-  .option('-l, --log-level <l>', 'logging level (1~5 for fatal~debug)',
+  .option('-l, --log-level <l>', 'logging level (1~5 for debug~fatal)',
           function(val){return (parseInt(val, 10) - 1) % 5 + 1;})
   .parse(process.argv);
 
-  log.level(util.logLevels[program.logLevel || 4]);
+  log.level = program.logLevel || 2;
 
   if (program.sampleConfigs) {
     log.info('Generate sample.configs.toml to current directory');
@@ -92,6 +94,10 @@ co(function *(){
     program.help();
   }
 
+  // set log name
+  log.name = 'bell.' + name;
   // run service
   yield service.serve();
-})();
+}).catch(function(err) {
+  util.fatal('Fatal error: %s', err);
+});
