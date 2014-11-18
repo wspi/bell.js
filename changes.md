@@ -1,6 +1,14 @@
 Node-bell Changelog
 ===================
 
+v0.4.6
+------
+
+- Upgrade co to v4
+- Upgrade node-ssdb to v0.1.4
+- Remove bunyan logger, use our own simple logger
+- Lots of dependencies version fixes.
+
 v0.4.5
 ------
 
