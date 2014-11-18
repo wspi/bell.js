@@ -38,8 +38,11 @@ var webapp = require('./lib/webapp');
 var util = require('./lib/util');
 var version = require('./package').version;
 
+// use bluebird promise
+global.Promise = require('bluebird').Promise;
 
-co(function *(){
+
+co(function *(){  // jshint ignore: line
   // argv parsing
   program
   .version(version)
@@ -95,4 +98,6 @@ co(function *(){
   log.name = 'bell.' + name;
   // run service
   yield service.serve();
-})();
+}).catch(function(err) {
+  util.fatal('Fatal error: %s', err);
+});
