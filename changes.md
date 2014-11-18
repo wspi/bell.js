@@ -8,6 +8,7 @@ v0.4.6
 - Upgrade node-ssdb to v0.1.4
 - Remove bunyan logger, use our own simple logger
 - Lots of dependencies version fixes.
+- Command line usage changes: 1~5 for debug ~ fatal
 
 v0.4.5
 ------
