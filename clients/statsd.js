@@ -16,7 +16,6 @@
 var net = require('net');
 var protocol = require('../lib/protocol');
 var minimatch = require('minimatch');
-var startsWith = require('../lib/util').startsWith;
 
 var config;
 var debug;
