@@ -13,8 +13,7 @@ var configs;
 
 
 var pattern = 'trending %s, ' +
-  '<a href="%s/?pattern=%s&limit=1">%s</a> ' +
-  '(%d anomalies)';
+  '<a href="%s/?pattern=%s&limit=1">%s</a>';
 
 var apiPattern = 'http://api.hipchat.com/v1/rooms/message?' +
   'format=json&auth_token=%s';
@@ -37,9 +36,15 @@ function notify(name, count, trend) {
   });
 }
 
-
+/**
+ * global dict: { <name>: { <time>: <count> } }
+ */
 var stats = {};
 
+
+/**
+ * @param {Array} event  // datapoint, trend
+ */
 function alert(event) {
   var datapoint = event[0];
   var trend = event[1];
@@ -58,6 +63,8 @@ function alert(event) {
 
     if (stat.count >= thre) {
       notify(name, stat.count, trend);
+      // reset stat.count to 0
+      stat.count = 0;
     }
   }
 
@@ -66,6 +73,9 @@ function alert(event) {
 
 
 
+/**
+ * an alerter module should export a function `init` like this
+ */
 exports.init = function(configs_, alerter, log_) {
   configs = configs_;
   log = log_;
