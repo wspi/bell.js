@@ -126,7 +126,7 @@ threshold = 172800
 # =============================== Alerter ===================================
 
 [alerter]
-host = "0.0.0.0"        # alerter host to bidn
+host = "0.0.0.0"        # alerter host to bind
 port = 8789             # alerter port to listen (tcp)
 
 # alerter.modules       array, the alerter modules list, each alerter module

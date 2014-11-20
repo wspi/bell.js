@@ -1,6 +1,14 @@
 Node-bell Topics
 ================
 
+- [Custom Client](#custom-client)
+- [Custom Alerter](#custom-alerter)
+- [Analyzers Scalability](#analyzers-scalability)
+- [Cross Machines Analyzers](#cross-machines-analyzers)
+- [Listener Net Protocol](#listener-net-protocol)
+- [Week Analyzation Ability](#week-analyzation-ability)
+- [Ssdb FAQ](#ssdb-faq)
+
 Custom Client
 -------------
 
@@ -63,6 +71,29 @@ catch up with the incomming datapoints, we should increase analyzer instances.
 [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
 watch a single beanstalk tube, and show you how fast jobs are going in and
 out of the queue, see also [Week Analyzation Ability](#week-analyzation-ability).
+
+
+Cross Machines Analyzers
+------------------------
+
+Generally, we run bell services all on one machine, but analyzers may require more
+cpus to make processing faster. To run bell analyzers on a new machine:
+
+1. Install node-bell: `npm install node-bell -g`
+2. Generate one copy of configs.toml: `bell -s`
+3. Edit the configuration, the following items should be configured:
+
+   - **beanstalkd.host**  the beanstalkd host to connect
+   - **beanstalkd.port**  the beanstalkd port to connect
+   - **beanstalkd.bell**  the beanstalkd tube to use
+   - **ssdb.host**  the ssdb host to connect
+   - **ssdb.port**  the ssdb port to connect
+   - **ssdb.prefix**  the prefix for bell to name zset, hash..
+   - **ssdb.zset.expire**  seconds to expire a datapoint
+   - **analyzer.***  all analyzer configs for analyzers on this machine (should be the same with 
+     analyzers on other machines)
+   - **alerter.host**  the only-one alerter host to connect
+   - **alerter.port**  the only=one alerter port to connect
 
 
 Listener Net Protocol

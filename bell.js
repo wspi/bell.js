@@ -53,6 +53,7 @@ co(function *(){  // jshint ignore: line
           function(val){return (parseInt(val, 10) - 1) % 5 + 1;})
   .parse(process.argv);
 
+  log.name = 'bell';
   log.level = program.logLevel || 2;
 
   if (program.sampleConfigs) {
