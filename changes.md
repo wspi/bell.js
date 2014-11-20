@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v0.4.7
+------
+
+- Fix typo `log.name` in bell.js
+- Add how to run analyzers on more than 1 machine
+
 v0.4.6
 ------
 
