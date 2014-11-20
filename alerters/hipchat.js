@@ -12,8 +12,7 @@ var log;
 var configs;
 
 
-var pattern = 'trending %s, ' +
-  '<a href="%s/?pattern=%s&limit=1">%s</a>';
+var pattern = 'trending %s <a href="%s/?pattern=%s&limit=1">%s</a>';
 
 var apiPattern = 'http://api.hipchat.com/v1/rooms/message?' +
   'format=json&auth_token=%s';
@@ -23,7 +22,7 @@ function notify(name, count, trend) {
   log.info('Notify hipchat.., %s %d %d',name, count, trend);
   var trend_ = trend > 0 ? '↑' : '↓';
   var weburl = configs.alerter.hipchat.weburl;
-  var message = util.format(pattern, trend_, weburl, name, name, count);
+  var message = util.format(pattern, trend_, weburl, name, name);
   var roomId = configs.alerter.hipchat.roomId;
   var notify_ = configs.alerter.hipchat.notify;
   var data = {'room_id': roomId, from: 'Bell Alerter', message: message,
