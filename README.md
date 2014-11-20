@@ -94,6 +94,7 @@ More Specific Topics
 - [Custom Client](docs/topics.md#custom-client)
 - [Custom Alerter](docs/topics.md#custom-alerter)
 - [Analyzers Scalability](docs/topics.md#analyzers-scalability)
+- [Cross Machines Analyzers](docs/topics.md#cross-machines-analyzers)
 - [Listener Net Protocol](docs/topics.md#listener-net-protocol)
 - [Week Analyzation Ability](docs/topics.md#week-analyzation-ability)
 - [SSDB FAQ](docs/topics.md#ssdb-faq)

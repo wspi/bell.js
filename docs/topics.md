@@ -4,6 +4,7 @@ Node-bell Topics
 - [Custom Client](#custom-client)
 - [Custom Alerter](#custom-alerter)
 - [Analyzers Scalability](#analyzers-scalability)
+- [Cross Machines Analyzers](#cross-machines-analyzers)
 - [Listener Net Protocol](#listener-net-protocol)
 - [Week Analyzation Ability](#week-analyzation-ability)
 - [Ssdb FAQ](#ssdb-faq)
@@ -78,9 +79,9 @@ Cross Machines Analyzers
 Generally, we run bell services all on one machine, but analyzers may require more
 cpus to make processing faster. To run bell analyzers on a new machine:
 
-- Install node-bell: `npm install node-bell -g`
-- Generate one copy of configs.toml: `bell -s`
-- Edit the configuration, the following items should be configured:
+1. Install node-bell: `npm install node-bell -g`
+2. Generate one copy of configs.toml: `bell -s`
+3. Edit the configuration, the following items should be configured:
 
    - **beanstalkd.host**  the beanstalkd host to connect
    - **beanstalkd.port**  the beanstalkd port to connect
