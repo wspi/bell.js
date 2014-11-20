@@ -1,8 +1,8 @@
 Node-bell Changelog
 ===================
 
-v0.4.8
-------
+v0.4.9 (Fix 0.4.8)
+------------------
 
 - Rebuild a simple hipchat alerter
 
