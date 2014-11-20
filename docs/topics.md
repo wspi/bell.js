@@ -59,7 +59,7 @@ on your own, here are brief wiki:
 
     - Event **'anomaly detected'**
 
-       - Parameters: `datapoint`, an array like: `[metricName, [timestamp, metricValue, AnalyzationResult]]`
+       - Parameters: `event`, an array like: `[[metricName, [timestamp, metricValue, AnalyzationResult]], trend]`
        - Emitted when an anomaly was detected.
 
 

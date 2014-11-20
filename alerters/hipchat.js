@@ -1,94 +1,82 @@
 /**
  * this module can send message to a hipchat room once enough anomalies
- * were detected since a certain time, to enable it, add this module to
- * `alerter.modules` in configs.toml.
+ * were detected, to enable it, add this module to `alerter.modules` in
+ * configs.toml
  */
 
 var util = require('util');
-var co = require('co');
 var request = require('request');
-var ssdb = require('ssdb');
 
 
-var messagePattern = '' +
-  // params: trend weburl, metric name, metric name
-  'trending %s, <a href="%s/?pattern=%s&limit=1">%s</a>: ' +
-  // params: anomalies count, since
-  '%d anomalies in last %d seconds';
+var log;
+var configs;
 
-var apiPattern = '' +
-  'http://api.hipchat.com/v1/rooms/message?' +
+
+var pattern = 'trending %s <a href="%s/?pattern=%s&limit=1">%s</a>';
+
+var apiPattern = 'http://api.hipchat.com/v1/rooms/message?' +
   'format=json&auth_token=%s';
+
+
+function notify(name, count, trend) {
+  log.info('Notify hipchat.., %s %d %d',name, count, trend);
+  var trend_ = trend > 0 ? '↑' : '↓';
+  var weburl = configs.alerter.hipchat.weburl;
+  var message = util.format(pattern, trend_, weburl, name, name);
+  var roomId = configs.alerter.hipchat.roomId;
+  var notify_ = configs.alerter.hipchat.notify;
+  var data = {'room_id': roomId, from: 'Bell Alerter', message: message,
+    notify: +notify_};
+
+  var api = util.format(apiPattern, configs.alerter.hipchat.token);
+
+  request.post(api).form(data).on('error', function(err) {
+    log.error('Hipchat request error: %s', err);
+  });
+}
+
+/**
+ * global dict: { <name>: { <time>: <count> } }
+ */
+var stats = {};
+
+
+/**
+ * @param {Array} event  // datapoint, trend
+ */
+function alert(event) {
+  var datapoint = event[0];
+  var trend = event[1];
+  var name = datapoint[0];
+  var time = datapoint[1][0];
+  var mult = datapoint[1][2];
+
+  var step = configs.interval;
+  var thre = configs.alerter.hipchat.threshold;
+
+  var stat = stats[name] = stats[name] || {};
+
+  if (stat.time > time - 2 * step) {
+    stat.count = stat.count || 0;
+    stat.count += 1;
+
+    if (stat.count >= thre) {
+      notify(name, stat.count, trend);
+      // reset stat.count to 0
+      stat.count = 0;
+    }
+  }
+
+  stat.time = time;
+}
+
 
 
 /**
  * an alerter module should export a function `init` like this
  */
-exports.init = function(configs, alerter, log) {
-  var roomId = configs.alerter.hipchat.roomId;
-  var token = configs.alerter.hipchat.token;
-  var weburl = configs.alerter.hipchat.weburl;
-  var since = configs.alerter.hipchat.since;
-  var threshold = configs.alerter.hipchat.threshold;
-
-  // api url
-  var api = util.format(apiPattern, token);
-
-  // create a new connection to ssdb
-  var ssdbc = ssdb.createClient({
-    port: configs.ssdb.port,
-    host: configs.ssdb.host
-  });
-  ssdbc.thunkify();
-
-  // notify hipchat
-  var notify = function (name, count, trend) {
-    log.debug('Notify hipchat.., %s, %d', name, count);
-    var message = util.format(messagePattern,
-                              trend > 0 ? '↑' : '↓',
-                              weburl, name, name, count, since);
-    var data = {'room_id': roomId, from: 'Bell Alerter', message: message,
-      notify: 1};
-    request.post(api).form(data).on('error', function(err){
-      log.error('Hipchat hook request error: %s', err);
-    });
-  };
-
-  // cache the last time sent notification, {name: time}
-  var cache = {};
-  // key prefix
-  var prefix = 'bellhipchat';
-
-  alerter.on('anomaly detected', function(datapoint){
-    co(function *(){
-      // datapoint: [name, [timestamp, value, multiples]]
-      var name = datapoint[0];
-      var time = datapoint[1][0];
-
-      // cache to ssdb, key: 'bellhipchattimer.mean.foo1411099647'
-      yield ssdbc.setx([prefix, name, time].join(''), 0, since);
-
-      // last time sent notification
-      var last = cache[name] = cache[name] || 0;
-
-      if (last + since < time) {
-        var start = [prefix, name, time - since].join('');
-        var stop = [prefix, name, time].join('');
-
-        var resps = yield [
-          ssdbc.keys(start, stop, -1),
-          ssdbc.hget(configs.ssdb.prefix + 'trend', name)
-        ];
-
-        var keys = resps[0];
-        var trend = +(resps[1].split(':')[0]);
-
-        if (keys.length >= threshold) {
-          notify(name, keys.length, trend);
-          // update cache
-          cache[name] = time;
-        }
-      }
-    });
-  });
+exports.init = function(configs_, alerter, log_) {
+  configs = configs_;
+  log = log_;
+  alerter.on('anomaly detected', alert);
 };

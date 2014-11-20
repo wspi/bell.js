@@ -3,7 +3,7 @@ Node-Bell
 
 ![build](https://travis-ci.org/eleme/node-bell.svg)
 
-Latest version: v0.4.7
+Latest version: v0.4.8
 
 ![snap](snap.png)
 
@@ -25,7 +25,7 @@ We ([Eleme](http://ele.me)) use node-bell to monitor our website interfaces, inc
 
 Our services and applications send these statistics to [statsd](https://github.com/etsy/statsd),
 then statsd sends aggregates to node-bell, node-bell analyzes the current stats
-with history data, calculated the trending, and alerts us if the current trending behaves 
+with history data, calculated the trending, and alerts us if the current trending behaves
 anomalous.
 
 We don't have to set a threshold for each metric, that would be tired, node-bell will find the "thresholds" automatically.
@@ -105,11 +105,11 @@ Insight
 1. **algorithm**
 
    Node-Bell uses the `3-sigma` rule (similar to z-score) to detect if a datapoint is an anomaly (or an outlier):
-   
+
    > States that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
 
 2. **storage schema**
-   
+
    Metrics are stored in ssdb using zset, the schema is:
 
    ```
