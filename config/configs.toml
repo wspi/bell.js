@@ -138,6 +138,6 @@ modules = ["../alerters/hipchat.js"]
 roomId = 12345                   # the room's id
 token = "hipchat-api-token"      # hipchat api token
 weburl = "http://localhost:8989" # the full url for bell webapp
+notify = 1                       # if notify people in this room
 
-since = 300             # check anomalies in recent {since} seconds
-threshold = 15          # alert if anomalies count is bigger than {threshold}
+threshold = 18          # alert if anomalies count is bigger than {threshold}
