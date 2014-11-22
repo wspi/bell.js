@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.5.0
+------
+
+- Reback to `upper_90` from `mean_90` as default timer field in statsd client
+
 v0.4.9 (Fix 0.4.8)
 ------------------
 
