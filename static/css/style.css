@@ -58,6 +58,8 @@ ul.dropdown-menu {
   border: 1px solid #ddd;
   background-color: #fff;
   display: none;
+  max-height: 560px;
+  overflow: scroll;
 }
 
 ul.dropdown-menu li {
