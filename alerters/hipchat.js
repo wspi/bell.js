@@ -54,7 +54,7 @@ function alert(event) {
   var step = +configs.interval;
   var thre = +configs.alerter.hipchat.threshold;
 
-  var stat = stats[name] = stats[name] || {};
+  var stat = stats[name] = stats[name] || {time: 0, count: 1};
 
   if ((!isNaN(stats.time)) &&
       (time <= stat.time + step + 1) &&
@@ -70,6 +70,7 @@ function alert(event) {
   }
 
   stat.time = time;
+  log.debug('Stat:', name, stat);
 }
 
 
