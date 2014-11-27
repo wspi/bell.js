@@ -48,16 +48,18 @@ function alert(event) {
   var datapoint = event[0];
   var trend = event[1];
   var name = datapoint[0];
-  var time = datapoint[1][0];
-  var mult = datapoint[1][2];
+  var time = +datapoint[1][0];
+  var mult = +datapoint[1][2];
 
-  var step = configs.interval;
-  var thre = configs.alerter.hipchat.threshold;
+  var step = +configs.interval;
+  var thre = +configs.alerter.hipchat.threshold;
 
   var stat = stats[name] = stats[name] || {};
 
-  if (stat.time > time - 2 * step) {
-    stat.count = stat.count || 0;
+  if ((!isNaN(stats.time)) &&
+      (time <= stat.time + step + 1) &&
+      (time >= stat.time + step - 1)) {
+
     stat.count += 1;
 
     if (stat.count >= thre) {
