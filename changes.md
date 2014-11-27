@@ -1,8 +1,8 @@
 Node-bell Changelog
 ===================
 
-v0.5.1
-------
+v0.5.2 (v0.5.1)
+---------------
 
 - Upgrade node-ssdb to v0.1.5
 - Add ssdb connection pool support
