@@ -26,7 +26,7 @@
     "minimatch": "1.0.0",
     "nunjucks": "1.1.0",
     "request": "~2.40.0",
-    "ssdb": ">=0.1.4",
+    "ssdb": ">=0.1.5",
     "toml": "2.0.6"
   },
   "devDependencies": {
