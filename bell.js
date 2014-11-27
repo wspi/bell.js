@@ -100,5 +100,5 @@ co(function *(){  // jshint ignore: line
   // run service
   yield service.serve();
 }).catch(function(err) {
-  util.fatal('Fatal error: %s', err);
+  util.fatal('Fatal error: %s', err.stack);
 });
