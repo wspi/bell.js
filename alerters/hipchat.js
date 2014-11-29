@@ -56,8 +56,7 @@ function alert(event) {
 
   var stat = stats[name] = stats[name] || {time: 0, count: 1};
 
-  if ((!isNaN(stat.time)) &&
-      (time <= stat.time + step + 1) &&
+  if ((time <= stat.time + step + 1) &&
       (time >= stat.time + step - 1)) {
 
     stat.count += 1;
@@ -67,6 +66,8 @@ function alert(event) {
       // reset stat.count to 0
       stat.count = 0;
     }
+  } else {
+    stat.count = 1;
   }
 
   stat.time = time;
