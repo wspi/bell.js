@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.5.4
+-------
+
+- Fix analyzers memory leaks.
+
 v0.5.3 (v0.5.1 v0.5.2)
 -----------------------
 
