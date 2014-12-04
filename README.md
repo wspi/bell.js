@@ -3,7 +3,7 @@ Node-Bell
 
 ![build](https://travis-ci.org/eleme/node-bell.svg)
 
-Latest version: v0.5.5
+Latest version: v0.5.4
 
 ![snap](snap.png)
 
