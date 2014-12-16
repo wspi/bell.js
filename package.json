@@ -1,6 +1,6 @@
 {
   "name": "node-bell",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/eleme/node-bell.git"
@@ -27,6 +27,7 @@
     "nunjucks": "1.1.0",
     "request": "~2.40.0",
     "ssdb": ">=0.1.5",
+    "strftime": "^0.8.2",
     "toml": "2.0.6"
   },
   "devDependencies": {
