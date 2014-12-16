@@ -102,7 +102,7 @@ function notify(key, key_, lev, score) {
 
   var api_ = util.format(api, configs.alerter.hipchat.token);
 
-  var notify_ = lev > 1 ? 1 : 0;
+  var notify_ = lev > 0 ? 1 : 0;
 
   var data = {'room_id': roomId, from: 'Bell Alerter', message: message,
     notify: +notify_, color: color};
