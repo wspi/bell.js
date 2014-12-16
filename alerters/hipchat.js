@@ -46,7 +46,7 @@ function check() {
       for (var name in trends) {
         if (minimatch(name, pattern)) {
           for (var i = 0; i < trends[name].length; i++) {
-            sum += trends[name].shift();
+            sum += trends[name][i];
             count += 1;
           }
         }
@@ -56,6 +56,11 @@ function check() {
         alert(key, key_, sum / count);
       }
     }
+  }
+
+  /* clean trends !important */
+  for (name in trends) {
+    trends[name] = [];
   }
 }
 
