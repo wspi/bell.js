@@ -43,8 +43,10 @@ on your own, here are brief wiki:
 1. An alerter is a nodejs module which should export a function `init`:
 
    ```js
-   init(configs, alerter, log)
+   init(configs, patterns, alerter, log)
    ```
+
+   *param `patterns` was added from v0.5.5*
 
 2. To make an alerter work, add it to `alerter.modules` in `configs.toml`:
 
