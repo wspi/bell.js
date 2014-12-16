@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v0.5.5
+------
+
+- Rewrite hipchat alerter (alert by patterns)
+- User strftime as log datetime
+
 v0.5.4
 -------
 
