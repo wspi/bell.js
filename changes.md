@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.5.7
+------
+
+- Add cache for listener#match
+
 v0.5.5 (v0.5.6)
 ---------------
 
