@@ -2,6 +2,7 @@ Node-Bell
 =========
 
 ![build](https://travis-ci.org/eleme/node-bell.svg)
+![nodei](https://nodei.co/npm/node-bell.png?downloads=true&downloadRank=true)
 
 Latest version: v0.5.7
 
@@ -47,7 +48,7 @@ Installation
    ```
 5. Start ssdb, beanstalkd, statsd and node-bell services
 
-*NOTE: We are using node-bell with beanstalkd 1.9 and ssdb 1.6.8.8 *
+*NOTE: We are using node-bell with beanstalkd 1.9 and ssdb 1.6.8.8*
 
 Usage
 -----
