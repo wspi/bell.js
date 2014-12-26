@@ -1,10 +1,9 @@
 Node-Bell
 =========
 
-![build](https://travis-ci.org/eleme/node-bell.svg)
 ![nodei](https://nodei.co/npm/node-bell.png?downloads=true&downloadRank=true)
 
-Latest version: v0.5.7
+![build](https://travis-ci.org/eleme/node-bell.svg)
 
 ![snap](snap.png)
 
