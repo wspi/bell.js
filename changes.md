@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.5.8
+------
+
+- Bind unfinished data to connection object (#74)
+
 v0.5.7
 ------
 
