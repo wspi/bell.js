@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.5.9
+------
+
+- Upgrade tj/co to v4.1.0 (memory leaks fixed) (issue#70)
+
 v0.5.8
 ------
 
