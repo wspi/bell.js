@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v0.6.0
+------
+
+- Upgrade node-ssdb to v0.1.6 (with spp_node, super fast now)
+
 v0.5.9
 ------
 
