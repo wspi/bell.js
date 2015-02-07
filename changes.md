@@ -1,10 +1,15 @@
 Node-bell Changelog
 ===================
 
+v0.6.4
+------
+
+- Add support for iojs v1.0.4+
+
 v0.6.1
 ------
 
-#81
+- Issue#81
 
 v0.6.0
 ------

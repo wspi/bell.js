@@ -33,7 +33,7 @@ We don't have to set a threshold for each metric, that would be tired, node-bell
 Installation
 ------------
 
-1. Install nodejs (0.11.9+), [ssdb](https://github.com/ideawu/ssdb) and [beanstalkd](https://github.com/kr/beanstalkd)
+1. Install nodejs (0.11.9+) or iojs (1.0.4+), [ssdb](https://github.com/ideawu/ssdb) and [beanstalkd](https://github.com/kr/beanstalkd)
 2. Install node-bell via npm
 
    ```bash
