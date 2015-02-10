@@ -140,4 +140,4 @@ Changes
 License
 -------
 
-MIT Copyright (c) 2014 Eleme, Inc.
+MIT Copyright (c) 2015 Eleme, Inc.
