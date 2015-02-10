@@ -132,4 +132,4 @@ port = 8789             # alerter port to listen (tcp)
 
 # alerter.modules       array, the alerter modules list, each alerter module
 #                       should be a node module.
-modules = []
+modules = ["../alerters/console"]
