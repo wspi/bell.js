@@ -16,7 +16,7 @@
   "dependencies": {
     "bluebird": "2.3.11",
     "clone": "0.1.18",
-    "co": "^4.1.0",
+    "co": "^4.3.0",
     "commander": "2.3.0",
     "extend": "2.0.0",
     "fivebeans": "1.1.1",
