@@ -1,6 +1,8 @@
 bell.js
 =======
 
+*Node-Bell is Renamed to bell.js now !*
+
 ![nodei](https://nodei.co/npm/bell.js.png?downloads=true&downloadRank=true)
 
 ![build](https://travis-ci.org/eleme/bell.js.svg)
