@@ -1,9 +1,9 @@
-# Node-Bell configuration. https://github.com/eleme/node-bell.git
+# bell.js configuration. https://github.com/eleme/bell.js
 
 # =============================== Global ======================================
 
-# patterns      string, patterns file path, e.g. "./patterns.js". Node-Bell
-#               analyzes all metrics match these patterns (excludes blacklist),
+# patterns      string, patterns file path, e.g. "./patterns.js". bell.js will
+#               analyze all metrics match these patterns (exclude blacklist),
 #
 #               the patterns schema (a javascript object):
 #
@@ -131,14 +131,5 @@ host = "0.0.0.0"        # alerter host to bind
 port = 8789             # alerter port to listen (tcp)
 
 # alerter.modules       array, the alerter modules list, each alerter module
-#                       should be a nodejs module, node-bell comes with a
-#                       built-in alerter module `hipchat`.
-modules = ["../alerters/hipchat.js"]
-
-[alerter.hipchat]
-roomId = 12345                   # the room's id
-token = "hipchat-api-token"      # hipchat api token
-weburl = "http://localhost:8989" # the full url for bell webapp
-levels = [0.4, 0.7, 0.9]         # info, warn, error
-atwho = ["@hit9"]                # at who on error
-interval = 300                   # check interval
+#                       should be a node module.
+modules = []
