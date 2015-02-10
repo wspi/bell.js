@@ -21,6 +21,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+'use strict';
 
 const fs = require('fs');
 const co = require('co');

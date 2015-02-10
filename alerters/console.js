@@ -2,6 +2,8 @@
  * Demo alerter module
  */
 
+'use strict';
+
 exports.init = function(configs, patterns, alerter, log) {
   alerter.on('anomaly detected', function(event) {
     var trend = event[1];
