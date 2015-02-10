@@ -10,3 +10,4 @@ test.timesteps.json
 *.pyc
 test.patterns.js
 heapdump-*
+npm-debug.log

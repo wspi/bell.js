@@ -71,7 +71,6 @@ co(function *() {
   if (configs.patterns.length > 0) {
     var patternsContent = fs.readFileSync(configs.patterns);
     var patterns_ = eval('var _; _ = ' + patternsContent);
-    console.log(patterns_);
     // clear default object `patterns`
     for (var key in patterns) delete patterns[key];
     extend(patterns, patterns_);
