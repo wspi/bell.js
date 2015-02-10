@@ -1,9 +1,9 @@
 /**
- * Common used node-bell client.
+ * Common used bell client.
  *
  * Example
  *
- *    var bell = require('node-bell');
+ *    var bell = require('bell.js');
  *    var client = bell.createClient({port: 8889});
  *
  *    // send datapoints every 10 seconds

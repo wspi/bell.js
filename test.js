@@ -1,10 +1,10 @@
-// https://travis-ci.org/eleme/node-bell
+// https://travis-ci.org/eleme/bell.js
 
 const should = require('should');
 const protocol = require('./lib/protocol');
 
 
-describe('node-bell', function(){
+describe('bell', function(){
   it('protocol.encode', function(){
     var datapoints = [['foo', [1413045998, 3.0]]];
     var buf = protocol.encode(datapoints);
