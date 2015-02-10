@@ -1,7 +1,7 @@
 // https://travis-ci.org/eleme/node-bell
 
-var should = require('should');
-var protocol = require('./lib/protocol');
+const should = require('should');
+const protocol = require('./lib/protocol');
 
 
 describe('node-bell', function(){
