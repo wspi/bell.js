@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v1.0.0
+------
+
+- Renamed to `bell.js`
+- Style fixes.
+
 v0.6.4
 ------
 

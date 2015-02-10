@@ -1,5 +1,5 @@
-Node-bell Topics
-================
+Bell Topics
+===========
 
 - [Custom Client](#custom-client)
 - [Custom Alerter](#custom-alerter)
@@ -15,7 +15,7 @@ Custom Client
 For example, to write a common bell client via [../clients/client.js](../clients/client.js):
 
 ```js
-var bell = require('node-bell');
+var bell = require('bell.js');
 var client = bell.createClient({port: 8889});
 
 // send datapoints every 10 seconds
@@ -24,11 +24,11 @@ setInterval(function(){
 }, 1e4);
 ```
 
-For statsd users, just add `'node-bell/clients/statsd'` to statsd config:
+For statsd users, just add `'bell.js/clients/statsd'` to statsd config:
 
 ```js
 {
-, backends: ['node-bell/clients/statsd']
+, backends: ['bell.js/clients/statsd']
 }
 ```
 
@@ -37,8 +37,8 @@ All clients available in [../clients](../clients), feel free to send yours.
 Custom Alerter
 --------------
 
-Node-Bell comes with a built-in alerter: [hipchat.js](../alerters/hipchat.js), but you can completely write one
-on your own, here are brief wiki:
+Bell comes with a built-in alerter: [console.js](../alerters/console.js), but you can 
+completely write one on your own, here are brief wiki:
 
 1. An alerter is a nodejs module which should export a function `init`:
 
@@ -81,7 +81,7 @@ Cross Machines Analyzers
 Generally, we run bell services all on one machine, but analyzers may require more
 cpus to make processing faster. To run bell analyzers on a new machine:
 
-1. Install node-bell: `npm install node-bell -g`
+1. Install bell: `npm install bell.js -g`
 2. Generate one copy of configs.toml: `bell -s`
 3. Edit the configuration, the following items should be configured:
 
@@ -101,7 +101,7 @@ cpus to make processing faster. To run bell analyzers on a new machine:
 Listener Net Protocol
 ---------------------
 
-The net protocol between clients and node-bell listener is very simple:
+The net protocol between clients and bell listener is very simple:
 
 ```
 Packet := Block+
