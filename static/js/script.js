@@ -89,7 +89,7 @@
 
 
   /**
-   * >Metrics source
+   * Metrics source
    *
    * @param {String} name
    * @return {Object}  // context.metric
