@@ -9,9 +9,11 @@
 
 <!-- dashboards -->
 <div class="dashboards-nav">
-  {% for name, dashboard in dashboards %}
+  {% for name, _dash in dashboards %}
   <span class="dashboards-nav-item">
-    <a class="dashboards-nav-item-name" href="{{ url('/', {'dashboard': name}) }}">
+    <a class="dashboards-nav-item-name
+      {% if name == params.dashboard %}dashboards-nav-item-name-current{% endif %}"
+      href="{{ url('/', {'dashboard': name}) }}">
       {{ name }}
     </a>
   </span>

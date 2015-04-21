@@ -258,16 +258,25 @@ form input {
 .dashboards-nav {
   margin-top: .5em;
   border-bottom: 1px solid #ddd;
+  padding: 8px 0;
 }
 
 .dashboards-nav-item {
   display: inline-block;
-  line-height: 20px;
-  padding: 8px 12px;
+  line-height: 19px;
+  padding: 0 10px;
 }
 
 .dashboards-nav-item-name {
     font-size: 18px;
+    border-bottom: 1px dotted #4183c4;
+}
+
+a.dashboards-nav-item-name-current {
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted #000;
 }
 
 /**
