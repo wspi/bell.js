@@ -1,4 +1,3 @@
-//
 // Statsd backend to work as a Node-Bell client.
 //
 //   * Statsd: https://github.com/etsy/statsd
@@ -40,8 +39,6 @@ var makers = {
   }
 };
 
-
-//
 // test if metric name matches our ignore patterns
 //
 // @param {String} key

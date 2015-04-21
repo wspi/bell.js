@@ -1,4 +1,3 @@
-//
 // Common used bell client.
 //
 // Example
@@ -41,7 +40,6 @@ var util = require('util');
 var protocol = require('../lib/protocol');
 
 
-//
 // Node-Bell client constructor
 //
 // options:
@@ -73,7 +71,6 @@ Client.prototype.connect = function() {
   return this;
 };
 
-//
 // destroy client to bell connection
 //
 // to auto reconnect:
@@ -87,12 +84,9 @@ Client.prototype.destroy = function() {
   this.conn = undefined;
 };
 
-//
 // send datapoints to Node-Bell
 //
 // @param {Array} datapoints  // e.g. [[name, [timestamp, value]], ..]
-// @param {Function} callback  // parameter
-// @return {Object} // this
 //
 Client.prototype.send = function(datapoints, callback) {
   var buffer = protocol.encode(datapoints);
