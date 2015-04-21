@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v1.1.0
+------
+
+- Upgrade ssdb to v0.3.0.
+- Style fixes.
+
 v1.0.0
 ------
 
