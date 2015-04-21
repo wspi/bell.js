@@ -1,6 +1,12 @@
 Node-bell Changelog
 ===================
 
+v1.2.0
+------
+
+- Remove quickenters/patterns. (Non-backward-compactiable)
+- Add dashboards support.
+
 v1.1.0
 ------
 
