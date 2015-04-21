@@ -1,9 +1,14 @@
 {% extends 'layout.html' %}
 
+{% block title %}
+Bell Monitor - {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
+{% if params.pattern %} pattern: {{ params.pattern }} {% endif %}
+{% endblock %}
+
 {% block main %}
 <!-- pattern form -->
 <form action="" method="get" accept-charset="utf-8">
-  <input name="pattern" type="text" placeholder="Pattern">
+  <input name="pattern" type="text" placeholder="patterns..">
 </form>
 <!-- end pattern form -->
 
