@@ -218,9 +218,12 @@ form input {
 #chart .title {
   margin-left: 0;
   padding: 0 7px;
-  background-color: rgba(255, 255, 255, .75);
+  background-color: rgba(255, 255, 255, .85);
 }
 
+#char .title a {
+  color: #333;
+}
 
 
 /**
