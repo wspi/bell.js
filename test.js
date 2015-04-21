@@ -3,7 +3,6 @@
 const should = require('should');
 const protocol = require('./lib/protocol');
 
-
 describe('bell', function(){
   it('protocol.encode', function(){
     var datapoints = [['foo', [1413045998, 3.0]]];

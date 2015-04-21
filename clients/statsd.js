@@ -1,30 +1,26 @@
-/**
- * Statsd backend to work as a Node-Bell client.
- *
- *   * Statsd: https://github.com/etsy/statsd
- *   * Node-bell: https://github.com/eleme/bell.js
- *
- * Optional configs:
- *   bellHost, default: '0.0.0.0'
- *   bellPort, default: 8889
- *   bellIgnores, default: ['statsd.*']
- *   bellTimerDataFields, default: ['upper_90', 'count_ps']
- *
- * Metric types supported: `counter_rates` & `timer_data`
- */
+// Statsd backend to work as a Node-Bell client.
+//
+//   * Statsd: https://github.com/etsy/statsd
+//   * Node-bell: https://github.com/eleme/bell.js
+//
+// Optional configs:
+//   bellHost, default: '0.0.0.0'
+//   bellPort, default: 8889
+//   bellIgnores, default: ['statsd.*']
+//   bellTimerDataFields, default: ['upper_90', 'count_ps']
+//
+// Metric types supported: `counter_rates` & `timer_data`
+//
 
-var net = require('net');
-var protocol = require('../lib/protocol');
+var net       = require('net');
+var protocol  = require('../lib/protocol');
 var minimatch = require('minimatch');
 
 var config;
 var debug;
 var logger;
 
-
-/**
- * datapoints creator for each metric type
- */
+// datapoints creator for each metric type
 var makers = {
   'counter_rates': function (key, val, time) {
     return [['counter.' + key, [time, val]]];
@@ -43,13 +39,11 @@ var makers = {
   }
 };
 
-
-/**
- * test if metric name matches our ignore patterns
- *
- * @param {String} key
- * @return {Boolean} // true for pass
- */
+// test if metric name matches our ignore patterns
+//
+// @param {String} key
+// @return {Boolean} // true for pass
+//
 function match(key) {
   var ignores = config.bellIgnores || ['statsd.*'];
 
@@ -61,16 +55,8 @@ function match(key) {
   return false;
 }
 
-
-/**
- * bell constructor
- */
 function Bell() {}
 
-
-/**
- * connect to bell listener
- */
 Bell.prototype.connect = function() {
   var self = this;
 
@@ -94,13 +80,6 @@ Bell.prototype.connect = function() {
   return this;
 };
 
-
-/**
- * flush datapoints to bell
- *
- * @param {Number} time
- * @param {Array} data  // statsd data object
- */
 Bell.prototype.flush = function(time, data) {
   var list = [];
   var types = Object.keys(makers);
@@ -143,7 +122,6 @@ Bell.prototype.flush = function(time, data) {
     });
   }
 };
-
 
 exports.init = function(uptime, _config, events, _logger) {
   logger = _logger || console;

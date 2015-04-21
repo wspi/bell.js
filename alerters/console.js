@@ -1,6 +1,4 @@
-/**
- * Demo alerter module
- */
+// Demo alerter module
 
 'use strict';
 
