@@ -9,7 +9,7 @@
   ;
 
   /**
-   * parameters from node-bell backend
+   * parameters from bell backend
    */
   var pattern;
   var sort;
@@ -17,6 +17,7 @@
   var type;
   var past;
   var stop;
+  var dashboard;
 
   // the seconds past
   var pastSecs;
@@ -28,7 +29,6 @@
   var chartTimeStepSpan = document.getElementById('chart-timestep');
   var loader = document.getElementById('loader');
 
-
   /**
    * entry function
    */
@@ -39,6 +39,7 @@
     type = options.type;
     past = options.past;
     stop = options.stop;
+    dashboard = options.dashboard;
 
     pastSecs = timespan2secs(past);
 
@@ -54,17 +55,12 @@
     }
 
     plot();
-    updateStats();
 
     if (stop === 0) {
       setInterval(function(){
         d3.select('#chart').selectAll('*').remove();
         plot();
       }, 10 * 60 * 1e3);  // replot every 10 min
-
-      setInterval(function() {
-        updateStats();
-      }, 60 * 1e3);  // 1min
     }
   };
 
@@ -102,7 +98,7 @@
       step = +step / 1e3;
 
       // api url to fetch metrics
-      var url = [api, 'metrics'].join('/') + '?' + buildUrlParams({
+      var url = [api, 'datapoints'].join('/') + '?' + buildUrlParams({
         name: name,
         type: type,
         start: start,
@@ -156,11 +152,16 @@
    * plot
    */
   function plot () {
-    var url = [api, 'names'].join('/') + '?' + buildUrlParams({
-      pattern: pattern,
-      limit: limit,
-      sort: sort
-    });
+    var params = {limit: limit, sort: sort};
+
+    if (dashboard) {
+      params.dashboard = dashboard;
+    } else {
+      params.pattern = pattern;
+    }
+
+    var url = [api, 'names'].join('/') + '?'
+      + buildUrlParams(params);
 
     request(url, function(names){
       // hide loader
@@ -210,48 +211,6 @@
     d3.selectAll('.value')
     .style('right', i === null ? null : context.size() - i + 'px');
   });
-
-
-  /**
-   * update patterns stats
-   */
-  function updateStats() {
-    var url = [api, 'stats'].join('/');
-
-    request(url, function(stats){
-      for (var pattern in stats) {
-        var trend = +stats[pattern];
-
-        // update trend
-        var span = document.getElementById('p-' + pattern);
-        span.innerHTML = trend < 0 ? '↓' : '↑';
-
-        // update link
-        var a = document.getElementById('a-' + pattern);
-        a.href = root + '?' + buildUrlParams({
-          pattern: pattern,
-          type: 'v', sort: trend < 0 ? '↓' : '↑'
-        });
-
-        // update background color
-        var li = document.getElementById('li-' + pattern);
-
-        var d = Math.abs(trend);
-
-        if (d < 0.2) {
-          li.setAttribute('class', 'lv1');
-        } else if (d >= 0.2 && d < 0.4) {
-          li.setAttribute('class', 'lv2');
-        } else if (d >= 0.4 && d < 0.6) {
-          li.setAttribute('class', 'lv3');
-        } else if (d >= 0.6 && d < 1.0) {
-          li.setAttribute('class', 'lv4');
-        } else if (d >= 1.0) {
-          li.setAttribute('class', 'lv5');
-        }
-      }
-    });
-  }
 })(this);
 
 

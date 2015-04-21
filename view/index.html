@@ -1,36 +1,30 @@
 {% extends 'layout.html' %}
 
+{% block title %}
+Bell Monitor - {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
+{% if params.pattern %} pattern: {{ params.pattern }} {% endif %}
+{% endblock %}
+
 {% block main %}
 <!-- pattern form -->
 <form action="" method="get" accept-charset="utf-8">
-  <input name="pattern" type="text" placeholder="Pattern">
+  <input name="pattern" type="text" placeholder="patterns..">
 </form>
 <!-- end pattern form -->
 
-<!-- patterns -->
-<div class="patterns">
-  {% for group, items in patterns %}
-  <span class="patterns-group">
-    <a class="patterns-group-name" href="javascript:void(0)" 
-      onclick="return false;">
-      {{ group }}
+<!-- dashboards -->
+<div class="dashboards-nav">
+  {% for name, _dash in dashboards %}
+  <span class="dashboards-nav-item">
+    <a class="dashboards-nav-item-name
+      {% if name == params.dashboard %}dashboards-nav-item-name-current{% endif %}"
+      href="{{ url('/', {'dashboard': name}) }}">
+      {{ name }}
     </a>
-    <div class="dropdown-menu-box">
-      <ul class="dropdown-menu">
-        {% for key, val in items %}
-        <li id="li-{{ val }}">
-          <a id="a-{{ val }}" href="{{ url('/', {'pattern': val, 'type': 'v'}) }}">
-            <span id="p-{{ val }}"></span>
-            {{ key }}
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
   </span>
-  {%endfor%}
+  {% endfor %}
 </div>
-<!-- end patterns -->
+<!-- end dashboards -->
 
 <!-- tabs -->
 <div class="tabnav">

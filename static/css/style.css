@@ -218,9 +218,12 @@ form input {
 #chart .title {
   margin-left: 0;
   padding: 0 7px;
-  background-color: rgba(255, 255, 255, .75);
+  background-color: rgba(255, 255, 255, .85);
 }
 
+#chart .title a {
+  color: #333;
+}
 
 
 /**
@@ -237,45 +240,6 @@ form input {
   padding: 8px 12px;
 }
 
-/* dropdown-menu trigger for quickenter items*/
-.patterns-group:hover .dropdown-menu {
-  display: block;
-}
-
-.patterns-group:hover .patterns-group-name{
-  color: #333;
-}
-
-.patterns-group-name {
-  font-size: 16px;
-}
-
-.patterns-group ul.dropdown-menu {
-  font-size: 14px;
-  width: 200px;
-}
-
-.patterns-group li.lv1 {  /* 0 ~ 0.2 */
-  background-color: #fff;
-}
-
-.patterns-group li.lv2 {   /* 0.2 ~ 0.4 */
-  background-color: #fff9ea;
-}
-
-.patterns-group li.lv3 {   /* 0.4 ~ 0.6 */
-  background-color: #FFF6A5;
-}
-
-.patterns-group li.lv4 {   /* 0.6 ~ 1 */
-  background-color: #FFB689;
-}
-
-.patterns-group li.lv5 {   /* 1 ~ */
-  background-color: #ff9999;
-}
-
-
 /**
  * custom dropdown-menus
  */
@@ -289,6 +253,33 @@ form input {
 
 .tabnav span ul.dropdown-menu li a {
   color: #4183c4;
+}
+
+/**
+ * dashboards nav
+ */
+.dashboards-nav {
+  margin-top: .5em;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+
+.dashboards-nav-item {
+  display: inline-block;
+  line-height: 26px;
+  padding: 0 10px;
+}
+
+.dashboards-nav-item-name {
+    font-size: 18px;
+    border-bottom: 1px dotted #4183c4;
+}
+
+a.dashboards-nav-item-name-current {
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted #000;
 }
 
 /**

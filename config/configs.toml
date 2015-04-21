@@ -2,32 +2,6 @@
 
 # =============================== Global ======================================
 
-# patterns      string, patterns file path, e.g. "./patterns.js". bell.js will
-#               analyze all metrics match these patterns (exclude blacklist),
-#
-#               the patterns schema (a javascript object):
-#
-#                   {
-#                     group: {
-#                       key: pattern
-#                     }
-#                   }
-#
-#               the default (also an example) patterns:
-#
-#                   {
-#                     timer: {
-#                       count_ps: 'timer.count_ps.*',
-#                       upper_90: 'timer.upper_90.*'
-#                     },
-#                     counter: {
-#                       rate: 'counter.*'
-#                     }
-#                   }
-#
-#               set this item to "" to use the default patterns.
-patterns = ""
-
 # interval      integer, seconds step for all metrics. default: 10 (10s)
 interval = 10
 
@@ -63,6 +37,15 @@ port = 8889                 # listener (tcp) port to listen, default: 8889
 # listener.blacklist        array, listener will disallow metrics which match
 #                           blacklist pattern(s), default: ["statsd.*"]
 blacklist = ["statsd.*"]
+
+# listener.patterns         array, listener will allow metrics which match these
+#                           pattern(s), except those hit blacklist, default:
+#                           ["timer.mean_90.*", "timer.count_ps.*", "counter.*"]
+patterns = [
+  "timer.mean_90.*",
+  "timer.count_ps.*",
+  "counter.*"
+]
 
 
 # =============================== Analyzer ====================================
@@ -110,6 +93,11 @@ port = 8989           # tcp port for webapp to bind
 #                     like 'http://mydomain.com/sub_dir', set this to "sub_dir",
 #                     default: "" (root directory)
 root = ""
+
+# webapp.dashboards   array, list of js file paths, schema e.g.:
+#
+#                       {name: 'mydashboard', patterns: [..]}
+dashboards = []
 
 
 # =============================== Cleaner ===================================

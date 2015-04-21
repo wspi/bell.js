@@ -5,12 +5,10 @@
 
 const co        = require('co');
 const fs        = require('fs');
-const extend    = require('extend');
 const program   = require('commander');
 const toml      = require('toml');
 const configs   = require('./lib/configs');
 const log       = require('./lib/log');
-const patterns  = require('./lib/patterns');
 const util      = require('./lib/util');
 const version   = require('./package').version;
 
@@ -45,15 +43,6 @@ co(function *() {
   var configsPath = program.configsPath || util.path.configs;
   var configsContent = fs.readFileSync(configsPath).toString();
   util.updateNestedObjects(configs, toml.parse(configsContent));
-
-  // update patterns
-  if (configs.patterns.length > 0) {
-    var patternsContent = fs.readFileSync(configs.patterns);
-    var patterns_ = eval('var _; _ = ' + patternsContent);
-    // clear default object `patterns`
-    for (var key in patterns) delete patterns[key];
-    extend(patterns, patterns_);
-  }
 
   var name = program.args[0];
 
