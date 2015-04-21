@@ -94,6 +94,11 @@ port = 8989           # tcp port for webapp to bind
 #                     default: "" (root directory)
 root = ""
 
+# webapp.dashboards   array, list of js file paths, schema e.g.:
+#
+#                       {name: 'mydashboard', patterns: [..]}
+dashboards = []
+
 
 # =============================== Cleaner ===================================
 
