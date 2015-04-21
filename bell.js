@@ -3,25 +3,24 @@
 
 'use strict';
 
-const fs = require('fs');
-const co = require('co');
-const program = require('commander');
-const extend = require('extend');
-const toml = require('toml');
+const co        = require('co');
+const fs        = require('fs');
+const extend    = require('extend');
+const program   = require('commander');
+const toml      = require('toml');
+const configs   = require('./lib/configs');
+const log       = require('./lib/log');
+const patterns  = require('./lib/patterns');
+const util      = require('./lib/util');
+const version   = require('./package').version;
 
-const listener = require('./lib/listener');
-const analyzer = require('./lib/analyzer');
-const webapp = require('./lib/webapp');
-const alerter = require('./lib/alerter');
-const cleaner = require('./lib/cleaner');
+global.Promise  = require('bluebird').Promise;
 
-const configs = require('./lib/configs');
-const log = require('./lib/log');
-const patterns = require('./lib/patterns');
-const util = require('./lib/util');
-const version = require('./package').version;
-
-global.Promise = require('bluebird').Promise;
+const listener  = require('./lib/listener');
+const analyzer  = require('./lib/analyzer');
+const webapp    = require('./lib/webapp');
+const alerter   = require('./lib/alerter');
+const cleaner   = require('./lib/cleaner');
 
 co(function *() {
   // argv parsing

@@ -12,8 +12,8 @@
 // Metric types supported: `counter_rates` & `timer_data`
 //
 
-var net = require('net');
-var protocol = require('../lib/protocol');
+var net       = require('net');
+var protocol  = require('../lib/protocol');
 var minimatch = require('minimatch');
 
 var config;
