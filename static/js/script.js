@@ -202,7 +202,7 @@
 
         return sprintf(
           '<a id="title-{3}" class="{0}" href="{1}">' +
-          '<span id="title-trend-{3}">{2}</span>{3}</a>',
+          '<span id="title-trend-{3}">{2} </span> {3}</a>',
           cls, url, arr, name
         );
       });
