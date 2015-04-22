@@ -1,16 +1,12 @@
 (function(){
-  /**
-   * cubism context with default settings
-   */
+  // cubism context with default settings
   var context = cubism.context()
   .serverDelay(0)
   .clientDelay(0)
   .size(3 * 60 * 60 / 10)  // 3 hours / 10s
   ;
 
-  /**
-   * parameters from bell backend
-   */
+  // parameters from bell backend
   var pattern;
   var sort;
   var limit;
@@ -22,16 +18,12 @@
   // the seconds past
   var pastSecs;
 
-  /**
-   * document elements
-   */
+  // document elements
   var chartUntilSpan = document.getElementById('chart-until');
   var chartTimeStepSpan = document.getElementById('chart-timestep');
   var loader = document.getElementById('loader');
 
-  /**
-   * entry function
-   */
+  // entry function
   this.initBell = function(options) {
     pattern = options.pattern;
     sort = options.sort;
@@ -64,13 +56,11 @@
     }
   };
 
-
-  /**
-   * 'GET' request an url, and call callback with responsed JSON data
-   *
-   * @param {String} url
-   * @param {Function} callback  // callback: @param {Object} data
-   */
+  // GET' request an url, and call callback with responsed JSON data
+  //
+  // param {String} url
+  // param {Function} callback  // callback: @param {Object} data
+  //
   function request(url, callback) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('GET', url, true);
@@ -83,13 +73,11 @@
     };
   }
 
-
-  /**
-   * Metrics source
-   *
-   * @param {String} name
-   * @return {Object}  // context.metric
-   */
+  // Metrics source
+  //
+  // @param {String} name
+  // @return {Object}  // context.metric
+  //
   function makeMetric(name) {
     return context.metric(function(start, stop, step, callback){
       // cast to timestamp from date
@@ -106,11 +94,10 @@
       });
       var values = [], i = 0;
 
-      /**
-       * request data and call callback with values
-       *
-       * data schema: {times: {Array}, vals: {Array}}
-       */
+      // request data and call callback with values
+      //
+      // data schema: {times: {Array}, vals: {Array}}
+      //
       request(url, function(data){
         // the timestamps from statsd DONT have exactly steps `10`
         while (start < stop) {
@@ -122,6 +109,9 @@
           start += step;
         }
         callback(null, values);
+
+        // update title
+        updateTitle(name, data.trend);
       });
 
       // udpate time range div
@@ -129,10 +119,7 @@
     }, name);
   }
 
-
-  /**
-   * make a horizon chart (hmm, horizon chart is amazing..)
-   */
+  // make a horizon chart (hmm, horizon chart is amazing..)
   function horizon() {
     var hrz = context.horizon();
 
@@ -147,10 +134,15 @@
     }
   }
 
+  // update title <a>
+  function updateTitle(name, trend) {
+    document.getElementById(sprintf('title-{0}', name))
+      .className = Math.abs(trend) >= 1? 'anomalous' : 'normal';
+    document.getElementById(sprintf('title-trend-{0}', name))
+      .innerHTML = trend > 0? '↑' : '↓';
+  }
 
-  /*
-   * plot
-   */
+  // plot
   function plot () {
     var params = {limit: limit, sort: sort};
 
@@ -163,13 +155,15 @@
     var url = [api, 'names'].join('/') + '?'
       + buildUrlParams(params);
 
-    request(url, function(names){
+    request(url, function(res){
       // hide loader
       loader.style.display = 'none';
 
       var data = [];
-      for (var i = 0; i < names.length; i++) {
-        data.push(makeMetric(names[i]));
+      var stat = {};  // {name: trend}
+      for (var i = 0; i < res.length; i++) {
+        data.push(makeMetric(res[i][0]));
+        stat[res[i][0]] = res[i][1];
       }
 
       d3.select('#chart').call(function(div) {
@@ -198,15 +192,24 @@
           type: type,
           past: past
         };
+        var trend = stat[name];
+        // arrow
+        var arr = trend > 0? '↑' : '↓';
+        // color
+        var cls = Math.abs(trend) >= 1? 'anomalous' : 'normal';
+        // link
         var url = root + '?' + buildUrlParams(params);
-        return '<a href="' + url + '">' + name + '</a>';
+
+        return sprintf(
+          '<a id="title-{3}" class="{0}" href="{1}">' +
+          '<span id="title-trend-{3}">{2} </span> {3}</a>',
+          cls, url, arr, name
+        );
       });
     });
   }
 
-  /*
-   * cubism context rule
-   */
+  // cubism context rule
   context.on('focus', function(i){
     d3.selectAll('.value')
     .style('right', i === null ? null : context.size() - i + 'px');
@@ -214,18 +217,16 @@
 })(this);
 
 
-/**
- * build url parameters
- *
- * example
- *
- *   buildUrlParams({'name': 'mike', 'age': 3})
- *   // => 'name=mike&age=3'
- *
- * @param {String} dict
- * @return {String}
- */
-
+// build url parameters
+//
+// example
+//
+//   buildUrlParams({'name': 'mike', 'age': 3})
+//   // => 'name=mike&age=3'
+//
+// @param {String} dict
+// @return {String}
+//
 function buildUrlParams(dict) {
   var list = [];
   for (var key in dict) {
@@ -235,21 +236,20 @@ function buildUrlParams(dict) {
 }
 
 
-/**
- * convert string format timespan to seconds
- *
- * example:
- *
- *   timespan2secs('1d')
- *   // => 86400
- *   timespan2secs('1h')
- *   // => 3600
- *   timespan2secs('1h2m')
- *   // => 3720
- *
- * @param {String} timespan
- * @return {Number}
- */
+// convert string format timespan to seconds
+//
+// example:
+//
+//   timespan2secs('1d')
+//   // => 86400
+//   timespan2secs('1h')
+//   // => 3600
+//   timespan2secs('1h2m')
+//   // => 3720
+//
+// @param {String} timespan
+// @return {Number}
+//
 function timespan2secs(timespan) {
   var map = {
     's': 1,
@@ -281,13 +281,11 @@ function timespan2secs(timespan) {
   return secs;
 }
 
-
-/**
- * convert unix timestamp to readable string format
- *
- * @param {Number} secs
- * @return {String}
- */
+// convert unix timestamp to readable string format
+//
+// @param {Number} secs
+// @return {String}
+//
 function secs2str(secs) {
   var date = new Date(secs * 1000);
   // getMonth() return 0~11 numbers
@@ -305,4 +303,13 @@ function secs2str(secs) {
   seconds = ('00' + seconds).slice(-2);
 
   return [month, day].join('/') + ' ' + [hours, minutes, seconds].join(':');
+}
+
+// help to sprintf a string
+function sprintf() {
+  var fmt = [].slice.apply(arguments, [0, 1])[0];
+  var args = [].slice.apply(arguments, [1]);
+  return fmt.replace(/{(\d+)}/g, function(match, idx) {
+    return typeof args[idx] != 'undefined'? args[idx] : match;
+  });
 }

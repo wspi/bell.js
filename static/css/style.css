@@ -225,6 +225,10 @@ form input {
   color: #333;
 }
 
+#chart .title a.anomalous {
+ color: #c03;
+}
+
 
 /**
  * .patterns
