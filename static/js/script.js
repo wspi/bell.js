@@ -109,6 +109,9 @@
           start += step;
         }
         callback(null, values);
+
+        // update title
+        updateTitle(name, data.trend);
       });
 
       // udpate time range div
@@ -129,6 +132,14 @@
     } else if (type === 'v') {
       return hrz;
     }
+  }
+
+  // update title <a>
+  function updateTitle(name, trend) {
+    document.getElementById(sprintf('title-{0}', name))
+      .className = Math.abs(trend) >= 1? 'anomalous' : 'normal';
+    document.getElementById(sprintf('title-trend-{0}', name))
+      .innerHTML = trend > 0? '↑' : '↓';
   }
 
   // plot
@@ -190,7 +201,8 @@
         var url = root + '?' + buildUrlParams(params);
 
         return sprintf(
-          '<a class="{0}" href="{1}">{2} {3}</a>',
+          '<a id="title-{3}" class="{0}" href="{1}">' +
+          '<span id="title-trend-{3}">{2}</span>{3}</a>',
           cls, url, arr, name
         );
       });
