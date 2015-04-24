@@ -180,11 +180,18 @@ ul.dropdown-menu li a:hover {
 
 
 /**
- * logo
+ * header // logo & api-link
  */
-.header img {
+.header .logo img {
   margin-top: 1em;
   height: 2em;
+}
+
+.header a.api-link {
+  float: right;
+  margin-top: 2em;
+  display: inline;
+  text-decoration: underline;
 }
 
 

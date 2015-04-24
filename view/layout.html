@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="{{ url('static/css/style.css') }}" type="text/css" />
     <script src="{{ url('static/js/d3.min.js' )}}"></script>
     <script src="{{ url('static/js/cubism.v1.min.js' )}}"></script>
-  </head>
-  <body>
     <!-- header -->
     <div class="header">
       <a href="{{ url('/') }}" class="logo">
         <img src="{{ url('static/img/logo.png') }}"/>
+      </a>
+      <a href="{{ url('/api') }}" class="api-link">
+        API
       </a>
     </div>
     <!-- end header -->
