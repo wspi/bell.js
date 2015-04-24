@@ -1,6 +1,6 @@
 {
   "name": "bell.js",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/eleme/bell.js"
@@ -27,7 +27,7 @@
     "minimatch": "1.0.0",
     "nunjucks": "1.2.0",
     "request": "~2.40.0",
-    "ssdb": "~0.3.0",
+    "ssdb": "~0.3.1",
     "strftime": "^0.8.2",
     "toml": "2.0.6"
   },

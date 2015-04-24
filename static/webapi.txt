@@ -1,0 +1,13 @@
+1. Get names by dashboard name:
+
+   GET /api/names?dashboard=myapp.dash&limit=30&sort=↑
+
+2. Get names by wildcard pattern:
+
+   GET /api/names?pattern=timer.count_ps.*&limit=30&sort=↓
+
+3. Get datapoints:
+
+   GET /api/datapoints?type=v&start=1429846175&stop=1429849175
+
+   GET /api/datapoints?type=m&start=1429846175&stop=1429849175
