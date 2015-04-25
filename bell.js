@@ -6,19 +6,14 @@
 const co        = require('co');
 const fs        = require('fs');
 const program   = require('commander');
+const logging   = require('logging.js');
 const toml      = require('toml');
 const configs   = require('./lib/configs');
-const log       = require('./lib/log');
 const util      = require('./lib/util');
 const version   = require('./package').version;
 
+const log       = logging.get('bell');
 global.Promise  = require('bluebird').Promise;
-
-const listener  = require('./lib/listener');
-const analyzer  = require('./lib/analyzer');
-const webapp    = require('./lib/webapp');
-const alerter   = require('./lib/alerter');
-const cleaner   = require('./lib/cleaner');
 
 co(function *() {
   // argv parsing
@@ -27,12 +22,13 @@ co(function *() {
     .usage('<service> [options]')
     .option('-c, --configs-path <c>', 'configs file path')
     .option('-s, --sample-configs', 'generate sample configs file')
-    .option('-l, --log-level <l>', 'logging level (1~5 for debug~fatal)',
+    .option('-l, --log-level <l>', 'logging level (1~5 for debug~critical)',
             function(val){return (parseInt(val, 10) - 1) % 5 + 1;})
     .parse(process.argv);
 
-  log.name = 'bell';
-  log.level = program.logLevel || 2;
+  // init logging
+  log.addRule({name: 'stdout', stream: process.stdout,
+              level: (program.logLevel || 2) * 10});
 
   if (program.sampleConfigs) {
     log.info('Generate sample.configs.toml to current directory');
@@ -52,11 +48,11 @@ co(function *() {
   }
 
   var service = {
-    listener: listener,
-    analyzer: analyzer,
-    webapp: webapp,
-    alerter: alerter,
-    cleaner: cleaner,
+    listener: require('./lib/listener'),
+    analyzer: require('./lib/analyzer'),
+    webapp  : require('./lib/webapp'),
+    alerter : require('./lib/alerter'),
+    cleaner : require('./lib/cleaner'),
   }[name];
 
   if (!service) {
@@ -64,10 +60,9 @@ co(function *() {
     program.help();
   }
 
-  // set log name
-  log.name = 'bell.' + name;
   // run service
   yield service.serve();
 }).catch(function(err) {
+  console.log(err.stack)
   util.fatal('Fatal error: %s', err.stack);
 });
