@@ -1,6 +1,16 @@
 Node-bell Changelog
 ===================
 
+v1.2.4
+------
+
+- Use logging.js instead of owen logger.
+
+v1.2.3
+------
+
+- Add api ref.
+
 v1.2.0
 ------
 
