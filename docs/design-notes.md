@@ -43,8 +43,9 @@ Eliminate periodicity
 
 ![](img/periodicity.png)
 
-Metrics reality are always with periodicity, the marked point on the picture above
-should be an anomaly, so bell only picks datapoints with same 'phase' to feed the
+Reality metrics are always with periodicity, the marked point on the picture above
+should be an anomaly (it should be much smaller at this time),
+so bell only picks datapoints with same "phase" to feed the
 analyzer.
 
 Anomalous Serverity Trending
