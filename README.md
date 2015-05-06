@@ -95,44 +95,14 @@ Bell has 5 "services", they do different jobs:
 More Specific Topics
 --------------------
 
-- [Custom Client](topics.md#custom-client)
-- [Custom Alerter](topics.md#custom-alerter)
-- [Analyzers Scalability](topics.md#analyzers-scalability)
-- [Cross Machines Analyzers](topics.md#cross-machines-analyzers)
-- [Listener Net Protocol](topics.md#listener-net-protocol)
-- [Week Analyzation Ability](topics.md#week-analyzation-ability)
-- [SSDB FAQ](topics.md#ssdb-faq)
-
-Insight
--------
-
-1. **algorithm**
-
-   Bell uses the `3-sigma` rule (similar to z-score) to detect if a datapoint is an anomaly (or an outlier):
-
-   > States that nearly all values(99.7%) lie within 3 standard deviations of the mean in a normal distribution.
-
-2. **storage schema**
-
-   Metrics are stored in ssdb using zset, the schema is:
-
-   ```
-   key       |  score
-   ------------------------------------------------
-   timestamp | value:anomalous severity:timestamp
-   ```
-
-3. **full data flow**
-
-   ```
-   [clients]->[listener]->[beanstalkd]
-                             |
-                             v
-              --------> [analyzers] ------> [alerter]
-              |              |
-      history |         save v    visualize
-              ------------ [ssdb] --------> [webapp]
-   ```
+- [Design Notes](docs/design-notes.md)
+- [Custom Client](docs/topics.md#custom-client)
+- [Custom Alerter](docs/topics.md#custom-alerter)
+- [Analyzers Scalability](docs/topics.md#analyzers-scalability)
+- [Cross Machines Analyzers](docs/topics.md#cross-machines-analyzers)
+- [Listener Net Protocol](docs/topics.md#listener-net-protocol)
+- [Week Analyzation Ability](docs/topics.md#week-analyzation-ability)
+- [SSDB FAQ](docs/topics.md#ssdb-faq)
 
 Changes
 -------
