@@ -1,0 +1,10 @@
+.*.sw[po]
+.git
+node_modules
+test-1
+test.js
+.travis.toml
+.npmignore
+.gitignore
+docs
+snap.png
