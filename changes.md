@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v1.2.5
+-------
+
+- Add docs/design-notes.md.
+
 v1.2.4
 ------
 
