@@ -33,12 +33,10 @@
     "toml": "2.0.6"
   },
   "devDependencies": {
-    "mocha": "~1.21.4",
-    "should": "~4.0.4",
-    "heapdump": "~0.3.3"
+    "mut": "0.0.3"
   },
   "scripts": {
-    "test": "mocha test.js"
+    "test": "node test.js"
   },
   "bin": {
     "bell": "./bin/bell.js"
