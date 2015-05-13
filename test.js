@@ -1,31 +1,35 @@
 // https://travis-ci.org/eleme/bell.js
 
-const should = require('should');
+const assert   = require('assert');
+const mut      = require('mut');
 const protocol = require('./lib/protocol');
 
-describe('bell', function(){
-  it('protocol.encode', function(){
+mut('bell', function(test) {
+  test('protocol.encode', function(done) {
     var datapoints = [['foo', [1413045998, 3.0]]];
     var buf = protocol.encode(datapoints);
     var str = '24\n[["foo",[1413045998,3]]]';
-    should(buf.toString()).eql(str);
+    assert.equal(buf.toString(), str);
+    done();
   });
 
-  it('protocol.decode', function(){
+  test('protocol.decode', function(done) {
     var buf = new Buffer('24\n[["foo",[1413045998,3]]]');
     var result = protocol.decode(buf);
-    should(result[0]).eql([['foo', [1413045998, 3.0]]]);
-    should(result[1]).eql(new Buffer(''));
+    assert.deepEqual(result[0], [['foo', [1413045998, 3.0]]]);
+    assert.deepEqual(result[1], new Buffer(''));
+    done();
   });
 
-  it('protocol.decode with unfinished data', function(){
+  test('protocol.decode with unfinished data', function(done) {
     var buf = new Buffer('24\n[["foo",[1413045998,3]]]45\n["aaa');
     var result = protocol.decode(buf);
-    should(result[0]).eql([['foo', [1413045998, 3.0]]]);
-    should(result[1]).eql(new Buffer('45\n["aaa'));
+    assert.deepEqual(result, [[['foo', [1413045998, 3.0]]],
+                     new Buffer('45\n["aaa')]);
+    done();
   });
 
-  it('protocol with large size data', function(){
+  test('protocol with large size data', function(done) {
     var datapoints = [];
 
     for (var i = 0; i < 1e4; i++) {
@@ -34,11 +38,11 @@ describe('bell', function(){
 
     var buf = protocol.encode(datapoints);  // length: 203k+
     var result = protocol.decode(buf);
-    should(result[0]).eql(datapoints);
-    should(result[1]).eql(new Buffer(''));
+    assert.deepEqual(result, [datapoints, new Buffer('')]);
+    done();
   });
 
-  it('protocol.decode with multiple chunks', function(){
+  test('protocol.decode with multiple chunks', function(done) {
     var chunks = [[['foo', [1413045998, 3.0]]], [['bar', [1413045998, 6.0]]]];
     var datapoints = [];
     var buf = new Buffer('');
@@ -50,7 +54,7 @@ describe('bell', function(){
     }
 
     var result = protocol.decode(buf);
-    should(result[0]).eql(datapoints);
-    should(result[1]).eql(new Buffer(''));
+    assert.deepEqual(result, [datapoints, new Buffer('')]);
+    done();
   });
 });
