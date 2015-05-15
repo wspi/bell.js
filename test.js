@@ -1,10 +1,10 @@
 // https://travis-ci.org/eleme/bell.js
 
 const assert   = require('assert');
-const mut      = require('mut');
+const ntt      = require('ntt');
 const protocol = require('./lib/protocol');
 
-mut('bell', function(test) {
+ntt('bell', function(test) {
   test('protocol.encode', function(done) {
     var datapoints = [['foo', [1413045998, 3.0]]];
     var buf = protocol.encode(datapoints);

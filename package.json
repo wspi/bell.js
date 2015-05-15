@@ -33,7 +33,7 @@
     "toml": "2.0.6"
   },
   "devDependencies": {
-    "mut": ">=0.0.4"
+    "ntt": ">=0.0.5"
   },
   "scripts": {
     "test": "node test.js"
