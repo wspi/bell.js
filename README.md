@@ -26,8 +26,8 @@ We ([Eleme](http://ele.me)) use it to monitor our website interfaces, including:
    - ...
 
 Our services and applications send these statistics to [statsd](https://github.com/etsy/statsd),
-then statsd sends aggregates to bell, bell analyzes the current stats
-with history data, calculated the trending, and alerts us if the current trending behaves
+then statsd sends aggregations to bell, bell analyzes the current stats
+with history data, calculates the trending, and alerts us if the current trending behaves
 anomalous.
 
 We don't have to set a threshold for each metric, that would be tired, bell will find the "thresholds" automatically.
