@@ -63,5 +63,5 @@ co(function *() {
   // run service
   yield service.serve();
 }).catch(function(err) {
-  util.fatal('Fatal error: %s', err.stack);
+  throw err;
 });

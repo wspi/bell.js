@@ -20,6 +20,7 @@ tube = "bell"       # beanstalkd tube to use, default: "bell"
 host = "0.0.0.0"   # ssdb host to connect, default: "0.0.0.0"
 port = 8888        # ssdb port to connect, default: 8888
 size = 6           # ssdb connection pool size, default: 6
+auth = ""          # ssdb auth string, default: "" (empty for no auth)
 prefix = "bell."   # the prefix for bell to name zset, hash.., default: "bell."
 
   [ssdb.zset]
