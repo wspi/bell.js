@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v1.2.6
+------
+
+- Add support for ssdb auth.
+
 v1.2.5
 -------
 
