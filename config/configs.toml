@@ -25,7 +25,7 @@ prefix = "bell."   # the prefix for bell to name zset, hash.., default: "bell."
 
   [ssdb.zset]
   # ssdb.zset.expire        integer, seconds to expire a datapoint (for all
-  #                         metrics), default: 432000 (5 day)
+  #                         metrics), default: 432000 (5 days)
   expire = 432000
 
 
