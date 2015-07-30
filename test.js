@@ -1,7 +1,9 @@
 // https://travis-ci.org/eleme/bell.js
 
-const assert   = require('assert');
-const ntt      = require('ntt');
+'use strict';
+
+const assert = require('assert');
+const ntt = require('ntt');
 const protocol = require('./lib/protocol');
 
 ntt('bell', function(test) {

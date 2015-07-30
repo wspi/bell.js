@@ -25,7 +25,7 @@ prefix = "bell."   # the prefix for bell to name zset, hash.., default: "bell."
 
   [ssdb.zset]
   # ssdb.zset.expire        integer, seconds to expire a datapoint (for all
-  #                         metrics), default: 432000 (5 day)
+  #                         metrics), default: 432000 (5 days)
   expire = 432000
 
 
@@ -53,7 +53,7 @@ patterns = [
 
 [analyzer]
 # analyzer.workers      integer, analyzer workers (processes) number, default: 24
-workers = 24
+workers = 4
 
 # analyzer.strict       boolean, whether burr points should be considered to be
 #                       anomaous, default: true
@@ -86,7 +86,7 @@ minSize = 50
 
 [webapp]
 # webapp.workers      integer, webapp workers (processes) number, default: 5
-workers = 5
+workers = 2
 
 port = 8989           # tcp port for webapp to bind
 

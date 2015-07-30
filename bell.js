@@ -3,17 +3,18 @@
 
 'use strict';
 
-const co        = require('co');
-const fs        = require('fs');
-const program   = require('commander');
-const logging   = require('logging.js');
-const toml      = require('toml');
-const configs   = require('./lib/configs');
-const util      = require('./lib/util');
-const version   = require('./package').version;
+const co = require('co');
+const fs = require('fs');
+const program = require('commander');
+const logging = require('logging.js');
+const toml = require('toml');
+const configs = require('./lib/configs');
+const util = require('./lib/util');
+const version = require('./package').version;
 
-const log       = logging.get('bell');
-global.Promise  = require('bluebird').Promise;
+const log = logging.get('bell');
+
+global.Promise = require('bluebird').Promise;
 
 co(function *() {
   // argv parsing
@@ -23,7 +24,7 @@ co(function *() {
     .option('-c, --configs-path <c>', 'configs file path')
     .option('-s, --sample-configs', 'generate sample configs file')
     .option('-l, --log-level <l>', 'logging level (1~5 for debug~critical)',
-            function(val){return (parseInt(val, 10) - 1) % 5 + 1;})
+            function(val) {return (parseInt(val, 10) - 1) % 5 + 1; })
     .parse(process.argv);
 
   // init logging
@@ -50,9 +51,9 @@ co(function *() {
   var service = {
     listener: require('./lib/listener'),
     analyzer: require('./lib/analyzer'),
-    webapp  : require('./lib/webapp'),
-    alerter : require('./lib/alerter'),
-    cleaner : require('./lib/cleaner'),
+    webapp: require('./lib/webapp'),
+    alerter: require('./lib/alerter'),
+    cleaner: require('./lib/cleaner')
   }[name];
 
   if (!service) {

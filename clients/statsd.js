@@ -10,10 +10,11 @@
 //   bellTimerDataFields, default: ['upper_90', 'count_ps']
 //
 // Metric types supported: `counter_rates` & `timer_data`
-//
 
-var net       = require('net');
-var protocol  = require('../lib/protocol');
+'use strict';
+
+var net = require('net');
+var protocol = require('../lib/protocol');
 var minimatch = require('minimatch');
 
 var config;
@@ -128,7 +129,9 @@ exports.init = function(uptime, _config, events, _logger) {
   debug = _config.debug;
   config = _config || {};
   var bell = new Bell();
-  events.on('flush', function(time, data){bell.flush(time, data);});
+  events.on('flush', function(time, data) {
+    bell.flush(time, data);
+  });
   bell.connect();
   return true;
 };

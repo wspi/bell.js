@@ -95,7 +95,7 @@ cpus to make processing faster. To run bell analyzers on a new machine:
    - **analyzer.***  all analyzer configs for analyzers on this machine (should be the same with 
      analyzers on other machines)
    - **alerter.host**  the only-one alerter host to connect
-   - **alerter.port**  the only=one alerter port to connect
+   - **alerter.port**  the only-one alerter port to connect
 
 
 Listener Net Protocol
