@@ -36,7 +36,7 @@
     "ntt": ">=0.0.5"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "eslint . && node test.js"
   },
   "bin": {
     "bell": "./bin/bell.js"
