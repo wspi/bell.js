@@ -33,10 +33,11 @@
     "toml": "2.0.6"
   },
   "devDependencies": {
-    "ntt": ">=0.0.5"
+    "ntt": ">=0.0.5",
+    "eslint": ">=0.24"
   },
   "scripts": {
-    "test": "eslint . && node test.js"
+    "test": "node test.js"
   },
   "bin": {
     "bell": "./bin/bell.js"

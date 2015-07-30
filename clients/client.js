@@ -34,9 +34,11 @@
 //   Data   := literal_stringify_json
 //
 
-var events   = require('events');
-var net      = require('net');
-var util     = require('util');
+'use strict';
+
+var events = require('events');
+var net = require('net');
+var util = require('util');
 var protocol = require('../lib/protocol');
 
 
@@ -60,14 +62,14 @@ Client.prototype.connect = function() {
   var self = this;
   this.conn = net.connect({
     host: this.options.host || '0.0.0.0',
-    port: this.options.port || 8889,
+    port: this.options.port || 8889
   });
-  this.conn.on('connect', function(){self.emit('connect');});
-  this.conn.on('error', function(err){self.emit('error', err);});
-  this.conn.on('timeout', function(){self.emit('timeout');});
-  this.conn.on('end', function(){self.emit('end');});
-  this.conn.on('close', function(){self.emit('close');});
-  this.conn.on('drain', function(){self.emit('drain');});
+  this.conn.on('connect', function(){self.emit('connect'); });
+  this.conn.on('error', function(err){self.emit('error', err); });
+  this.conn.on('timeout', function(){self.emit('timeout'); });
+  this.conn.on('end', function(){self.emit('end'); });
+  this.conn.on('close', function(){self.emit('close'); });
+  this.conn.on('drain', function(){self.emit('drain'); });
   return this;
 };
 
