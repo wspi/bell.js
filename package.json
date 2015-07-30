@@ -37,7 +37,7 @@
     "eslint": ">=0.24"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "node --harmony test.js"
   },
   "bin": {
     "bell": "./bin/bell.js"
