@@ -36,9 +36,9 @@
 
 'use strict';
 
-var events = require('events');
-var net = require('net');
-var util = require('util');
+var events   = require('events');
+var net      = require('net');
+var util     = require('util');
 var protocol = require('../lib/protocol');
 
 

@@ -14,5 +14,5 @@ node_js:
   - "iojs"
 
 script:
-  - $(npm bin)/eslint .
+  - $(npm bin)/jshint .
   - npm test

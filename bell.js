@@ -3,13 +3,13 @@
 
 'use strict';
 
-const co = require('co');
-const fs = require('fs');
+const co      = require('co');
+const fs      = require('fs');
 const program = require('commander');
 const logging = require('logging.js');
-const toml = require('toml');
+const toml    = require('toml');
 const configs = require('./lib/configs');
-const util = require('./lib/util');
+const util    = require('./lib/util');
 const version = require('./package').version;
 
 const log = logging.get('bell');

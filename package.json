@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "ntt": ">=0.0.5",
-    "eslint": ">=0.24"
+    "jshint": "2.8.0"
   },
   "scripts": {
     "test": "node --harmony test.js"
