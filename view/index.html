@@ -1,9 +1,24 @@
 {% extends 'layout.html' %}
 
+{% macro switch(dict) %}
+  {{ url('/', extend(clone(params), dict)) }}
+{% endmacro %}
+
+{% macro title() %}
+{% if params.dashboard %}
+{% set groupName = params.dashboard.split(":")[0] %}
+{% set dashboardName = params.dashboard.split(":")[1] %}
+{% set group = groups[groupName] %}
+{% set dashboard = group.dashboards[dashboardName] %}
+  {% if group.title %}{{ group.title }}{% else %}{{ groupName }}{% endif %}:
+  {% if dashboard.title %}{{ dashboard.title }}{% else %}{{ dashboardName }}{% endif %}
+{% else %}
+Pattern: {{ params.pattern }}
+{% endif %}
+{% endmacro %}
+
 {% block title %}
-Bell Monitor -
-  {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
-  {% if params.pattern %} pattern: {{ params.pattern  }} {% endif %}
+Bell Monitor - {{ title() }}
 {% endblock %}
 
 {% block navbar %}
@@ -18,6 +33,20 @@ Bell Monitor -
 {% endblock %}
 
 {% block sidebar %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Dashboards
+    </h3>
+  </div>
+  <div class="panel-body">
+    {% block sidebarPanel %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebarPanel %}
 <ul class="nav nav-pills nav-stacked">
   {% if params.pattern %}
     <li class="active">
@@ -26,11 +55,15 @@ Bell Monitor -
   {% endif %}
   {% for groupName, group in groups %}
   <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-      {{ groupName }} <span class="caret"></span>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+      aria-expanded="false">
+      {% if group.title %} {{ group.title }}
+      {% else%} {{ groupName }}
+      {% endif %}
+      <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      {% for dashboardName, dashboard in group %}
+      {% for dashboardName, dashboard in group.dashboards %}
       <li>
         <a href="{{ url('/', {'dashboard': groupName + ':' + dashboardName }) }}">
           {% if dashboard.title %} {{ dashboard.title }}
@@ -45,11 +78,21 @@ Bell Monitor -
 </ul>
 {% endblock %}
 
-{% macro switch(dict) %}
-  {{ url('/', extend(clone(params), dict)) }}
-{% endmacro %}
-
 {% block main %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <a href="{{ switch({}) }}">{{ title() }}</a>
+    </h3>
+  </div>
+  <div class="panel-body">
+    {% block mainPanel %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+{% block mainPanel %}
 {% set tabs = {
   '0s': 'Now',
   '3h': '3 hours',
