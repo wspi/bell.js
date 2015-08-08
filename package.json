@@ -3,7 +3,7 @@
   "version": "1.2.8",
   "repository": {
     "type": "git",
-    "url": "git://github.com/eleme/bell.js"
+    "url": "https://github.com/eleme/bell.js"
   },
   "description": "Realtime anomalous metrics detection",
   "author": "hit9 <hit9@ele.me>",

@@ -1,5 +1,5 @@
 .axis {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
 }
 
 .axis text {
@@ -37,7 +37,7 @@
 .horizon .title,
 .horizon .value {
   bottom: 0;
-  line-height: 30px;
+  line-height: 32px;
   margin: 0 6px;
   position: absolute;
   text-shadow: 0 1px 0 rgba(255,255,255,.5);
@@ -54,5 +54,5 @@
 
 .line {
   background: black;
-  z-index: 2;
+  z-index: 1000;
 }

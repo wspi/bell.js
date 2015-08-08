@@ -1,124 +1,147 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Bell Monitor - {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
-{% if params.pattern %} pattern: {{ params.pattern }} {% endif %}
+Bell Monitor - 
+  {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
+  {% if params.pattern %} pattern: {{ params.pattern  }} {% endif %}
 {% endblock %}
 
-{% block main %}
-<!-- pattern form -->
-<form action="" method="get" accept-charset="utf-8">
-  <input name="pattern" type="text" placeholder="patterns..">
-</form>
-<!-- end pattern form -->
-
-<!-- dashboards -->
-<div class="dashboards-nav">
-  {% for name, _dash in dashboards %}
-  <span class="dashboards-nav-item">
-    <a class="dashboards-nav-item-name
-      {% if name == params.dashboard %}dashboards-nav-item-name-current{% endif %}"
-      href="{{ url('/', {'dashboard': name}) }}">
-      {{ name }}
-    </a>
-  </span>
-  {% endfor %}
+{% block navbar %}
+<div class="collapse navbar-collapse">
+  <form action="{{ url('/') }}" method="get" accept-charset="utf-8" class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input name="pattern" type="text" class="form-control" placeholder="Pattern..">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
 </div>
-<!-- end dashboards -->
+{% endblock %}
 
-<!-- tabs -->
-<div class="tabnav">
+{% block sidebar %}
+<ul class="nav nav-pills nav-stacked">
+  {% if params.pattern %}
+    <li class="active">
+      <a href="{{ url('/', params) }}">{{ params.pattern }}</a>
+    </li>
+  {% endif %}
+  {% for name, dashboard in dashboards %}
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+      {{ name }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
 
-  {% macro switch(dict) %}
-    {{ url('/', extend(clone(params), dict)) }}
-  {% endmacro %}
+{% macro switch(dict) %}
+  {{ url('/', extend(clone(params), dict)) }}
+{% endmacro %}
 
-  <span class="tab-chart-info tab-others">
-    ~ <span id="chart-until"></span>
-  </span>
+{% block main %}
+{% set tabs = {
+  '0s': 'Now',
+  '3h': '3 hours',
+  '6h': '6 hours',
+  '1d': '1 day', 
+  '2d': '2 days', 
+  '3d': '3 days',
+  '4d': '4 days'
+} %}
+<ul class="nav nav-tabs">
+  <!-- tab datetime util -->
+  <li class="disabled">
+    <a>~ <span id="chart-until"></span></a>
+  </li>
+  <!-- end tab datetime util -->
+
+  <!-- past tabs -->
+  {% for key, val in tabs %}
+  <li {% if params.past == key %}class="active"{% endif %}>
+    <a href="{{ switch({past: key}) }}">{{ val }}</a>
+  </li>
+  {% endfor %}
+  {% if not tabs.hasOwnProperty(params.past) %}
+  <li class="active">
+    <a href="{{ switch({past: params.past})  }}">{{ params.past  }}</a>
+  </li>
+  {% endif %}
+  <!-- end past tabs -->
 
   <!-- tab switch -->
-  <span class="tab-switch tab-right tab-others">
-    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'}) }}"> Switch </a>
-  </span>
+  <li class="pull-right">
+    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}"> Switch </a>
+  </li>
   <!-- end tab switch -->
 
   <!-- tab stop -->
-  <span class="tab-stop tab-right tab-others">
-  {% if params.stop == 0 %}
-    <a href="{{ switch({stop: 1}) }}"> Pause </a>
-  {% else %}
-    <a href="{{ switch({stop: 0}) }}"> Realtime </a>
-  {% endif %}
-  </span>
+  <li class="pull-right">
+    {% if params.stop == 0 %}
+    <a href="{{ switch({stop: 1})  }}"> Pause </a>
+    {% else %}
+    <a href="{{ switch({stop: 0})  }}"> Realtime </a>
+    {% endif %}
+  </li>
   <!-- end tab stop -->
 
-  <!-- tab limit -->
-  <span class="tab-limit tab-right tab-others">
-    <a href="javscript:void(0);" onclick="return false;"> Top {{ params.limit}}</a>
-    <div class="dropdown-menu-box">
-      <ul class="dropdown-menu">
-      {% for limit in [1, 30, 50, 100, 500, 1000] %}
-        <li>
-          <a href="{{ switch({limit: limit}) }}">{{ limit }}</a>
-        </li>
-      {% endfor %}
-      </ul>
-    </div>
-  </span>
-  <!-- end tab limit -->
-
   <!-- tab sort -->
-  <span class="tab-sort-by tab-right tab-others">
-    <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
-    <div class="dropdown-menu-box">
-      <ul class="dropdown-menu">
-        <li>
-          <a href="{{ switch({sort: '↑'}) }}">Trending Up ↑</a>
-        </li>
-        <li>
-          <a href="{{ switch({sort: '↓'}) }}">Trending Down ↓</a>
-        </li>
-      </ul>
-    </div>
-  </span>
+  <li class="dropdown pull-right">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
+      Sort By {{ params.sort }}<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="{{ switch({sort: '↑'})  }}">Trending Up ↑</a>
+      </li>
+      <li>
+        <a href="{{ switch({sort: '↓'})  }}">Trending Down ↓</a>
+      </li>
+    </ul>
+  </li>
+  <!-- end tab sort -->
 
-  <!-- past tabs -->
-  <ul class="tabs">
-  {% set tabs = {'0s': 'Now', '3h': '3 hours', '6h': '6 hours', '1d': '1 day', '2d': '2 days', '3d': '3 days', '4d': '4 days'} %}
-  {% for key, val in tabs %}
-    <li {% if params.past == key %} class="active" {% endif %}>
-      <a href="{{ switch({past: key}) }}">{{ val }}</a>
-    </li>
-  {% endfor %}
-  {% if not tabs.hasOwnProperty(params.past) %}
-    <li class="active">
-      <a href="{{ switch({past: params.past}) }}">{{ params.past }}</a>
-    </li>
-  {% endif %}
-  </ul>
-  <!-- end past tabs -->
-</div>
-<!-- end tabs -->
+  <!-- tab limit -->
+  <li class="dropdown pull-right">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
+      Limit {{ params.limit }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      {% for limit in [1, 30, 50, 100, 500, 1000] %}
+      <li>
+        <a href="{{ switch({limit: limit})  }}">{{ limit  }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  <!-- end tab limit -->
+</ul>
 
 <!-- chart -->
-<div id="chart">
-  <div class="loader" id="loader">
-    <img src="{{ url('static/img/spinner.gif') }}" />
+<div class="chart-box">
+  <div class="chart" id="chart">
+    <div class="loader" id="loader">
+      <img src="{{ url('static/img/spinner.gif')  }}" />
+    </div>
   </div>
 </div>
 <!-- end chart -->
-{%endblock%}
+{% endblock %}
 
 {% block script %}
-<script src="{{ url('static/js/script.js') }}"></script>
+<script src="{{ url('static/js/script.js')  }}"></script>
 <script>
   // vars required by script.js
-  var api = '{{ url('/api') }}'
-  var root = '{{ url('/') }}';
-  var step = {{ configs.interval }};
-
+  var api = '{{ url('/api')  }}'
+  var root = '{{ url('/')  }}';
+  var step = {{ configs.interval  }};
   {% set options = JSON.stringify(params) %}
-  window.onload = function() {initBell({{ options }})};
+  window.onload = function() {initBell({{ options  }})};
 </script>
 {% endblock %}

@@ -210,9 +210,10 @@
   }
 
   // cubism context rule
-  context.on('focus', function(i){
+  context.on('focus', function(i) {
+    offset = document.getElementById("chart").offsetWidth - i;
     d3.selectAll('.value')
-    .style('right', i === null ? null : context.size() - i + 'px');
+    .style('right', i === null ? null : offset + 'px');
   });
 })(this);
 
