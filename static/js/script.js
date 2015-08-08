@@ -156,10 +156,10 @@
       var boxCls = "alert alert-dismissible ";
       var status;
 
-      if (Math.abs(data.data) < 0.25) {
+      if (Math.abs(data.data) < 0.5) {
         boxCls += "alert-success";
         status = 'OK';
-      } else if (Math.abs(data.data) > 0.5 && Math.abs(data.data) < 0.75) {
+      } else if (Math.abs(data.data) >= 0.5 && Math.abs(data.data) < 0.95) {
         boxCls += "alert-warning";
         status = 'WARNING';
       } else {
