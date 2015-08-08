@@ -32,25 +32,12 @@ Bell Monitor - {{ title() }}
 </div>
 {% endblock %}
 
-{% block sidebar %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-      Dashboards
-    </h3>
-  </div>
-  <div class="panel-body">
-    {% block sidebarPanel %}
-    {% endblock %}
-  </div>
-</div>
-{% endblock %}
-
-{% block sidebarPanel %}
+{% block sidebarTitle %}Dashboards{% endblock %}
+{% block sidebarContent %}
 <ul class="nav nav-pills nav-stacked">
   {% if params.pattern %}
     <li class="active">
-      <a href="{{ url('/', params) }}">{{ params.pattern }}</a>
+      <a href="{{ url('/', params) }}">Pattern: {{ params.pattern }}</a>
     </li>
   {% endif %}
   {% for groupName, group in groups %}
@@ -78,21 +65,8 @@ Bell Monitor - {{ title() }}
 </ul>
 {% endblock %}
 
-{% block main %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-      <a href="{{ switch({}) }}">{{ title() }}</a>
-    </h3>
-  </div>
-  <div class="panel-body">
-    {% block mainPanel %}
-    {% endblock %}
-  </div>
-</div>
-{% endblock %}
-
-{% block mainPanel %}
+{% block mainTitle %}{{ title() }}{% endblock %}
+{% block mainContent %}
 {% set tabs = {
   '0s': 'Now',
   '3h': '3 hours',

@@ -37,10 +37,28 @@
   <div class="container-fluid container">
     <div class="row">
       <div class="col-sm-2 sidebar">
-        {% block sidebar %} {% endblock %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {% block sidebarTitle %}{% endblock %}
+            </h3>
+          </div>
+          <div class="panel-body">
+            {% block sidebarContent %} {% endblock %}
+          </div>
+        </div>
       </div>
       <div class="col-sm-10 main", role="main">
-        {% block main %} {% endblock %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {% block mainTitle %}{% endblock %}
+            </h3>
+          </div>
+          <div class="panel-body">
+            {% block mainContent %} {% endblock %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
