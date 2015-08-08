@@ -81,7 +81,8 @@
 {% if params.dashboard %}
 <div class="alert alert-dismissible" id="tavg-box">
   <button type="button" class="close" data-dismiss="alert">×</button>
-  <p> {{ lang("Current dashboard trendings average is:", "当前面板所有指标的趋势因子平均值是:") }}
+  <p><h4>Status: <span id="tavg-status"></span></h4>
+  {{ lang("Current dashboard trendings average is:", "当前面板所有指标的趋势因子平均值是:") }}
   <b><span id="tavg-data"></span></b>,
   {{ lang("updated at ", "数据更新于") }}<span id="tavg-time"></span>
   </p>
@@ -92,9 +93,7 @@
   '3h': '距今3小时' if params.lang == 'zh' else '3 hours',
   '6h': '距今6小时' if params.lang == 'zh' else '6 hours',
   '1d': '距今1天' if params.lang == 'zh' else '1 day',
-  '2d': '距今2天' if params.lang == 'zh' else '2 day',
-  '3d': '距今3天' if params.lang == 'zh' else '3 day',
-  '4d': '距今4天' if params.lang == 'zh' else '4 day'
+  '2d': '距今2天' if params.lang == 'zh' else '2 day'
 } %}
 <ul class="nav nav-tabs">
   <!-- past tabs -->

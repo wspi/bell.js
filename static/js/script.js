@@ -154,17 +154,22 @@
     var url = [api, 'tavg'].join('/') + '?' + buildUrlParams({dashboard: dashboard});
     request(url, function(data) {
       var boxCls = "alert alert-dismissible ";
+      var status;
 
-      if (data.data < 0.25) {
+      if (Math.abs(data.data) < 0.25) {
         boxCls += "alert-success";
-      } else if (data.data > 0.5 && data.data < 0.75) {
+        status = 'OK';
+      } else if (Math.abs(data.data) > 0.5 && Math.abs(data.data) < 0.75) {
         boxCls += "alert-warning";
+        status = 'WARNING';
       } else {
         boxCls += "alert-danger";
+        status = 'CRITICAL';
       }
 
       document.getElementById('tavg-box').className = boxCls;
-      document.getElementById('tavg-data').innerHTML = data.data;
+      document.getElementById('tavg-status').innerHTML = status;
+      document.getElementById('tavg-data').innerHTML = data.data.toFixed(2);
       document.getElementById('tavg-time').innerHTML = secs2str(data.time);
     });
   }
