@@ -53,7 +53,7 @@
     <ul class="dropdown-menu">
       {% for dashboardName, dashboard in group.dashboards %}
       <li>
-        <a href="{{ url('/', {'dashboard': groupName + ':' + dashboardName }) }}">
+        <a href="{{ switch({dashboard: groupName + ':' + dashboardName }) }}">
           {% if dashboard.title %} {{ dashboard.title }}
           {% else%} {{ dashboardName }}
           {% endif %}
