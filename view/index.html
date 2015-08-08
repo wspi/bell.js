@@ -75,7 +75,7 @@
 {% endblock %}
 {% block mainContent %}
 {% set tabs = {
-  '0s': '当前时刻' if params.lang == 'zh' else  'Now',
+  '0s': '当前' if params.lang == 'zh' else  'Now',
   '3h': '距今3小时' if params.lang == 'zh' else '3 hours',
   '6h': '距今6小时' if params.lang == 'zh' else '6 hours',
   '1d': '距今1天' if params.lang == 'zh' else '1 day',
@@ -87,7 +87,9 @@
   <!-- past tabs -->
   {% for key, val in tabs %}
   <li {% if params.past == key %}class="active"{% endif %}>
-    <a href="{{ switch({past: key}) }}">{{ val }}</a>
+    <a href="{{ switch({past: key}) }}" data-toggle="tooltip" data-placement="bottom",
+      {% if key != '0s' %}title="{{ lang("Shift date to " + val + " ago", "平移时间线到" + val) }}"{% endif %}
+      >{{ val }}</a>
   </li>
   {% endfor %}
   {% if not tabs.hasOwnProperty(params.past) %}
@@ -97,25 +99,37 @@
   {% endif %}
   <!-- end past tabs -->
 
+  <!-- tab reset -->
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  title="{{ lang("Reset query options (excluding pattern/dashboard)",
+  "重置所有除面板和通配符外的查询选项") }}">
+    <a href="{{ switch({dashboard: params.dashboard, pattern: params.pattern}) }}">
+      {{ lang('Reset', '重置选项') }} </a>
+  </li>
+
   <!-- tab switch -->
-  <li class="pull-right">
-    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}"> 
-      {{ lang('Switch', '切换数据类型') }} </a>
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  title="{{ lang("Switch data type between anomalous factor (teal/red color) and real values (green color)",
+  "切换数据类型到异常系数(蓝红色指标)或实际数据(绿色指标)") }}">
+    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}">
+      {{ lang('Switch', '切换类型') }} </a>
   </li>
   <!-- end tab switch -->
 
   <!-- tab stop -->
-  <li class="pull-right">
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  title="{{ lang("Enable/Disable data realtime update", "启用或禁用实时数据更新") }}">
     {% if params.stop == 0 %}
-    <a href="{{ switch({stop: 1})  }}"> {{ lang('Pause', '禁止数据更新') }} </a>
+    <a href="{{ switch({stop: 1})  }}"> {{ lang('Pause', '禁用更新') }} </a>
     {% else %}
-    <a href="{{ switch({stop: 0})  }}"> {{ lang('Realtime', '数据实时更新') }} </a>
+    <a href="{{ switch({stop: 0})  }}"> {{ lang('Realtime', '开启更新') }} </a>
     {% endif %}
   </li>
   <!-- end tab stop -->
 
   <!-- tab sort -->
-  <li class="dropdown pull-right">
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  title="{{ lang("Sort by trending", "根据数据的趋势变化快慢排序, '↑'表示按照上升趋势排序，上升快的排在前面") }}">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
       {{ lang('Sort By', '按趋势排序') }} {{ params.sort }}<span class="caret"></span>
     </a>
@@ -131,9 +145,10 @@
   <!-- end tab sort -->
 
   <!-- tab limit -->
-  <li class="dropdown pull-right">
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  title="{{ lang("Only return frist N items", "限制返回数量, 按当前排序规则取前面的指标") }}">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
-      {{ lang('Limit', '限制返回数量') }} {{ params.limit }} <span class="caret"></span>
+      {{ lang('Limit', '限制数量') }} {{ params.limit }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
       {% for limit in [1, 30, 50, 100, 500, 1000] %}
@@ -163,6 +178,9 @@
   var root = '{{ url('/')  }}';
   var step = {{ configs.interval  }};
   {% set options = JSON.stringify(params) %}
-  window.onload = function() {initBell({{ options  }})};
+  window.onload = function() {
+    $('[data-toggle="tooltip"]').tooltip()
+    initBell({{ options  }})
+  };
 </script>
 {% endblock %}
