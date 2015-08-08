@@ -54,7 +54,7 @@
 
     if (stop === 0) {
       if (dashboard) {
-        setInterval(updateTrendingAverage, 10 * 60 * 1e3);  // 1min;
+        setInterval(updateTrendingAverage, 1 * 60 * 1e3);  // 1min;
       }
       setInterval(function(){
         d3.select('#chart').selectAll('*').remove();
@@ -156,15 +156,15 @@
       var boxCls = "alert alert-dismissible ";
       var status;
 
-      if (Math.abs(data.data) < 0.5) {
+      if (Math.abs(data.data) < 0.4) {
         boxCls += "alert-success";
         status = 'OK';
-      } else if (Math.abs(data.data) >= 0.5 && Math.abs(data.data) < 0.95) {
+      } else if (Math.abs(data.data) >= 0.4 && Math.abs(data.data) < 0.75) {
         boxCls += "alert-warning";
         status = 'WARNING';
-      } else {
+      } else if (Math.abs(data.data) >= 0.75) {
         boxCls += "alert-danger";
-        status = 'CRITICAL';
+        status = 'DANGER';
       }
 
       document.getElementById('tavg-box').className = boxCls;
