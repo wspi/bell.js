@@ -1,5 +1,10 @@
 {% extends 'layout.html' %}
 
+{% macro switch(dict) %}
+  {% set defaults = {lang: 'en', pattern: '*', limit: 50, sort: '↑', past: '0s', type: 'm', stop: 0} %}
+  {{ url('/', cleanWith(extend(clone(params), dict), defaults)) }}
+{% endmacro %}
+
 {% macro title() %}
 {% if params.dashboard %}
 {% set groupName = params.dashboard.split(':')[0] %}
@@ -33,7 +38,7 @@
 <ul class="nav nav-pills nav-stacked">
   {% if params.pattern %}
     <li class="active">
-    <a href="{{ url('/', params) }}">{{ lang('Pattern', '通配符') }}: {{ params.pattern }}</a>
+    <a href="{{ switch({}) }}">{{ lang('Pattern', '通配符') }}: {{ params.pattern }}</a>
     </li>
   {% endif %}
   {% for groupName, group in groups %}

@@ -3,10 +3,6 @@
 {% else %} {{ en }} {% endif %}
 {% endmacro %}
 
-{% macro switch(dict) %}
-  {{ url('/', extend(clone(params), dict)) }}
-{% endmacro %}
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -23,14 +19,14 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url('/') }}">Bell - {{ lang('Metrics Monitor', '指标监控') }}</a>
+        <a class="navbar-brand" href="{{ url('/', cleanWith({lang: params.lang}, {lang: 'en'})) }}">Bell - {{ lang('Metrics Monitor', '指标监控') }}</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="dropdown">
            <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
              {{ lang('Documentations', '文档指南') }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ url('/docs') }}">{{ lang('Web Usage', '网站使用') }}</a></li>
+            <li><a href="{{ url('/docs', {lang: params.lang}) }}">{{ lang('Web Usage', '网站使用') }}</a></li>
             <li><a href="{{ package.repository.url + '/tree/master/docs/design-notes.md' }}">{{ lang('Design Notes', '设计思路') }}</a></li>
             <li><a href="{{ package.repository.url + '/tree/master/docs/topics.md' }}">{{ lang('More Topics', '更多话题') }}...</a></li>
           </ul>
@@ -39,6 +35,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ switch({lang: 'zh' if params.lang == 'en' else 'en'}) }}">
           {{ lang("简体中文", "English") }}</a></li>
+        <li><a>Eleme, Inc</a></li>
         <li><a href="{{ package.repository.url }}">@GitHub</a></li>
       </ul>
       {% block navbar %}
