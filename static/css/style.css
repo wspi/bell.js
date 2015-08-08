@@ -29,13 +29,11 @@ html, body {
   border-right: 1px solid #eee;
 }
 
-.chart-box {
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
 .chart {
+  position: relative;
+  width: 1080px;
+  margin: 0 auto;
+  padding: 0;
   padding-top: 20px;
 }
 
@@ -52,10 +50,6 @@ html, body {
 
 .chart .title a.anomalous {
   color: #c03;
-}
-
-.chart .horizon canvas {
-  float: right;
 }
 
 .chart .value {
