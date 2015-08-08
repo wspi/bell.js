@@ -1,124 +1,168 @@
 {% extends 'layout.html' %}
 
+{% macro switch(dict) %}
+  {% set defaults = {lang: 'en', pattern: '*', limit: 50, sort: '↑', past: '0s', type: 'm', stop: 0} %}
+  {{ url('/', cleanWith(extend(clone(params), dict), defaults)) }}
+{% endmacro %}
+
+{% macro title() %}
+{% if params.dashboard %}
+{% set groupName = params.dashboard.split(':')[0] %}
+{% set dashboardName = params.dashboard.split(':')[1] %}
+{% set group = groups[groupName] %}
+{% set dashboard = group.dashboards[dashboardName] %}
+  {% if group.title %}{{ group.title }}{% else %}{{ groupName }}{% endif %}:
+  {% if dashboard.title %}{{ dashboard.title }}{% else %}{{ dashboardName }}{% endif %}
+{% else %}
+{{ lang('Pattern', '通配符') }}: {{ params.pattern }}
+{% endif %}
+{% endmacro %}
+
 {% block title %}
-Bell Monitor - {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
-{% if params.pattern %} pattern: {{ params.pattern }} {% endif %}
+{{ lang('Bell Monitor', 'Bell监控') }} - {{ title() }}
 {% endblock %}
 
-{% block main %}
-<!-- pattern form -->
-<form action="" method="get" accept-charset="utf-8">
-  <input name="pattern" type="text" placeholder="patterns..">
-</form>
-<!-- end pattern form -->
-
-<!-- dashboards -->
-<div class="dashboards-nav">
-  {% for name, _dash in dashboards %}
-  <span class="dashboards-nav-item">
-    <a class="dashboards-nav-item-name
-      {% if name == params.dashboard %}dashboards-nav-item-name-current{% endif %}"
-      href="{{ url('/', {'dashboard': name}) }}">
-      {{ name }}
-    </a>
-  </span>
-  {% endfor %}
+{% block navbar %}
+<div class="collapse navbar-collapse">
+  <form action="{{ url('/') }}" method="get" accept-charset="utf-8" class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input name="pattern" type="text" class="form-control" placeholder="{{ lang('Pattern', '通配符') }}...">
+    </div>
+    <button type="submit" class="btn btn-default">{{ lang('Sumbit', '提交') }}</button>
+  </form>
 </div>
-<!-- end dashboards -->
+{% endblock %}
 
-<!-- tabs -->
-<div class="tabnav">
+{% block sidebarTitle %}{{ lang('Dashboards', '所有面板') }}{% endblock %}
+{% block sidebarContent %}
+<ul class="nav nav-pills nav-stacked">
+  {% if params.pattern %}
+    <li class="active">
+    <a href="{{ switch({}) }}">{{ lang('Pattern', '通配符') }}: {{ params.pattern }}</a>
+    </li>
+  {% endif %}
+  {% for groupName, group in groups %}
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+      aria-expanded="false">
+      {% if group.title %} {{ group.title }}
+      {% else%} {{ groupName }}
+      {% endif %}
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      {% for dashboardName, dashboard in group.dashboards %}
+      <li>
+        <a href="{{ url('/', {'dashboard': groupName + ':' + dashboardName }) }}">
+          {% if dashboard.title %} {{ dashboard.title }}
+          {% else%} {{ dashboardName }}
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+  </ul>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
 
-  {% macro switch(dict) %}
-    {{ url('/', extend(clone(params), dict)) }}
-  {% endmacro %}
-
-  <span class="tab-chart-info tab-others">
-    ~ <span id="chart-until"></span>
-  </span>
+{% block mainTitle %}
+<a href="{{ switch({}) }}">{{ title() }}</a>
+<span class="pull-right">
+  {{ lang('date ranging to', '数据时间截至') }}
+  <span id="chart-until"></span></a>
+</span>
+{% endblock %}
+{% block mainContent %}
+{% set tabs = {
+  '0s': '当前时刻' if params.lang == 'zh' else  'Now',
+  '3h': '距今3小时' if params.lang == 'zh' else '3 hours',
+  '6h': '距今6小时' if params.lang == 'zh' else '6 hours',
+  '1d': '距今1天' if params.lang == 'zh' else '1 day',
+  '2d': '距今2天' if params.lang == 'zh' else '2 day',
+  '3d': '距今3天' if params.lang == 'zh' else '3 day',
+  '4d': '距今4天' if params.lang == 'zh' else '4 day'
+} %}
+<ul class="nav nav-tabs">
+  <!-- past tabs -->
+  {% for key, val in tabs %}
+  <li {% if params.past == key %}class="active"{% endif %}>
+    <a href="{{ switch({past: key}) }}">{{ val }}</a>
+  </li>
+  {% endfor %}
+  {% if not tabs.hasOwnProperty(params.past) %}
+  <li class="active">
+    <a href="{{ switch({past: params.past})  }}">{{ params.past }}</a>
+  </li>
+  {% endif %}
+  <!-- end past tabs -->
 
   <!-- tab switch -->
-  <span class="tab-switch tab-right tab-others">
-    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'}) }}"> Switch </a>
-  </span>
+  <li class="pull-right">
+    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}"> 
+      {{ lang('Switch', '切换数据类型') }} </a>
+  </li>
   <!-- end tab switch -->
 
   <!-- tab stop -->
-  <span class="tab-stop tab-right tab-others">
-  {% if params.stop == 0 %}
-    <a href="{{ switch({stop: 1}) }}"> Pause </a>
-  {% else %}
-    <a href="{{ switch({stop: 0}) }}"> Realtime </a>
-  {% endif %}
-  </span>
+  <li class="pull-right">
+    {% if params.stop == 0 %}
+    <a href="{{ switch({stop: 1})  }}"> {{ lang('Pause', '禁止数据更新') }} </a>
+    {% else %}
+    <a href="{{ switch({stop: 0})  }}"> {{ lang('Realtime', '数据实时更新') }} </a>
+    {% endif %}
+  </li>
   <!-- end tab stop -->
 
-  <!-- tab limit -->
-  <span class="tab-limit tab-right tab-others">
-    <a href="javscript:void(0);" onclick="return false;"> Top {{ params.limit}}</a>
-    <div class="dropdown-menu-box">
-      <ul class="dropdown-menu">
-      {% for limit in [1, 30, 50, 100, 500, 1000] %}
-        <li>
-          <a href="{{ switch({limit: limit}) }}">{{ limit }}</a>
-        </li>
-      {% endfor %}
-      </ul>
-    </div>
-  </span>
-  <!-- end tab limit -->
-
   <!-- tab sort -->
-  <span class="tab-sort-by tab-right tab-others">
-    <a href="javscript:void(0);" onclick="return false;"> Sort By</a>
-    <div class="dropdown-menu-box">
-      <ul class="dropdown-menu">
-        <li>
-          <a href="{{ switch({sort: '↑'}) }}">Trending Up ↑</a>
-        </li>
-        <li>
-          <a href="{{ switch({sort: '↓'}) }}">Trending Down ↓</a>
-        </li>
-      </ul>
-    </div>
-  </span>
+  <li class="dropdown pull-right">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
+      {{ lang('Sort By', '按趋势排序') }} {{ params.sort }}<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+      <a href="{{ switch({sort: '↑'})  }}">{{ lang('Trending Up', '按上升趋势') }} ↑</a>
+      </li>
+      <li>
+      <a href="{{ switch({sort: '↓'})  }}"> {{ lang('Trending Down', '按下降趋势') }} ↓</a>
+      </li>
+    </ul>
+  </li>
+  <!-- end tab sort -->
 
-  <!-- past tabs -->
-  <ul class="tabs">
-  {% set tabs = {'0s': 'Now', '3h': '3 hours', '6h': '6 hours', '1d': '1 day', '2d': '2 days', '3d': '3 days', '4d': '4 days'} %}
-  {% for key, val in tabs %}
-    <li {% if params.past == key %} class="active" {% endif %}>
-      <a href="{{ switch({past: key}) }}">{{ val }}</a>
-    </li>
-  {% endfor %}
-  {% if not tabs.hasOwnProperty(params.past) %}
-    <li class="active">
-      <a href="{{ switch({past: params.past}) }}">{{ params.past }}</a>
-    </li>
-  {% endif %}
-  </ul>
-  <!-- end past tabs -->
-</div>
-<!-- end tabs -->
+  <!-- tab limit -->
+  <li class="dropdown pull-right">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
+      {{ lang('Limit', '限制返回数量') }} {{ params.limit }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      {% for limit in [1, 30, 50, 100, 500, 1000] %}
+      <li>
+        <a href="{{ switch({limit: limit})  }}">{{ limit  }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  <!-- end tab limit -->
+</ul>
 
 <!-- chart -->
-<div id="chart">
+<div class="chart" id="chart">
   <div class="loader" id="loader">
-    <img src="{{ url('static/img/spinner.gif') }}" />
+    <img src="{{ url('static/img/spinner.gif')  }}" />
   </div>
 </div>
 <!-- end chart -->
-{%endblock%}
+{% endblock %}
 
 {% block script %}
-<script src="{{ url('static/js/script.js') }}"></script>
+<script src="{{ url('static/js/script.js')  }}"></script>
 <script>
   // vars required by script.js
-  var api = '{{ url('/api') }}'
-  var root = '{{ url('/') }}';
-  var step = {{ configs.interval }};
-
+  var api = '{{ url('/api')  }}'
+  var root = '{{ url('/')  }}';
+  var step = {{ configs.interval  }};
   {% set options = JSON.stringify(params) %}
-  window.onload = function() {initBell({{ options }})};
+  window.onload = function() {initBell({{ options  }})};
 </script>
 {% endblock %}
