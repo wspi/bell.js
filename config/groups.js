@@ -1,16 +1,22 @@
 {
   timers: {
-    count_ps: {
-      title: "调用量",
-      patterns: ["timer.count_ps.*"]
-    },
-    mean_90: {
-      patterns: ["timer.mean_90.*"]
+    title: "Timers",
+    dashboards: {
+      count_ps: {
+        title: "Our timers",
+        patterns: ["timer.count_ps.*"]
+      },
+      mean_90: {
+        patterns: ["timer.mean_90.*"]
+      }
     }
   },
   counters: {
-    counters: {
-      patterns: ["counter.*"]
+    title: "Our counters",
+    dashboards: {
+      counters: {
+        patterns: ["counter.*"]
+      }
     }
   }
 }
