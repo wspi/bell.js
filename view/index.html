@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-Bell Monitor - 
+Bell Monitor -
   {% if params.dashboard %} dashboard: {{ params.dashboard }}{% endif %}
   {% if params.pattern %} pattern: {{ params.pattern  }} {% endif %}
 {% endblock %}
@@ -24,17 +24,21 @@ Bell Monitor -
       <a href="{{ url('/', params) }}">{{ params.pattern }}</a>
     </li>
   {% endif %}
-  {% for name, dashboard in dashboards %}
+  {% for groupName, group in groups %}
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-      {{ name }} <span class="caret"></span>
+      {{ groupName }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Separated link</a></li>
+      {% for dashboardName, dashboard in group %}
+      <li>
+        <a href="{{ url('/', {'dashboard': groupName + ':' + dashboardName }) }}">
+          {% if dashboard.title %} {{ dashboard.title }}
+          {% else%} {{ dashboardName }}
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
   </ul>
   </li>
   {% endfor %}
@@ -50,8 +54,8 @@ Bell Monitor -
   '0s': 'Now',
   '3h': '3 hours',
   '6h': '6 hours',
-  '1d': '1 day', 
-  '2d': '2 days', 
+  '1d': '1 day',
+  '2d': '2 days',
   '3d': '3 days',
   '4d': '4 days'
 } %}
