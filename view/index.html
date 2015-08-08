@@ -103,7 +103,11 @@
   <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
   title="{{ lang("Reset query options (excluding pattern/dashboard)",
   "重置所有除面板和通配符外的查询选项") }}">
-    <a href="{{ switch({dashboard: params.dashboard, pattern: params.pattern}) }}">
+    {% if params.dashboard %}
+    <a href="{{ url('/', {dashboard: params.dashboard}) }}">
+    {% else %}
+    <a href="{{ url('/', {pattern: params.pattern}) }}">
+    {% endif %}
       {{ lang('Reset', '重置选项') }} </a>
   </li>
 
