@@ -1,10 +1,19 @@
+{% macro lang(en, zh) %}
+{% if params.lang == 'zh' %} {{ zh }}
+{% else %} {{ en }} {% endif %}
+{% endmacro %}
+
+{% macro switch(dict) %}
+  {{ url('/', extend(clone(params), dict)) }}
+{% endmacro %}
+
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Bell - Metrics Monitor{% endblock %}</title>
+  <title>{% block title %}Bell - {{ lang('Metrics Monitor', '指标监控') }}{% endblock %}</title>
   <link rel="shortcut icon" href="{{ url('static/img/bell.png') }}">
   <link rel="stylesheet" href="{{ url('static/css/bootstrap.min.css')  }}" type="text/css" />
   <link rel="stylesheet" href="{{ url('static/css/cubism.css')  }}" type="text/css" />
@@ -14,20 +23,22 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url('/') }}">Bell</a>
+        <a class="navbar-brand" href="{{ url('/') }}">Bell - {{ lang('Metrics Monitor', '指标监控') }}</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="dropdown">
            <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
-             Documentations <span class="caret"></span></a>
+             {{ lang('Documentations', '文档指南') }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ url('/docs') }}">Web Usage</a></li>
-            <li><a href="{{ package.repository.url + '/tree/master/docs/design-notes.md' }}">Design Notes</a></li>
-            <li><a href="{{ package.repository.url + '/tree/master/docs/topics.md' }}">More Topics...</a></li>
+            <li><a href="{{ url('/docs') }}">{{ lang('Web Usage', '网站使用') }}</a></li>
+            <li><a href="{{ package.repository.url + '/tree/master/docs/design-notes.md' }}">{{ lang('Design Notes', '设计思路') }}</a></li>
+            <li><a href="{{ package.repository.url + '/tree/master/docs/topics.md' }}">{{ lang('More Topics', '更多话题') }}...</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ switch({lang: 'zh' if params.lang == 'en' else 'en'}) }}">
+          {{ lang("简体中文", "English") }}</a></li>
         <li><a href="{{ package.repository.url }}">@GitHub</a></li>
       </ul>
       {% block navbar %}

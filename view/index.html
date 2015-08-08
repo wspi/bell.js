@@ -1,43 +1,39 @@
 {% extends 'layout.html' %}
 
-{% macro switch(dict) %}
-  {{ url('/', extend(clone(params), dict)) }}
-{% endmacro %}
-
 {% macro title() %}
 {% if params.dashboard %}
-{% set groupName = params.dashboard.split(":")[0] %}
-{% set dashboardName = params.dashboard.split(":")[1] %}
+{% set groupName = params.dashboard.split(':')[0] %}
+{% set dashboardName = params.dashboard.split(':')[1] %}
 {% set group = groups[groupName] %}
 {% set dashboard = group.dashboards[dashboardName] %}
   {% if group.title %}{{ group.title }}{% else %}{{ groupName }}{% endif %}:
   {% if dashboard.title %}{{ dashboard.title }}{% else %}{{ dashboardName }}{% endif %}
 {% else %}
-Pattern: {{ params.pattern }}
+{{ lang('Pattern', '通配符') }}: {{ params.pattern }}
 {% endif %}
 {% endmacro %}
 
 {% block title %}
-Bell Monitor - {{ title() }}
+{{ lang('Bell Monitor', 'Bell监控') }} - {{ title() }}
 {% endblock %}
 
 {% block navbar %}
 <div class="collapse navbar-collapse">
   <form action="{{ url('/') }}" method="get" accept-charset="utf-8" class="navbar-form navbar-left" role="search">
     <div class="form-group">
-      <input name="pattern" type="text" class="form-control" placeholder="Pattern..">
+      <input name="pattern" type="text" class="form-control" placeholder="{{ lang('Pattern', '通配符') }}...">
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">{{ lang('Sumbit', '提交') }}</button>
   </form>
 </div>
 {% endblock %}
 
-{% block sidebarTitle %}Dashboards{% endblock %}
+{% block sidebarTitle %}{{ lang('Dashboards', '所有面板') }}{% endblock %}
 {% block sidebarContent %}
 <ul class="nav nav-pills nav-stacked">
   {% if params.pattern %}
     <li class="active">
-      <a href="{{ url('/', params) }}">Pattern: {{ params.pattern }}</a>
+    <a href="{{ url('/', params) }}">{{ lang('Pattern', '通配符') }}: {{ params.pattern }}</a>
     </li>
   {% endif %}
   {% for groupName, group in groups %}
@@ -65,24 +61,24 @@ Bell Monitor - {{ title() }}
 </ul>
 {% endblock %}
 
-{% block mainTitle %}{{ title() }}{% endblock %}
+{% block mainTitle %}
+<a href="{{ switch({}) }}">{{ title() }}</a>
+<span class="pull-right">
+  {{ lang('date ranging to', '数据时间截至') }}
+  <span id="chart-until"></span></a>
+</span>
+{% endblock %}
 {% block mainContent %}
 {% set tabs = {
-  '0s': 'Now',
-  '3h': '3 hours',
-  '6h': '6 hours',
-  '1d': '1 day',
-  '2d': '2 days',
-  '3d': '3 days',
-  '4d': '4 days'
+  '0s': '当前时刻' if params.lang == 'zh' else  'Now',
+  '3h': '距今3小时' if params.lang == 'zh' else '3 hours',
+  '6h': '距今6小时' if params.lang == 'zh' else '6 hours',
+  '1d': '距今1天' if params.lang == 'zh' else '1 day',
+  '2d': '距今2天' if params.lang == 'zh' else '2 day',
+  '3d': '距今3天' if params.lang == 'zh' else '3 day',
+  '4d': '距今4天' if params.lang == 'zh' else '4 day'
 } %}
 <ul class="nav nav-tabs">
-  <!-- tab datetime util -->
-  <li class="disabled">
-    <a>~ <span id="chart-until"></span></a>
-  </li>
-  <!-- end tab datetime util -->
-
   <!-- past tabs -->
   {% for key, val in tabs %}
   <li {% if params.past == key %}class="active"{% endif %}>
@@ -91,23 +87,24 @@ Bell Monitor - {{ title() }}
   {% endfor %}
   {% if not tabs.hasOwnProperty(params.past) %}
   <li class="active">
-    <a href="{{ switch({past: params.past})  }}">{{ params.past  }}</a>
+    <a href="{{ switch({past: params.past})  }}">{{ params.past }}</a>
   </li>
   {% endif %}
   <!-- end past tabs -->
 
   <!-- tab switch -->
   <li class="pull-right">
-    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}"> Switch </a>
+    <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}"> 
+      {{ lang('Switch', '切换数据类型') }} </a>
   </li>
   <!-- end tab switch -->
 
   <!-- tab stop -->
   <li class="pull-right">
     {% if params.stop == 0 %}
-    <a href="{{ switch({stop: 1})  }}"> Pause </a>
+    <a href="{{ switch({stop: 1})  }}"> {{ lang('Pause', '禁止数据更新') }} </a>
     {% else %}
-    <a href="{{ switch({stop: 0})  }}"> Realtime </a>
+    <a href="{{ switch({stop: 0})  }}"> {{ lang('Realtime', '数据实时更新') }} </a>
     {% endif %}
   </li>
   <!-- end tab stop -->
@@ -115,14 +112,14 @@ Bell Monitor - {{ title() }}
   <!-- tab sort -->
   <li class="dropdown pull-right">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
-      Sort By {{ params.sort }}<span class="caret"></span>
+      {{ lang('Sort By', '按趋势排序') }} {{ params.sort }}<span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
       <li>
-        <a href="{{ switch({sort: '↑'})  }}">Trending Up ↑</a>
+      <a href="{{ switch({sort: '↑'})  }}">{{ lang('Trending Up', '按上升趋势') }} ↑</a>
       </li>
       <li>
-        <a href="{{ switch({sort: '↓'})  }}">Trending Down ↓</a>
+      <a href="{{ switch({sort: '↓'})  }}"> {{ lang('Trending Down', '按下降趋势') }} ↓</a>
       </li>
     </ul>
   </li>
@@ -131,7 +128,7 @@ Bell Monitor - {{ title() }}
   <!-- tab limit -->
   <li class="dropdown pull-right">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
-      Limit {{ params.limit }} <span class="caret"></span>
+      {{ lang('Limit', '限制返回数量') }} {{ params.limit }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
       {% for limit in [1, 30, 50, 100, 500, 1000] %}
@@ -145,11 +142,9 @@ Bell Monitor - {{ title() }}
 </ul>
 
 <!-- chart -->
-<div class="chart-box">
-  <div class="chart" id="chart">
-    <div class="loader" id="loader">
-      <img src="{{ url('static/img/spinner.gif')  }}" />
-    </div>
+<div class="chart" id="chart">
+  <div class="loader" id="loader">
+    <img src="{{ url('static/img/spinner.gif')  }}" />
   </div>
 </div>
 <!-- end chart -->
