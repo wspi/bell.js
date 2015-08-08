@@ -39,7 +39,7 @@ html, body {
 
 
 .chart .title {
-  background-color: rgba(252, 252, 252, .85);
+  background-color: rgba(255, 255, 255, .85);
   margin-left: 0;
   padding: 0 7px;
 }
@@ -66,4 +66,11 @@ html, body {
   text-align: left;
   display: block;
   min-width: 160px;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover, 
+.nav-tabs>li.active>a:focus
+{
+  background-color: #fff;
 }

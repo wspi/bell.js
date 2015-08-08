@@ -78,6 +78,15 @@
 </span>
 {% endblock %}
 {% block mainContent %}
+{% if params.dashboard %}
+<div class="alert alert-dismissible" id="tavg-box">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <p> {{ lang("Current dashboard trendings average is:", "当前面板所有指标的趋势因子平均值是:") }}
+  <b><span id="tavg-data"></span></b>,
+  {{ lang("updated at ", "数据更新于") }}<span id="tavg-time"></span>
+  </p>
+</div>
+{% endif %}
 {% set tabs = {
   '0s': '当前' if params.lang == 'zh' else  'Now',
   '3h': '距今3小时' if params.lang == 'zh' else '3 hours',
@@ -104,7 +113,7 @@
   <!-- end past tabs -->
 
   <!-- tab reset -->
-  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom",
   title="{{ lang("Reset query options (excluding pattern/dashboard)",
   "重置所有除面板和通配符外的查询选项") }}">
     {% if params.dashboard %}
@@ -116,7 +125,7 @@
   </li>
 
   <!-- tab switch -->
-  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom",
   title="{{ lang("Switch data type between anomalous factor (teal/red color) and real values (green color)",
   "切换数据类型到异常系数(蓝红色指标)或实际数据(绿色指标)") }}">
     <a href="{{ switch({type: 'v' if params.type == 'm' else 'm'})  }}">
@@ -125,7 +134,7 @@
   <!-- end tab switch -->
 
   <!-- tab stop -->
-  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom",
   title="{{ lang("Enable/Disable data realtime update", "启用或禁用实时数据更新") }}">
     {% if params.stop == 0 %}
     <a href="{{ switch({stop: 1})  }}"> {{ lang('Pause', '禁用更新') }} </a>
@@ -136,7 +145,7 @@
   <!-- end tab stop -->
 
   <!-- tab sort -->
-  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom",
   title="{{ lang("Sort by trending", "根据数据的趋势变化快慢排序, '↑'表示按照上升趋势排序，上升快的排在前面") }}">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
       {{ lang('Sort By', '按趋势排序') }} {{ params.sort }}<span class="caret"></span>
@@ -153,7 +162,7 @@
   <!-- end tab sort -->
 
   <!-- tab limit -->
-  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom", 
+  <li class="dropdown pull-right" data-toggle="tooltip" data-placement="bottom",
   title="{{ lang("Only return frist N items", "限制返回数量, 按当前排序规则取前面的指标") }}">
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);" aria-expanded="true">
       {{ lang('Limit', '限制数量') }} {{ params.limit }} <span class="caret"></span>
