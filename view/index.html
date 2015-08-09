@@ -187,17 +187,18 @@
 <!-- end chart -->
 {% endblock %}
 
-{% block script %}
+{% block scriptsrc %}
 <script src="{{ url('static/js/script.js')  }}"></script>
-<script>
-  // vars required by script.js
-  var api = '{{ url('/api')  }}'
-  var root = '{{ url('/')  }}';
-  var step = {{ configs.interval  }};
-  {% set options = JSON.stringify(params) %}
-  window.onload = function() {
-    $('[data-toggle="tooltip"]').tooltip()
-    initBell({{ options  }})
-  };
-</script>
+{% endblock %}
+
+{% block script %}
+// vars required by script.js
+var api = '{{ url('/api')  }}'
+var root = '{{ url('/')  }}';
+var step = {{ configs.interval  }};
+{% set options = JSON.stringify(params) %}
+window.onload = function() {
+  $('[data-toggle="tooltip"]').tooltip()
+  initBell({{ options  }})
+};
 {% endblock %}

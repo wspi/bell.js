@@ -31,6 +31,7 @@
     type = options.type;
     past = options.past;
     stop = options.stop;
+    lang = options.lang;
     dashboard = options.dashboard;
 
     pastSecs = timespan2secs(past);
@@ -210,7 +211,8 @@
           sort: sort,
           limit: 1,
           type: type,
-          past: past
+          past: past,
+          lang: lang,
         };
         var trend = stat[name];
         // arrow
