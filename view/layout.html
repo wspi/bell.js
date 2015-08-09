@@ -29,8 +29,8 @@
              {{ lang('Documentations', '文档指南') }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{ url('/docs', {lang: params.lang}) }}">{{ lang('Web Usage', '网站使用') }}</a></li>
-            <li><a href="{{ package.repository.url + '/tree/master/docs/design-notes.md' }}">{{ lang('Design Notes', '设计思路') }}</a></li>
-            <li><a href="{{ package.repository.url + '/tree/master/docs/topics.md' }}">{{ lang('More Topics', '更多话题') }}...</a></li>
+            <li><a href="https://github.com/eleme/bell.js/blob/master/docs/design-notes.md">{{ lang('Design Notes', '设计思路') }}</a></li>
+            <li><a href="https://github.com/eleme/bell.js/blob/master/docs/topics.md">{{ lang('More Topics', '更多话题') }}...</a></li>
           </ul>
         </li>
       </ul>
@@ -39,7 +39,7 @@
           {{ lang("简体中文", "English") }}</a></li>
         <li><a>Eleme, Inc </a></li>
         <li><a>Version {{ package.version }}</a></li>
-        <li><a href="{{ package.repository.url }}">Bell.js@GitHub</a></li>
+        <li><a href="https://github.com/eleme/bell.js">Bell.js@GitHub</a></li>
       </ul>
       {% block navbar %}
       {% endblock %}
