@@ -168,9 +168,23 @@
         stat[res.names[i][0]] = res.names[i][1];
       }
 
+      var cls;
+      if (total === 0) {
+        cls = "info";
+      } else {
+        if (mcount == 0) {
+          cls = "success";
+        } else if (mcount / total > 0.5) {
+          cls = "danger"
+        } else {
+          cls = "warning";
+        }
+      }
       document.getElementById('info-total').innerHTML = total;
       document.getElementById('info-mcount').innerHTML = mcount;
       document.getElementById('info-returns').innerHTML = res.names.length;
+      document.getElementById("main-info").className = sprintf(
+        "alert alert-dismissible alert-{0}", cls);
 
       d3.select('#chart').call(function(div) {
         div.append('div')

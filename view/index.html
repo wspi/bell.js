@@ -78,14 +78,14 @@
 </span>
 {% endblock %}
 {% block mainContent %}
-<div class="alert alert-dismissible alert-warning">
+<div class="alert alert-dismissible" id="main-info">
   <button type="button" class="close" data-dismiss="alert">×</button>
   <p>
-  <span class="main-info">{{ lang("Hit metrics count:", "查询命中指标个数:") }}
+  <span class="main-info-each">{{ lang("Hit metrics count:", "查询命中指标个数:") }}
     <strong id="info-total"></strong></span>
-  <span class="main-info">{{ lang("Returned metrics count:", "查询返回指标个数:") }}
+  <span class="main-info-each">{{ lang("Returned metrics count:", "查询返回指标个数:") }}
     <strong id="info-returns"></strong></span>
-  <span class="main-info">{{ lang("Anomalous metrics count:", "当前异常指标个数:") }}
+  <span class="main-info-each">{{ lang("Anomalous metrics count:", "当前异常指标个数:") }}
     <strong id="info-mcount"></strong></span>
   </p>
 </div>
