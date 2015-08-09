@@ -78,16 +78,10 @@
 </span>
 {% endblock %}
 {% block mainContent %}
-{% if params.dashboard %}
-<div class="alert alert-dismissible" id="tavg-box">
+<div class="alert alert-dismissible alert-info ">
   <button type="button" class="close" data-dismiss="alert">×</button>
-  <p><h4>Status: <span id="tavg-status"></span></h4>
-  {{ lang("Current dashboard trendings average is:", "当前面板所有指标的趋势因子平均值是:") }}
-  <b><span id="tavg-data"></span></b>,
-  {{ lang("updated at ", "数据更新于") }}<span id="tavg-time"></span>
-  </p>
+  <p></p>
 </div>
-{% endif %}
 {% set tabs = {
   '0s': '当前' if params.lang == 'zh' else  'Now',
   '3h': '距今3小时' if params.lang == 'zh' else '3 hours',

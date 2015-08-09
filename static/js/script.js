@@ -41,10 +41,6 @@
     .step(step * 1e3)
     ;
 
-    if (dashboard) {
-      updateTrendingAverage();
-    }
-
     // stop update
     if (stop === 1) {
       context.stop();
@@ -53,9 +49,6 @@
     plot();
 
     if (stop === 0) {
-      if (dashboard) {
-        setInterval(updateTrendingAverage, 1 * 60 * 1e3);  // 1min;
-      }
       setInterval(function(){
         d3.select('#chart').selectAll('*').remove();
         plot();
@@ -147,31 +140,6 @@
       .className = Math.abs(trend) >= 1? 'anomalous' : 'normal';
     document.getElementById(sprintf('title-trend-{0}', name))
       .innerHTML = trend > 0? '↑' : '↓';
-  }
-
-  // update trending average
-  function updateTrendingAverage() {
-    var url = [api, 'tavg'].join('/') + '?' + buildUrlParams({dashboard: dashboard});
-    request(url, function(data) {
-      var boxCls = "alert alert-dismissible ";
-      var status;
-
-      if (Math.abs(data.data) < 0.4) {
-        boxCls += "alert-success";
-        status = 'OK';
-      } else if (Math.abs(data.data) >= 0.4 && Math.abs(data.data) < 0.75) {
-        boxCls += "alert-warning";
-        status = 'WARNING';
-      } else if (Math.abs(data.data) >= 0.75) {
-        boxCls += "alert-danger";
-        status = 'DANGER';
-      }
-
-      document.getElementById('tavg-box').className = boxCls;
-      document.getElementById('tavg-status').innerHTML = status;
-      document.getElementById('tavg-data').innerHTML = data.data.toFixed(2);
-      document.getElementById('tavg-time').innerHTML = secs2str(data.time);
-    });
   }
 
   // plot
