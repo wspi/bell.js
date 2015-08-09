@@ -78,9 +78,16 @@
 </span>
 {% endblock %}
 {% block mainContent %}
-<div class="alert alert-dismissible alert-info ">
+<div class="alert alert-dismissible alert-warning">
   <button type="button" class="close" data-dismiss="alert">×</button>
-  <p></p>
+  <p>
+  <span class="main-info">{{ lang("Hit metrics count:", "查询命中指标个数:") }}
+    <strong id="info-total"></strong></span>
+  <span class="main-info">{{ lang("Returned metrics count:", "查询返回指标个数:") }}
+    <strong id="info-returns"></strong></span>
+  <span class="main-info">{{ lang("Anomalous metrics count:", "当前异常指标个数:") }}
+    <strong id="info-mcount"></strong></span>
+  </p>
 </div>
 {% set tabs = {
   '0s': '当前' if params.lang == 'zh' else  'Now',
@@ -110,9 +117,9 @@
   title="{{ lang("Reset query options (excluding pattern/dashboard)",
   "重置所有除面板和通配符外的查询选项") }}">
     {% if params.dashboard %}
-    <a href="{{ url('/', {dashboard: params.dashboard}) }}">
+    <a href="{{ url('/', {dashboard: params.dashboard, lang: params.lang}) }}">
     {% else %}
-    <a href="{{ url('/', {pattern: params.pattern}) }}">
+    <a href="{{ url('/', {pattern: params.pattern, lang: params.lang}) }}">
     {% endif %}
       {{ lang('Reset', '重置选项') }} </a>
   </li>

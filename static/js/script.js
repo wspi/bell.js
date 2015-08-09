@@ -159,12 +159,18 @@
       // hide loader
       loader.style.display = 'none';
 
+      var total = res.total;
+      var mcount = res.mcount;
       var data = [];
       var stat = {};  // {name: trend}
-      for (var i = 0; i < res.length; i++) {
-        data.push(makeMetric(res[i][0]));
-        stat[res[i][0]] = res[i][1];
+      for (var i = 0; i < res.names.length; i++) {
+        data.push(makeMetric(res.names[i][0]));
+        stat[res.names[i][0]] = res.names[i][1];
       }
+
+      document.getElementById('info-total').innerHTML = total;
+      document.getElementById('info-mcount').innerHTML = mcount;
+      document.getElementById('info-returns').innerHTML = res.names.length;
 
       d3.select('#chart').call(function(div) {
         div.append('div')
