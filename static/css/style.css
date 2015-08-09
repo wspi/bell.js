@@ -71,6 +71,10 @@ html, body {
   color: black;
 }
 
+.main-info-each {
+  margin-right: 25px;
+}
+
 .loader {
   text-align: center;
   padding: 2em;

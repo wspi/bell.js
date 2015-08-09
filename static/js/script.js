@@ -31,6 +31,7 @@
     type = options.type;
     past = options.past;
     stop = options.stop;
+    lang = options.lang;
     dashboard = options.dashboard;
 
     pastSecs = timespan2secs(past);
@@ -41,10 +42,6 @@
     .step(step * 1e3)
     ;
 
-    if (dashboard) {
-      updateTrendingAverage();
-    }
-
     // stop update
     if (stop === 1) {
       context.stop();
@@ -53,9 +50,6 @@
     plot();
 
     if (stop === 0) {
-      if (dashboard) {
-        setInterval(updateTrendingAverage, 1 * 60 * 1e3);  // 1min;
-      }
       setInterval(function(){
         d3.select('#chart').selectAll('*').remove();
         plot();
@@ -149,31 +143,6 @@
       .innerHTML = trend > 0? '↑' : '↓';
   }
 
-  // update trending average
-  function updateTrendingAverage() {
-    var url = [api, 'tavg'].join('/') + '?' + buildUrlParams({dashboard: dashboard});
-    request(url, function(data) {
-      var boxCls = "alert alert-dismissible ";
-      var status;
-
-      if (Math.abs(data.data) < 0.4) {
-        boxCls += "alert-success";
-        status = 'OK';
-      } else if (Math.abs(data.data) >= 0.4 && Math.abs(data.data) < 0.75) {
-        boxCls += "alert-warning";
-        status = 'WARNING';
-      } else if (Math.abs(data.data) >= 0.75) {
-        boxCls += "alert-danger";
-        status = 'DANGER';
-      }
-
-      document.getElementById('tavg-box').className = boxCls;
-      document.getElementById('tavg-status').innerHTML = status;
-      document.getElementById('tavg-data').innerHTML = data.data.toFixed(2);
-      document.getElementById('tavg-time').innerHTML = secs2str(data.time);
-    });
-  }
-
   // plot
   function plot () {
     var params = {limit: limit, sort: sort};
@@ -191,12 +160,32 @@
       // hide loader
       loader.style.display = 'none';
 
+      var total = res.total;
+      var mcount = res.mcount;
       var data = [];
       var stat = {};  // {name: trend}
-      for (var i = 0; i < res.length; i++) {
-        data.push(makeMetric(res[i][0]));
-        stat[res[i][0]] = res[i][1];
+      for (var i = 0; i < res.names.length; i++) {
+        data.push(makeMetric(res.names[i][0]));
+        stat[res.names[i][0]] = res.names[i][1];
       }
+
+      var cls;
+      if (total === 0) {
+        cls = "info";
+      } else {
+        if (mcount == 0) {
+          cls = "success";
+        } else if (mcount / total > 0.5) {
+          cls = "danger"
+        } else {
+          cls = "warning";
+        }
+      }
+      document.getElementById('info-total').innerHTML = total;
+      document.getElementById('info-mcount').innerHTML = mcount;
+      document.getElementById('info-returns').innerHTML = res.names.length;
+      document.getElementById("main-info").className = sprintf(
+        "alert alert-dismissible alert-{0}", cls);
 
       d3.select('#chart').call(function(div) {
         div.append('div')
@@ -222,7 +211,8 @@
           sort: sort,
           limit: 1,
           type: type,
-          past: past
+          past: past,
+          lang: lang,
         };
         var trend = stat[name];
         // arrow
