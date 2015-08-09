@@ -82,14 +82,14 @@
 <script src="{{ url('static/js/cubism.v1.min.js' ) }}"></script>
 {% block scriptsrc %}{% endblock %}
 <script>
-  if (localStorage.lang && localStorage.lang !== '{{ params.lang }}') {
+  if (localStorage['bell.lang'] && localStorage['bell.lang'] !== '{{ params.lang }}') {
     window.location = "{{ switch({lang: targetLang}) | trim }}";
     throw new Error('Interrupt javascript execution');
   }
 
   function onChangeLang(link) {
     var targetLang = "{{ targetLang }}";
-    localStorage.lang = targetLang;
+    localStorage['bell.lang'] = targetLang;
     window.location = link.getAttribute("href");
   }
 {% block script %}
