@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v1.3 - 1.4.1
+------------
+
+- New UI for webapp
+
 v1.2.6
 ------
 
