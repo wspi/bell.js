@@ -8,16 +8,20 @@
 const co      = require('co');
 const fs      = require('fs');
 const program = require('commander');
-const logging = require('logging.js').get('bell');
+const log     = require('logging.js').get('bell');
 const toml    = require('toml');
 const configs = require('./lib/configs');
 const util    = require('./lib/util');
 const version = require('./package').version;
-const log     = logging.get('bell');
 
 global.Promise = require('bluebird').Promise;
 
 co(function *() {
+  var configsPath,
+      configsContent,
+      serviceName,
+      service;
+
   //----------------------------------------------------
   // Parse command line arguments
   //----------------------------------------------------
@@ -51,26 +55,26 @@ co(function *() {
   //----------------------------------------------------
   // Read configs
   //----------------------------------------------------
-  var configsPath = program.configsPath || util.path.configs;
-  var configsContent = fs.readFileSync(configsPath).toString();
+  configsPath = program.configsPath || util.path.configs;
+  configsContent = fs.readFileSync(configsPath).toString();
   util.updateNestedObjects(configs, toml.parse(configsContent));
 
   //----------------------------------------------------
   // Start service
   //----------------------------------------------------
-  var name = program.args[0];
+  serviceName = program.args[0];
 
-  if (!name) {
+  if (!serviceName) {
     program.help();
   }
 
-  var service = {
+  service = {
     listener: require('./lib/listener'),
     analyzer: require('./lib/analyzer'),
     webapp:   require('./lib/webapp'),
     alerter:  require('./lib/alerter'),
     cleaner:  require('./lib/cleaner')
-  }[name];
+  }[serviceName];
 
   if (!service) {
     program.help();
