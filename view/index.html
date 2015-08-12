@@ -27,9 +27,9 @@
   <form action="{{ url('/') }}" method="get" accept-charset="utf-8" class="navbar-form navbar-left" role="search">
     <div class="form-group">
       <div class="input-group">
-        <input name="pattern" type="text" class="form-control" placeholder="{{ lang('Pattern', '通配符') }}...">
+        <input name="pattern" type="text" class="form-control" placeholder="{{ lang('Pattern', '通配符') }}..." class="typeahead">
         <span class="input-group-btn">
-          <button class="btn btn-primary" type="button">Go</button>
+          <button class="btn btn-primary" type="Submit">Go</button>
         </span>
       </div>
     </div>
@@ -190,6 +190,7 @@
 {% endblock %}
 
 {% block scriptsrc %}
+<script src="{{ url('static/js/bootstrap3-typeahead.min.js')  }}"></script>
 <script src="{{ url('static/js/script.js')  }}"></script>
 {% endblock %}
 
