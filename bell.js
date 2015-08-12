@@ -1,6 +1,7 @@
 /**
- * Real-time anomalies detection for periodic time series.
- * MIT. Copyright (c) 2014 Eleme, Inc. https://github.com/eleme/bell.js
+ * @fileoverview Real-time anomalies detection for periodic time series.
+ * @author Chao Wang (hit9)
+ * @copyright 2015 Eleme, Inc. All rights reserved.
  */
 
 'use strict';
