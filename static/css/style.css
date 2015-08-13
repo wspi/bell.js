@@ -60,7 +60,7 @@ html, body {
   color: black;
 }
 
-input.typeahead {
+input[name="pattern"] {
   min-width: 250px;
 }
 
