@@ -5,6 +5,7 @@
  *   * Node-bell: https://github.com/eleme/bell.js
  *
  * Optional configs:
+ *
  *   bellHost, default: '0.0.0.0'
  *   bellPort, default: 8889
  *   bellIgnores, default: ['statsd.*']
