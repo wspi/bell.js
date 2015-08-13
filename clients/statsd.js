@@ -1,15 +1,18 @@
-// Statsd backend to work as a Node-Bell client.
-//
-//   * Statsd: https://github.com/etsy/statsd
-//   * Node-bell: https://github.com/eleme/bell.js
-//
-// Optional configs:
-//   bellHost, default: '0.0.0.0'
-//   bellPort, default: 8889
-//   bellIgnores, default: ['statsd.*']
-//   bellTimerDataFields, default: ['upper_90', 'count_ps']
-//
-// Metric types supported: `counter_rates` & `timer_data`
+/**
+ * Statsd backend to work as a Node-Bell client.
+ *
+ *   * Statsd: https://github.com/etsy/statsd
+ *   * Node-bell: https://github.com/eleme/bell.js
+ *
+ * Optional configs:
+ *
+ *   bellHost, default: '0.0.0.0'
+ *   bellPort, default: 8889
+ *   bellIgnores, default: ['statsd.*']
+ *   bellTimerDataFields, default: ['upper_90', 'count_ps']
+ *
+ * Metric types supported: `counter_rates` & `timer_data`
+ */
 
 'use strict';
 
@@ -40,11 +43,12 @@ var makers = {
   }
 };
 
-// test if metric name matches our ignore patterns
-//
-// @param {String} key
-// @return {Boolean} // true for pass
-//
+/**
+ * test if metric name matches our ignore patterns
+ *
+ * @param {String} key
+ * @return {Boolean} // true for pass
+ */
 function match(key) {
   var ignores = config.bellIgnores || ['statsd.*'];
 

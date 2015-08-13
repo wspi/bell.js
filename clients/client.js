@@ -1,38 +1,39 @@
-// Common used bell client.
-//
-// Example
-//
-//    var bell = require('bell.js');
-//    var client = bell.createClient({port: 8889});
-//
-//    // send datapoints every 10 seconds
-//    setInterval(function(){
-//      client.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
-//    }, 1e4);
-//
-// API
-//
-//   - createClient(options)
-//   - client.connect()
-//   - client.send(datapoints)
-//   - client.destroy()
-//
-// Events on client
-//
-//   - 'connecte'
-//   - 'error'
-//   - 'close'
-//   - 'timeout'
-//   - 'end'
-//   - 'drain'
-//
-// Net Protocol
-//
-//   Packet := Block+
-//   Block  := Size '\n' Data
-//   Size   := literal_integer
-//   Data   := literal_stringify_json
-//
+/**
+ * Common used bell client.
+ *
+ * Example
+ *
+ *    var bell = require('bell.js');
+ *    var client = bell.createClient({port: 8889});
+ *
+ *    // send datapoints every 10 seconds
+ *    setInterval(function(){
+ *      client.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
+ *    }, 1e4);
+ *
+ * API
+ *
+ *   - createClient(options)
+ *   - client.connect()
+ *   - client.send(datapoints)
+ *   - client.destroy()
+ *
+ * Events on client
+ *
+ *   - 'connecte'
+ *   - 'error'
+ *   - 'close'
+ *   - 'timeout'
+ *   - 'end'
+ *   - 'drain'
+ *
+ * Net Protocol
+ *
+ *   Packet := Block+
+ *   Block  := Size '\n' Data
+ *   Size   := literal_integer
+ *   Data   := literal_stringify_json
+ */
 
 'use strict';
 
@@ -42,16 +43,17 @@ var util     = require('util');
 var protocol = require('../lib/protocol');
 
 
-// Node-Bell client constructor
-//
-// options:
-//
-//   port, Number, default: 8889
-//   host, String, default: '0.0.0.0'
-//
-// @param {Object} options  // {port: 8889, host: '0.0.0.0'}
-// @return {Object}  // this
-//
+/**
+ * Node-Bell client constructor
+ *
+ * options:
+ *
+ *   port, Number, default: 8889
+ *   host, String, default: '0.0.0.0'
+ *
+ * @param {Object} options  // {port: 8889, host: '0.0.0.0'}
+ * @return {Object}  // this
+ */
 function Client(options) {
   this.options = options || {};
   return this;
@@ -73,23 +75,26 @@ Client.prototype.connect = function() {
   return this;
 };
 
-// destroy client to bell connection
-//
-// to auto reconnect:
-//
-//    client.on('error', function(){
-//      self.destroy();
-//    });
-//
+/**
+ * destroy client to bell connection
+ *
+ * to auto reconnect:
+ *
+ *    client.on('error', function(){
+ *      self.destroy();
+ *    });
+ */
 Client.prototype.destroy = function() {
   this.conn.destroy();
   this.conn = undefined;
 };
 
-// send datapoints to Node-Bell
-//
-// @param {Array} datapoints  // e.g. [[name, [timestamp, value]], ..]
-//
+/**
+ * send datapoints to Node-Bell
+ *
+ * @param {Array} datapoints  // [[name, [timestamp, value]], ..]
+ *
+ */
 Client.prototype.send = function(datapoints, callback) {
   var buffer = protocol.encode(datapoints);
 
