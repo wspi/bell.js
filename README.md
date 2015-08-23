@@ -27,8 +27,36 @@ from statsd every 10 seconds:
 Bell will catch the datapoint `299`, and report it as an anomaly.
 
 Why don't we just set a fixed threshold instead (i.e. 200ms)? This may also work but we may
-have many apis to monitor, some are fast (~10ms) and some are slow (~1000ms), it is hard to set
-a good threshold for each one, and also hard to set a appropriate global threshold for all.
+have a lot of apis to monitor, some are fast (~10ms) and some are slow (~1000ms), it is hard
+to set a good threshold for each one, and also hard to set a appropriate global threshold for all.
 Bell sloves this via [3-sigma](docs/design-notes.md), it gives dynamic thresholds for each metric,
 rely on history dataponts. We don't have to set a threshold for each metric, bell will find the
 "thresholds" automatically.
+
+Requirments
+-----------
+
+- nodejs (>= 0.12) or iojs (>=1.1) *(generator feature required)*
+- beanstalkd (https://github.com/kr/beanstalkd) (we are using version 1.9)
+- ssdb (https://github.com/ideawu/ssdb) (we are using version 1.6.8.8)
+
+Installation
+------------
+
+Via `npm`:
+
+```bash
+$ npm install bell.js -g
+```
+
+Quick Start
+-----------
+
+Here is a simple quickstart for case with statsd, make sure [statsd](https://github.com/etsy/statsd)
+is ready to work.
+
+1. First, generate a sample config file via `bell -s`.
+2. Open the sample config file (in language toml) and edit it.
+3. Start ssdb, beanstalkd.
+4. Start bell services (analyzer, listener, webapp, alerter, cleaner), the first 3 services are required
+   and others are optional. To start a service (i.e. analyzer): `bell analyzer -c configs.toml`
