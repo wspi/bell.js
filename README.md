@@ -43,8 +43,6 @@ Requirments
 Installation
 ------------
 
-Via `npm`:
-
 ```bash
 $ npm install bell.js -g
 ```
@@ -52,11 +50,20 @@ $ npm install bell.js -g
 Quick Start
 -----------
 
-Here is a simple quickstart for case with statsd, make sure [statsd](https://github.com/etsy/statsd)
-is ready to work.
+Here is a simple quickstart for the case with statsd, make sure
+[statsd](https://github.com/etsy/statsd) is ready to work.
 
 1. First, generate a sample config file via `bell -s`.
 2. Open the sample config file (in language toml) and edit it.
 3. Start ssdb, beanstalkd.
-4. Start bell services (analyzer, listener, webapp, alerter, cleaner), the first 3 services are required
-   and others are optional. To start a service (i.e. analyzer): `bell analyzer -c configs.toml`
+4. Start bell services (analyzer, listener, webapp, alerter, cleaner), to start a service
+   (i.e. analyzer): `bell analyzer -c configs.toml`
+5. Add `'bell.js/clients/statsd'` to statsd's backends and start statsd.
+
+*note: analyzer & listener are core (required) services, others are optional, you may also
+need webapp*.
+
+Configs
+-------
+
+Default config file is at [config/configs.toml](config/configs.toml).
