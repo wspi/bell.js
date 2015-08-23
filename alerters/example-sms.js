@@ -63,4 +63,4 @@ exports.init = function(configs, alerter, log) {
     });
     stats[name] = +new Date();
   }
-}
+};
