@@ -49,7 +49,11 @@ Install bell.js via npm:
 $ npm install bell.js -g
 ```
 
-After the installation, there is a command named `bell` avaliable.
+After the installation, there is a command named `bell` avaliable, to start a service
+
+```
+$ bell <service-name> -c <path-to-config-file>
+```
 
 Quick Start
 -----------
@@ -78,14 +82,14 @@ Services
 Bell has 5 "services", they are started with different entries, running in separate
 processes:
 
-1. **listener** Receive incoming stats from clients(like statsd) over TCP, pack to jobs
+1. **listener**: Receive incoming stats from clients(like statsd) over TCP, pack to jobs
    and send them to job queue.
-2. **analyzer(s)** Get jobs from queue, analyze current datapoint via [3-sigma rule](docs/design-notes.md).
+2. **analyzer(s)**: Get jobs from queue, analyze current datapoint via [3-sigma rule](docs/design-notes.md).
    Store analyzation result and all statistics in ssdb. Bell is scalable, we can start multiple
    analyzer instances to process lots of metrics.
-3. **webapp** Visualize metrics and analyzation on the web, default prot: 8989.
-4. **alerter** Alert once enough anomalies were detected.
-5. **cleaner** Check the last time of a metric hitting bell every certain interval, if
+3. **webapp**: Visualize metrics and analyzation on the web, default prot: 8989.
+4. **alerter**: Alert once enough anomalies were detected.
+5. **cleaner**: Check the last time of a metric hitting bell every certain interval, if
    the age exceeds the threshold, clean it.
 
 License
