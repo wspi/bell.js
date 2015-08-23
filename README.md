@@ -117,7 +117,7 @@ setInterval(function() {
 Custom Alerter
 --------------
 
-Bell comes with a built-in alerter: [console.js](../alerters/console.js), it's
+Bell comes with a built-in alerter: [console.js](alerters/console.js), it's
 just an sample, but you can completely write one on your own, here are brief wiki:
 
 1. An alerter is a nodejs module which should export a function `init`:
@@ -144,15 +144,12 @@ Frequently Asked Questions
 
 1. Analyzers scalability?
 
-   The more metrics, the more analyzers should be up. If the analyzation cant
-   catch up with the incomming datapoints, we should increase analyzer instances.
-   [Beanstats](https://github.com/hit9/beanstats) is a simple console tool to
-   watch a single beanstalk tube, and show you how fast jobs are going in and
-   out of the queue. What if our analyzers cannot catch up with incomming datapoints?
-   (beanstalkd hoards the jobs):
-
-      - Increase analyzer workers.  *(Preferred solution)*
-      - Reduce `analyzer.filter.offset`, this makes IO faster.
+   The more metrics, the more analyzers should be up. If the analyzation can not
+   catch up with the incomming datapoints, we should increase analyzer instances,
+   this is the preferred solution, another one is to reduce `analyzer.filter.offset`,
+   this makes IO faster. [Beanstats](https://github.com/hit9/beanstats) is a simple
+   console tool to watch a single beanstalk tube, and show you how fast jobs are going
+   in and out of the queue.
 
 2. SSDB disk usage is too Large.
 
