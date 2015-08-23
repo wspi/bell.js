@@ -100,7 +100,7 @@ We are using statsd as bell's client, just add `'bell.js/clients/statsd'` to sta
 }
 ```
 
-And it's very simple to implement a command bell client via
+And it's very simple to implement a custom bell client via
 [clients/client.js](clients/client.js):
 
 ```js
@@ -108,9 +108,10 @@ var bell = require('bell.js');
 var client = bell.createClient({port: 8889});
 
 // send datapoints every 10 seconds
-setInterval(function(){
-  client.send([['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]])
-}, 1e4);
+setInterval(function() {
+  var datapoints = [['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]];
+  client.send(datapoints);
+}, 10 * 1000);
 ```
 
 Custom Alerter
