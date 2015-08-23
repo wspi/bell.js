@@ -50,6 +50,7 @@ $ npm install bell.js -g
 ```
 
 After the installation, there is a command named `bell` avaliable, to start a service
+(i.e. analyzer): `bell analyzer -c configs.toml`:
 
 ```
 $ bell <service-name> -c <path-to-config-file>
@@ -64,12 +65,8 @@ Here is a simple quickstart for the case with statsd, make sure
 1. First, generate a sample config file via `bell -s`.
 2. Open the sample config file (in language toml) and edit it.
 3. Start ssdb, beanstalkd.
-4. Start bell services (analyzer, listener, webapp, alerter, cleaner), to start a service
-   (i.e. analyzer): `bell analyzer -c configs.toml`
+4. Start bell services (analyzer, listener, webapp, alerter, cleaner).
 5. Add `'bell.js/clients/statsd'` to statsd's backends and start statsd.
-
-*note: analyzer & listener are core (required) services, others are optional, you may also
-need webapp*.
 
 Configs
 -------
