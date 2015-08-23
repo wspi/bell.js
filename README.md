@@ -28,7 +28,7 @@ Bell will catch the datapoint `299`, and report it as an anomaly.
 
 Why don't we just set a fixed threshold instead (i.e. 200ms)? This may also work but we may
 have a lot of apis to monitor, some are fast (~10ms) and some are slow (~1000ms), it is hard
-to set a good threshold for each one, and also hard to set a appropriate global threshold for all.
+to set a good threshold for each one, and also hard to set an appropriate global threshold for all.
 Bell sloves this via [3-sigma](docs/design-notes.md), it gives dynamic thresholds for each metric,
 rely on history dataponts. We don't have to set a threshold for each metric, bell will find the
 "thresholds" automatically.
@@ -43,9 +43,13 @@ Requirments
 Installation
 ------------
 
+Install bell.js via npm:
+
 ```bash
 $ npm install bell.js -g
 ```
+
+After the installation, there is a command named `bell` avaliable.
 
 Quick Start
 -----------
@@ -67,3 +71,24 @@ Configs
 -------
 
 Default config file is at [config/configs.toml](config/configs.toml).
+
+Services
+--------
+
+Bell has 5 "services", they are started with different entries, running in separate
+processes:
+
+1. **listener** Receive incoming stats from clients(like statsd) over TCP, pack to jobs
+   and send them to job queue.
+2. **analyzer(s)** Get jobs from queue, analyze current datapoint via [3-sigma rule](docs/design-notes.md).
+   Store analyzation result and all statistics in ssdb. Bell is scalable, we can start multiple
+   analyzer instances to process lots of metrics.
+3. **webapp** Visualize metrics and analyzation on the web, default prot: 8989.
+4. **alerter** Alert once enough anomalies were detected.
+5. **cleaner** Check the last time of a metric hitting bell every certain interval, if
+   the age exceeds the threshold, clean it.
+
+License
+-------
+
+MIT Copyright (c) 2014 - 2015 Eleme, Inc.
