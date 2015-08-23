@@ -33,7 +33,7 @@ Bell sloves this via [3-sigma](docs/design-notes.md), it gives dynamic threshold
 rely on history dataponts. We don't have to set a threshold for each metric, bell will find the
 "thresholds" automatically.
 
-Requirments
+Requirements
 -----------
 
 - nodejs (>= 0.12) or iojs (>=1.1) *(generator feature required)*
@@ -89,17 +89,76 @@ processes:
 5. **cleaner**: Check the last time of a metric hitting bell every certain interval, if
    the age exceeds the threshold, clean it.
 
-More Specific Topics
---------------------
+Custom Client
+------------
 
-- [Design Notes](docs/design-notes.md)
-- [Custom Client](docs/topics.md#custom-client)
-- [Custom Alerter](docs/topics.md#custom-alerter)
-- [Analyzers Scalability](docs/topics.md#analyzers-scalability)
-- [Cross Machines Analyzers](docs/topics.md#cross-machines-analyzers)
-- [Listener Net Protocol](docs/topics.md#listener-net-protocol)
-- [Week Analyzation Ability](docs/topics.md#week-analyzation-ability)
+We are using statsd as bell's client, just add `'bell.js/clients/statsd'` to statsd config:
 
+```js
+{
+, backends: ['bell.js/clients/statsd']
+}
+```
+
+And it's very simple to implement a custom bell client via
+[clients/client.js](clients/client.js):
+
+```js
+var bell = require('bell.js');
+var client = bell.createClient({port: 8889});
+
+// send datapoints every 10 seconds
+setInterval(function() {
+  var datapoints = [['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]];
+  client.send(datapoints);
+}, 10 * 1000);
+```
+
+Custom Alerter
+--------------
+
+Bell comes with a built-in alerter: [console.js](alerters/console.js), it's
+just an sample, but you can completely write one on your own, here are brief wiki:
+
+1. An alerter is a nodejs module which should export a function `init`:
+
+   ```js
+   init(configs, alerter, log)
+   ```
+
+2. To make an alerter work, add it to `alerter.modules` in `configs.toml`:
+
+   ```toml
+   [alerter]
+   modules = ["./path/to/myalerter.js"]
+   ```
+
+3. An nodejs event is available for the second parameter `alerter` in function `init`:
+   Event **'anomaly detected'**
+
+   - Parameters: `event`, an array like: `[[metricName, [timestamp, metricValue, AnalyzationResult]], trend]`
+   - Emitted when an anomaly was detected.
+
+Frequently Asked Questions
+--------------------------
+
+1. Analyzers scalability?
+
+   The more metrics, the more analyzers should be up. If the analyzation can not
+   catch up with the incomming datapoints, we should increase analyzer instances,
+   this is the preferred solution, another one is to reduce `analyzer.filter.offset`,
+   this makes IO faster. [Beanstats](https://github.com/hit9/beanstats) is a simple
+   console tool to watch a single beanstalk tube, and show you how fast jobs are going
+   in and out of the queue.
+
+2. SSDB disk usage is too Large.
+
+   Set item `compression` to `yes` in `ssdb.conf`, or run `compact` in ssdb-cli.
+
+3. "Too many open files" in my ssdb log.
+
+   You need to set your linux's max open files to at least 10k, see
+   [how to](http://stackoverflow.com/questions/34588/how-do-i-change-the-number-of-open-files-limit-in-linux).
 
 License
 -------
