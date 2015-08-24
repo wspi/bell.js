@@ -139,6 +139,21 @@ just an sample, but you can completely write one on your own, here are brief wik
    - Parameters: `event`, an array like: `[[metricName, [timestamp, metricValue, AnalyzationResult]], trend]`
    - Emitted when an anomaly was detected.
 
+There's a demo sms alerter: [alerters/example-sms.js](alerters/example-sms.js), it alerts when trending
+grows over 1 or -1.
+
+Cross Machines Analyzers
+------------------------
+
+Generally, we run bell services all on one machine, but analyzers may require more cpus to make
+processing faster. The `ssdb.*`, `beanstalkd.*`, `analyzer.*` and `alerter.*` should be configured
+to run separate analyzers on another host.
+
+Implementation Notes
+--------------------
+
+[design-notes.md](docs/design-notes.md)
+
 Frequently Asked Questions
 --------------------------
 
