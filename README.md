@@ -152,7 +152,11 @@ to run separate analyzers on another host.
 Implementation Notes
 --------------------
 
-[design-notes.md](docs/design-notes.md)
+- [Anomalies detection algorithm](docs/design-notes.md#anomalies-detection-algorithm)
+- [Eliminate periodicity](docs/design-notes.md#eliminate-periodicity)
+- [Anomalous Serverity Trending](docs/design-notes.md#anomalous-serverity-trending)
+- [Data flow and storage schema](docs/design-notes.md#data-flow-and-storage-schema)
+- [Listener Net Protocol](docs/design-notes.md#listener-net-protocol)
 
 Frequently Asked Questions
 --------------------------
