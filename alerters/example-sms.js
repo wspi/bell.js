@@ -52,15 +52,17 @@ function wrap(name, value, trend) {
  * @param {Object} log // bell's logger
  */
 exports.init = function(configs, alerter, log) {
-  var trend = event[1],
-      name = event[0][0],
-      value = event[0][1][1];
+  alerter.on('anomaly detected', function(event) {
+    var trend = event[1],
+        name = event[0][0],
+        value = event[0][1][1];
 
-  if ((Math.abs(trend) >= 1) &&
-      (+new Date() - stats[name] >= interval * 1000)) {
-    mobiles.forEach(function(mobile) {
-      send(wrap(name, value, trend), mobile, log);
-    });
-    stats[name] = +new Date();
-  }
+    if ((Math.abs(trend) >= 1) &&
+        (+new Date() - stats[name] >= interval * 1000)) {
+      mobiles.forEach(function(mobile) {
+        send(wrap(name, value, trend), mobile, log);
+      });
+      stats[name] = +new Date();
+    }
+  });
 };

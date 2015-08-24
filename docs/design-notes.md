@@ -90,3 +90,24 @@ Data flow and storage schema
    ------------------------------------------------
    timestamp | value:anomalous severity:timestamp
    ```
+
+Listener Net Protocol
+---------------------
+
+The net protocol between clients and bell listener is very simple:
+
+```
+Packet := Block+
+Block  := Size '\n' Data
+Size   := literal_integer
+Data   := literal_stringify_json
+```
+
+example:
+
+```
+57
+[['foo', [1412762335, 3.14]], ['bar', [1412762335, 314]]
+58
+[['foo', [1412762345, 3.15]], ['bar', [1412762345, 2348]]
+```
