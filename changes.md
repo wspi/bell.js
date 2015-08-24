@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v1.4.3
+------
+
+- Refactor docs
+
 v1.3 - 1.4.1
 ------------
 
