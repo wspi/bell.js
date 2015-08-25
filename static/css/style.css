@@ -3,34 +3,45 @@ html, body {
 }
 
 .container {
-  display: table;
   margin-top: 0px;
   padding-top: 55px;  /* nav height + 15px */
   width: 100%;
   height: 100%; /* 1 - 40/768 */
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .container .row {
-  display: table-row;
   height: 100%;
   vertical-align: top;
 }
 
 .main {
-  display: table-cell;
   height: 100%;
 }
 
 .sidebar {
-  display: table-cell;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #eee;
 }
 
-.chart-box {
+.chart-box, .chart-box-top {
+  width: 100%;
   overflow-x: scroll;
+  border: 0;
+}
+
+.chart-box-top {
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.chart-box-top-div {
+  width: 1080px;
+  height: 20px;
 }
 
 .chart {

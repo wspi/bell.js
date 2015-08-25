@@ -179,6 +179,10 @@
 </ul>
 
 <!-- chart -->
+<div class="chart-box-top">
+  <div class="chart-box-top-div">
+  </div>
+</div>
 <div class="chart-box">
   <div class="chart" id="chart">
     <div class="loader" id="loader">
@@ -200,7 +204,13 @@ var root = '{{ url('/')  }}';
 var step = {{ configs.interval  }};
 {% set options = JSON.stringify(params) %}
 window.onload = function() {
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
+  $('.chart-box-top').scroll(function() {
+    $('.chart-box').scrollLeft($('.chart-box-top').scrollLeft());
+  });
+  $('.chart-box').scroll(function() {
+    $('.chart-box-top').scrollLeft($('.chart-box').scrollLeft());
+  });
   initBell({{ options  }})
 };
 {% endblock %}
