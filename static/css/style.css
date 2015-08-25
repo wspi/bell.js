@@ -48,10 +48,8 @@ html, body {
   position: relative;
   width: 1080px;
   margin: 0 auto;
-  padding: 0;
-  padding-top: 20px;
+  padding: 15px 0;
 }
-
 
 .chart .title {
   background-color: rgba(255, 255, 255, .85);
@@ -92,8 +90,29 @@ input[name="pattern"] {
 }
 
 .nav-tabs>li.active>a,
-.nav-tabs>li.active>a:hover, 
+.nav-tabs>li.active>a:hover,
 .nav-tabs>li.active>a:focus
 {
   background-color: #fff;
+}
+
+/* Force chart-box scrollbars to display on mac */
+.chart-box-force-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.chart-box-force-scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #bbb;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.chart-box-force-scrollbar::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  background: #aaa;
+}
+
+.chart-box-force-scrollbar::-webkit-scrollbar-thumb:window-inactive {
+  background: #eee;
 }

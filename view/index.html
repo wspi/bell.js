@@ -179,11 +179,11 @@
 </ul>
 
 <!-- chart -->
-<div class="chart-box-top">
+<div class="chart-box-top chart-box-force-scrollbar">
   <div class="chart-box-top-div">
   </div>
 </div>
-<div class="chart-box">
+<div class="chart-box chart-box-force-scrollbar">
   <div class="chart" id="chart">
     <div class="loader" id="loader">
       <img src="{{ url('static/img/spinner.gif')  }}" />
@@ -211,6 +211,6 @@ window.onload = function() {
   $('.chart-box').scroll(function() {
     $('.chart-box-top').scrollLeft($('.chart-box').scrollLeft());
   });
-  initBell({{ options  }})
+  initBell({{ options }})
 };
 {% endblock %}
