@@ -27,8 +27,21 @@ html, body {
   border-right: 1px solid #eee;
 }
 
-.chart-box {
+.chart-box, .chart-box-top {
+  width: 100%;
   overflow-x: scroll;
+  border: 0;
+}
+
+.chart-box-top {
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.chart-box-top-div {
+  width: 1080px;
+  height: 20px;
 }
 
 .chart {
