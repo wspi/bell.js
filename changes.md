@@ -1,6 +1,11 @@
 Node-bell Changelog
 ===================
 
+v1.4.4
+------
+
+- Fix scrollbar and some styles.
+
 v1.4.3
 ------
 
