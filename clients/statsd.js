@@ -9,7 +9,7 @@
  *   bellHost, default: '0.0.0.0'
  *   bellPort, default: 8889
  *   bellIgnores, default: ['statsd.*']
- *   bellTimerDataFields, default: ['upper_90', 'count_ps']
+ *   bellTimerDataFields, default: ['mean_90', 'count_ps']
  *
  * Metric types supported: `counter_rates` & `timer_data`
  */
@@ -30,7 +30,7 @@ var makers = {
     return [['counter.' + key, [time, val]]];
   },
   'timer_data': function (key, stats, time) {
-    var fields = config.bellTimerDataFields || ['upper_90', 'count_ps'];
+    var fields = config.bellTimerDataFields || ['mean_90', 'count_ps'];
     var datapoints = [];
 
     for (var i = 0; i < fields.length; i++) {
