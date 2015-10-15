@@ -29,8 +29,7 @@
     "nunjucks": "1.2.0",
     "request": "~2.40.0",
     "ssdb": "~0.3.5",
-    "strftime": "^0.8.2",
-    "toml": "2.0.6"
+    "strftime": "^0.8.2"
   },
   "devDependencies": {
     "ntt": ">=0.0.5",
