@@ -7,7 +7,7 @@
  * Optional configs:
  *
  *   bellHost, default: '0.0.0.0'
- *   bellPort, default: 8889
+ *   bellPort, default: 2015
  *   bellIgnores, default: ['statsd.*']
  *   bellTimerDataFields, default: ['mean_90', 'count_ps']
  *
@@ -67,7 +67,7 @@ Bell.prototype.connect = function() {
 
   this.conn = net.connect({
     host: config.bellHost || '0.0.0.0',
-    port: config.bellPort || 8889
+    port: config.bellPort || 2015
   }, function(){
     if (debug) {
       logger.log('bell connected successfully');
