@@ -1,13 +1,5 @@
 .*.sw[po]
 node_modules
-test*.toml
-sample.configs.toml
-test-*.js
-test-2
-test-*
-test.quickenters.json
-test.timesteps.json
-*.pyc
-test.patterns.js
 heapdump-*
 npm-debug.log
+test-*
