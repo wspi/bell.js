@@ -59,7 +59,7 @@ co(function *() {
   service = {
     listener: require('./lib/listener'),
     analyzer: require('./lib/analyzer'),
-    webapp:   require('./lib/webapp'),
+    // webapp:   require('./lib/webapp'),
     alerter:  require('./lib/alerter'),
     cleaner:  require('./lib/cleaner')
   }[serviceName];
