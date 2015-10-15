@@ -8,7 +8,7 @@
 
 const co      = require('co');
 const program = require('commander');
-const logging = require('logging.js')
+const logging = require('logging.js');
 const config  = require('./lib/config');
 const version = require('./package').version;
 const log     = logging.get('bell');
@@ -29,7 +29,7 @@ co(function *() {
   .usage('<service> [options]')
   .option('-c, --config-path <c>', 'config file path [optional]')
   .option('-l, --log-level <l>', 'log level (e.g. debug, info..)',
-          function(val) { return logging.levels[l.toUpperCase()];},
+          function(l) { return logging.levels[l.toUpperCase()];},
           logging.INFO)
   .parse(process.argv);
 
@@ -45,7 +45,7 @@ co(function *() {
   //----------------------------------------------------
   // Read configs
   //----------------------------------------------------
-  config.init(program.configPath)
+  config.init(program.configPath);
 
   //----------------------------------------------------
   // Start service
