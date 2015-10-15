@@ -1,19 +1,17 @@
 /**
- * @fileoverview Real-time anomalies detection for periodic time series.
- * @author Chao Wang (hit9)
+ * @overview  Real-time anomalies detection for periodic time series.
+ * @author    Chao Wang (hit9)
  * @copyright 2015 Eleme, Inc. All rights reserved.
  */
 
 'use strict';
 
 const co      = require('co');
-const fs      = require('fs');
 const program = require('commander');
-const log     = require('logging.js').get('bell');
-const toml    = require('toml');
-const configs = require('./lib/configs');
-const util    = require('./lib/util');
+const logging = require('logging.js')
+const config  = require('./lib/config');
 const version = require('./package').version;
+const log     = logging.get('bell');
 
 global.Promise = require('bluebird').Promise;
 
@@ -29,36 +27,25 @@ co(function *() {
   program
   .version(version)
   .usage('<service> [options]')
-  .option('-c, --configs-path <c>', 'configs file path')
-  .option('-s, --sample-configs', 'generate sample configs file')
-  .option('-l, --log-level <l>', 'log level (1~5 for debug~critical)', function(val) {
-    return (parseInt(val, 10) - 1) % 5 + 1;
-  })
+  .option('-c, --config-path <c>', 'config file path [optional]')
+  .option('-l, --log-level <l>', 'log level (e.g. debug, info..)',
+          function(val) { return logging.levels[l.toUpperCase()];},
+          logging.INFO)
   .parse(process.argv);
 
   //----------------------------------------------------
   // Initialize logging
   //----------------------------------------------------
   log.addRule({
-    name: 'stdout',
+    name: 'stderr',
     stream: process.stdout,
-    level: (program.logLevel || 2) * 10
+    level: program.logLevel
   });
-
-  //----------------------------------------------------
-  // Generate sample config file
-  //----------------------------------------------------
-  if (program.sampleConfigs) {
-    log.info("Generate sample.configs.toml to current directory");
-    return util.copy(util.path.configs, 'sample.configs.toml');
-  }
 
   //----------------------------------------------------
   // Read configs
   //----------------------------------------------------
-  configsPath = program.configsPath || util.path.configs;
-  configsContent = fs.readFileSync(configsPath).toString();
-  util.updateNestedObjects(configs, toml.parse(configsContent));
+  config.init(program.configPath)
 
   //----------------------------------------------------
   // Start service
