@@ -3,9 +3,6 @@ Bell.js
 
 ![snap](snap.png)
 
-Please see https://github.com/eleme/noise, which is easier and faster, only for anomalies detection.
-----------------------------------------------------------------------------------------------------
-
 Introduction
 ------------
 
@@ -19,6 +16,9 @@ api called frequency, api response time(time cost per call) and exceptions count
 services send these statistics to statsd, statsd aggregates them every 10 seconds and
 broadcasts the results to its backends including bell, bell analyzes current stats with
 history data, calculates the trending, and alerts us if the trending behaves anomalous.
+
+You may also want to see https://github.com/eleme/noise, which is only for anomalies detection
+, but easier and faster.
 
 Requirements
 -----------
