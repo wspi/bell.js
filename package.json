@@ -12,7 +12,7 @@
     "iojs": ">=1.1",
     "node": ">=0.12"
   },
-  "main": "./clients/client",
+  "main": "./statsd.js",
   "dependencies": {
     "bluebird": "2.3.11",
     "clone": "0.1.18",
