@@ -6,10 +6,10 @@
 
 'use strict';
 
-const co      = require('co');
+const co = require('co');
 const program = require('commander');
-const config  = require('./lib/config');
-const log     = require('./lib/log');
+const config = require('./lib/config');
+const log = require('./lib/log');
 const version = require('./package').version;
 
 global.Promise = require('bluebird').Promise;
