@@ -17,8 +17,8 @@
 'use strict';
 
 var net       = require('net');
-var protocol  = require('../lib/protocol');
 var minimatch = require('minimatch');
+var protocol  = require('./lib/protocol');
 
 var config;
 var debug;
