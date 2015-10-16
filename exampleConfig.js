@@ -20,6 +20,9 @@
  *   size           connection pool size. [default: 6]
  *   prefix         the prefix to name bell zset/hash.. [default: 'bell.']
  *
+ * SQLite Options:
+ *   file           file path for sqlite (maintains admin etc.) [default: 'bell.db']
+ *
  * Listener Options
  *   port           listener port to listen. [default: 2015]
  *   whitelist      metrics whitelist. [auto reloading, default: ['*']]
@@ -71,6 +74,10 @@
     port: 8888,
   },
 
+  sqlite: {
+    file: 'bell.db',
+  },
+
   listener: {
     port: 2015,
     whitelist: ['*'],
@@ -85,7 +92,7 @@
   webapp: {
     port: 2016,
     workers: 2,
-    auth: 'admin:admin',
+    auth: {name: 'admin', pass: 'secret'},
   },
 
   cleaner: {
