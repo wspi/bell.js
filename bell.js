@@ -8,10 +8,9 @@
 
 const co      = require('co');
 const program = require('commander');
-const logging = require('logging.js');
 const config  = require('./lib/config');
+const log     = require('./lib/log');
 const version = require('./package').version;
-const log     = logging.get('bell');
 
 global.Promise = require('bluebird').Promise;
 
@@ -29,18 +28,13 @@ co(function *() {
   .usage('<service> [options]')
   .option('-c, --config-path <c>', 'config file path [optional]')
   .option('-l, --log-level <l>', 'log level (e.g. debug, info..)',
-          function(l) { return logging.levels[l.toUpperCase()];},
-          logging.INFO)
+          function(l) { return log[l.toUpperCase()]; }, log.INFO)
   .parse(process.argv);
 
   //----------------------------------------------------
   // Initialize logging
   //----------------------------------------------------
-  log.addRule({
-    name: 'stderr',
-    stream: process.stdout,
-    level: program.logLevel
-  });
+  log.level = program.logLevel;
 
   //----------------------------------------------------
   // Read configs
@@ -59,7 +53,7 @@ co(function *() {
   service = {
     listener: require('./lib/listener'),
     analyzer: require('./lib/analyzer'),
-    // webapp:   require('./lib/webapp'),
+    webapp:   require('./lib/webapp'),
     alerter:  require('./lib/alerter'),
     cleaner:  require('./lib/cleaner')
   }[serviceName];
