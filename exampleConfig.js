@@ -43,6 +43,7 @@
  *   port           webapp port to listen. [default: 2016]
  *   workers        number of webapp workers to start. [default: 2]
  *   root           the root path to serve at. [default: null]
+ *   auth           username and password for admin basic auth. [default: 'admin:admin']
  *
  * Cleaner Options
  *   interval       cleaning time interval (in secs). [default: 10*60 (10min)]
@@ -84,6 +85,7 @@
   webapp: {
     port: 2016,
     workers: 2,
+    auth: 'admin:admin',
   },
 
   cleaner: {
