@@ -55,7 +55,7 @@
  * Alerter Options
  *   host           alerter host to bind/connect. [default: '0.0.0.0']
  *   port           alerter port to listen/connect. [default: 2017]
- *   modules        module to send message (i.e. sms, email) for alerter
+ *   senders        module to send message (i.e. sms, email) for alerter
  */
 
 {
@@ -102,6 +102,6 @@
 
   alerter: {
     port: 2017,
-    modules: [],
+    senders: [],
   },
 }
