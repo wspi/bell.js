@@ -22,7 +22,7 @@
   <nav class="navbar navbar-default navbar-fixed-top main-nav">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url('/', cleanWith({lang: params.lang}, {lang: 'en'})) }}">
+        <a class="navbar-brand" href="{{ url('/', util.cleanWith({lang: params.lang}, {lang: 'en'})) }}">
           Bell - {{ lang('Metrics Monitor', '指标监控') }}</a>
       </div>
       <ul class="nav navbar-nav">

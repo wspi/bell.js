@@ -2,7 +2,7 @@
 
 {% macro switch(dict) %}
   {% set defaults = {lang: 'en', pattern: '*', limit: 50, sort: '↑', past: '0s', type: 'm', stop: 0} %}
-  {{ url('/', cleanWith(extend(clone(params), dict), defaults)) }}
+  {{ url('/', util.cleanWith(extend(clone(params), dict), defaults)) }}
 {% endmacro %}
 
 {% macro title() %}
