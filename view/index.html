@@ -7,12 +7,11 @@
 
 {% macro title() %}
 {% if params.dashboard %}
-{% set groupName = params.dashboard.split(':')[0] %}
-{% set dashboardName = params.dashboard.split(':')[1] %}
-{% set group = groups[groupName] %}
-{% set dashboard = group.dashboards[dashboardName] %}
-  {% if group.title %}{{ group.title }}{% else %}{{ groupName }}{% endif %}:
-  {% if dashboard.title %}{{ dashboard.title }}{% else %}{{ dashboardName }}{% endif %}
+{% set dashGroupId = params.dashboard.split(':')[0] %}
+{% set dashBoardId = params.dashboard.split(':')[1] %}
+{% set dashGroup = dashGroups[dashGroupId] %}
+{% set dashBoard = dashGroups.dashBoards[dashboardId] %}
+  {{ dashGroup.name }}: {{ dashBoard.name }}
 {% else %}
 {{ lang('Pattern', '通配符') }}: {{ params.pattern }}
 {% endif %}
@@ -45,23 +44,14 @@
     <a href="{{ switch({}) }}">{{ lang('Pattern', '通配符') }}: {{ params.pattern }}</a>
     </li>
   {% endif %}
-  {% for groupName, group in groups %}
+  {% for dashGroupId, dashGroup in dashGroups %}
   <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#"
-      aria-expanded="false">
-      {% if group.title %} {{ group.title }}
-      {% else%} {{ groupName }}
-      {% endif %}
-      <span class="caret"></span>
-    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+      {{ dashGroup.name }}<span class="caret"></span></a>
     <ul class="dropdown-menu">
-      {% for dashboardName, dashboard in group.dashboards %}
+      {% for dashBoardId, dashBoard in dashGroup.dashBoards %}
       <li>
-        <a href="{{ switch({dashboard: groupName + ':' + dashboardName }) }}">
-          {% if dashboard.title %} {{ dashboard.title }}
-          {% else%} {{ dashboardName }}
-          {% endif %}
-        </a>
+        <a href="{{ switch({dashboard: dashGroupId + '-' + dashBoardId }) }}"> {{ dashBoard.name }}</a>
       </li>
       {% endfor %}
   </ul>
@@ -201,7 +191,7 @@
 // vars required by script.js
 var api = '{{ url('/api')  }}'
 var root = '{{ url('/')  }}';
-var step = {{ configs.interval  }};
+var step = {{ config.interval  }};
 {% set options = JSON.stringify(params) %}
 window.onload = function() {
   $('[data-toggle="tooltip"]').tooltip();
