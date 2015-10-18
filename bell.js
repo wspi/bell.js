@@ -40,8 +40,8 @@ co(function *() {
   // Initialize logging
   //----------------------------------------------------
   log.addRule({
-    name: 'stdout',
-    stream: process.stdout,
+    name: 'file',
+    stream: fs.createWriteStream(configs.logPath + log.name +'.log', {flags: 'a'}),
     level: (program.logLevel || 2) * 10
   });
 

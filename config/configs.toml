@@ -4,7 +4,7 @@
 
 # interval      integer, seconds step for all metrics. default: 10 (10s)
 interval = 10
-
+logPath = "/var/log/bell/"
 
 # =============================== Job Queue ===================================
 
